@@ -1,7 +1,7 @@
 # CTF Walkthroughs
 
 HackTheBox:
-- [Horizontall](/horizontall/walkthrough.md)
-- [Precious](/precious/walkthrough.md)
-- [Red Panda](/red-panda/walkthrough.md)
-- [Trick](/trick/walkthrough.md)
+- [Horizontall](/horizontall/walkthrough.html)
+- [Precious](/precious/walkthrough.html)
+- [Red Panda](/red-panda/walkthrough.html)
+- [Trick](/trick/walkthrough.html)

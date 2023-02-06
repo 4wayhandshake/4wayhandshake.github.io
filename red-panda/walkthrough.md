@@ -431,3 +431,12 @@ watch cat xxe_creds.xml
 After waiting about 30s, I saw the root flag appear :happy:
 
 ![root flag censored](root%20flag%20censored.jpg)
+
+:tada:
+
+------
+
+Thanks for reading
+
+:handshake: :handshake: :handshake: :handshake:
+@4wayhandshake
