@@ -164,7 +164,7 @@ Set the options. Note that the LHOST should be changed to the IP of the HackTheB
 
 
 
-### User flag
+### USER FLAG
 
 The reverse shell from **msfconsole** provided root access to the target machine. To find the user flag, we just need to determine what user holds the flag. I issued the following commands:
 
@@ -179,7 +179,7 @@ The reverse shell from **msfconsole** provided root access to the target machine
 
 
 
-### Root flag
+### ROOT FLAG
 
 The root flag is even easier. Since we're already the root user, just read the flag from where it always is:
 
@@ -187,7 +187,7 @@ The root flag is even easier. Since we're already the root user, just read the f
 
 
 
-### Extra Credit: Persistence
+### EXTRA CREDIT: PERSISTENCE
 
 Ok, so that was kinda... *lame* :upside_down_face:
 
