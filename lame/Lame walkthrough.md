@@ -4,13 +4,13 @@ Linux, Easy, Released 2017-03-17
 
 
 
-### DESCRIPTION
+## INTRODUCTION
 
 Lame is one of the oldest boxes on HTB. Its solution is very direct: while it is a "box", it is actually shorter than many "challenges". It is perfect for a beginner, or someone that just wants to brush up on some more introductory pentesting skills.
 
 
 
-### RECON
+## RECON
 
 I followed my typical first steps. I set up a directory for the box, with a ``nmap`` subdirectory. Then set $RADDR to my target machine's IP, and scanned it with my typical nmap "init" scan:
 
@@ -90,9 +90,9 @@ FTP and SMB are both good leads to check out. SSH could be used for persistence 
 
 
 
-### FOOTHOLD
+## FOOTHOLD
 
-##### Investigating FTP
+### Investigating FTP
 
 If you've just run through the *Starting Point* boxes on HTB, this is probably looking eerily familiar. When anonymous login is enabled, you can just jump right in to FTP: Use the username **anonymous** and a **blank password**
 
@@ -122,7 +122,7 @@ Set the required option then run it:
 
 No dice :game_die: Perhaps this was patched on the target machine. Oh well :man_shrugging: this is only an Easy box, so it's probably safe to say ``vsftpd`` is investigated enough. Time to move on to the next lead.
 
-##### Investigating SMB
+### Investigating SMB
 
 Nmap already discovered that smb is running. Let's see if it also has anonymous login, or if it requires credentials. Just try listing the smb shares, providing a **blank password**:
 
@@ -164,7 +164,7 @@ Set the options. Note that the LHOST should be changed to the IP of the HackTheB
 
 
 
-### USER FLAG
+## USER FLAG
 
 The reverse shell from **msfconsole** provided root access to the target machine. To find the user flag, we just need to determine what user holds the flag. I issued the following commands:
 
@@ -179,7 +179,7 @@ The reverse shell from **msfconsole** provided root access to the target machine
 
 
 
-### ROOT FLAG
+## ROOT FLAG
 
 The root flag is even easier. Since we're already the root user, just read the flag from where it always is:
 
@@ -187,7 +187,7 @@ The root flag is even easier. Since we're already the root user, just read the f
 
 
 
-### EXTRA CREDIT: PERSISTENCE
+## EXTRA CREDIT: PERSISTENCE
 
 Ok, so that was kinda... *lame* :upside_down_face:
 
@@ -238,6 +238,22 @@ Wait, what? root has new **mail..?** Alright, let's see what it is :confused:
 Oh, ok. This must be what happens all those times when I sudo something and the system tells me "this action will be reported" :roll_eyes:
 
 Anyway, **we now have persistence, and can log in via SSH** using just the key we generated. I'd call that a success! Congrats to you for going the extra mile to upgrade your dumb shell into SSH instead :clap:
+
+
+
+## LESSONS LEARNED
+
+### Attacker
+
+- Don't spend too long examining files that are likely just distractions. I spent a bit too much time looking through the ``\tmp`` samba share.
+- Searchsploit is your friend. When using it, try using synonyms as well. Ex. checking both ``smb`` and ``samba`` was important for this box.
+- It's OK to jump right into **msfconsole** and try out a bunch of exploits. It can be a huge time-saver. If you're looking to be hardcore, be sure to read though the code for any exploit that worked and understand why it worked. Read the CVE article if one exists.
+
+### Defender
+
+- There is no reason to ever have anonymous login enabled for any file-share. Even a shared credential is better than none at all.
+- Read infosec news and stay on top of the latest CVEs
+- Perform regular updates, especially for outward-facing services or anything exposed to the internet.
 
 
 
