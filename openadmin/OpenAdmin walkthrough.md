@@ -1,4 +1,4 @@
-# Bashed
+# OpenAdmin
 
 Linux, Easy, Released 2020-01-05
 
