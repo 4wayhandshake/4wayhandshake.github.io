@@ -4,6 +4,7 @@
 
 ## HackTheBox:
 
+- [OpenAdmin](/openadmin/walkthrough.html)
 - [Bashed](/bashed/walkthrough.html)
 - [Lame](/lame/walkthrough.html)
 - [Horizontall (images only)](/horizontall/walkthrough.html)
