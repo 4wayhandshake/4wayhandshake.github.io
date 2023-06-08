@@ -12,9 +12,14 @@ Linux, Easy, Released 2020-01-05
 
 ## INTRODUCTION
 
-At first, the target seems like a half-built Apache server. After a little enumeration, it seems like a single server hosting four website templates: one for music, one for interior design, one for artwork, and one that is generally-applicable. It's funny, but some of these seem like really nice templates.
+At first, the target seems like a half-built Apache server. After a little enumeration, it seems like a single server hosting four website templates: one for music, one for interior design, one for artwork, and one that is generally-applicable. 
 
-**Warning: This walkthrough contains many spoilers, but none should come as a surprise if you read the walkthrough sequentially**
+> It's funny, but some of these seem like really nice templates.
+
+The real action, as the name of the box suggests, is at the admin panel that manages the templates. It's a site for typical web hosting tasks like managing hosts, editing DNS, adding users, etc.
+
+**Warning: This walkthrough contains many spoilers.**
+**No spoilers will be unexpected if you read the walkthrough sequentially.**
 
 
 
@@ -71,8 +76,9 @@ OS:PCK=G%RUCK=G%RUD=G)IE(R=Y%DFI=N%T=40%CD=S)
 
 nmap scan revealed only SSH on port 22 and a webserver on port 80
 
-
 ### Webserver Strategy
+
+Results of the strategy will be summarized at the end of the section.
 
 1. Add the target to **/etc/hosts**.
 
@@ -172,7 +178,9 @@ Apache 2.4.29, Ubuntu, PHP
 
 ### Exploring the website
 
-The server appears to host four websites, each on a different directory of the same domain: `/music`, `/artwork`, `/sierra`, and `/marga`. The server seems to have some kind of admin panel at `/ona`.
+The server appears to host four websites, each on a different directory of the same domain: `/music`, `/artwork`, `/sierra`, and `/marga`. The server seems to have some kind of admin panel at `/ona`, shown below:
+
+![ona panel](../../../../Box_Notes/OpenAdmin/walkthrough/ona%20panel.png)
 
 The update warning on the /ona site indicates it is running a tool called **opennetadmin**, which has a corresponding [git repo here](https://github.com/opennetadmin/ona). The update warning also reveals that it is running version 18.1.1.
 
@@ -198,6 +206,8 @@ OK cool, a database user. Also, we now know that it is using MySQL (which I woul
 After reading fully through the [installation and configuration instructions on the git repo](https://github.com/opennetadmin/ona/wiki), it is clear that ona_sys will have UPDATE access to the database, but should already have a password defined. 
 
 Not seeing anything else particularly interesting on this page, it might be time to move on. 
+
+
 
 ## FOOTHOLD
 
@@ -314,7 +324,9 @@ Using a web browser, I made a request to the reverse shell. Immediately, I got a
 
 ### Upgrading the Shell
 
-I originally learned this procedure [from this blog post](https://blog.ropnop.com/upgrading-simple-shells-to-fully-interactive-ttys/). It goes into much more depth, but I find that the following is usually sufficient. In only a few rare cases have I had to do more than this. This also assumes python is available on the target machine. Starting with the "dumb" shell, change from ``sh`` to ``bash``:
+I originally learned this procedure [from this blog post](https://blog.ropnop.com/upgrading-simple-shells-to-fully-interactive-ttys/). It goes into much more depth, but I find that the following is usually sufficient. In only a few rare cases have I had to do more than this.
+
+ Starting with the "dumb" shell, change from ``sh`` to ``bash``:
 
 ```bash
 SHELL=/bin/bash script -q /dev/null
@@ -462,16 +474,11 @@ No dice :game_die:  None of those were correct. Let's take a look around for sus
 ```
 www-data@openadmin:/opt/ona/$ ls /opt/ona/sql
 www-data@openadmin:/opt/ona/sql$ cat list_all_hosts.sql 
-
 www-data@openadmin:/opt/ona/www/config$ cat config.inc.php
-
 www-data@openadmin:/opt/ona/www/local/config$ cat database_settings.inc.php
-
 ```
 
-
-
-Beautiful! database_settings.inc.php has some useful info inside:
+Beautiful! `database_settings.inc.php` has some useful info inside:
 
 ```
 <?php
