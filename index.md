@@ -4,6 +4,7 @@
 
 ## HackTheBox:
 
+- [Soccer](/soccer/walkthrough.html)
 - [OpenAdmin](/openadmin/walkthrough.html)
 - [Bashed](/bashed/walkthrough.html)
 - [Lame](/lame/walkthrough.html)
