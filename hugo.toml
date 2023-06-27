@@ -32,14 +32,14 @@ paginate     = 10
 
 [languages]
   [languages.en]
-    title = "Hello Friend NG"
-    subtitle = "A simple theme for Hugo"
-    keywords = ""
+    title = "4wayhandshake"
     copyright = '<a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a>'
-    readOtherPosts = "Read other posts"
-
+    [languages.en.params]
+      subtitle = "CTF Walkthroughs, Tips & Tricks"
+      keywords = "infosec ctf hacking security guide walkthrough strategy hackthebox htb"
+      readOtherPosts = "Read other posts"
     [languages.en.params.logo]
-      logoText = "hello friend ng"
+      logoText = "4wayhandshake"
       logoHomeLink = "/"
     # or
     #
@@ -48,6 +48,6 @@ paginate     = 10
 
   # And you can even create generic menu
   [[menu.main]]
-    identifier = "blog"
-    name       = "Blog"
-    url        = "/posts"
+    identifier = "walkthroughs"
+    name       = "Walkthroughs"
+    url        = "/walkthrough"
