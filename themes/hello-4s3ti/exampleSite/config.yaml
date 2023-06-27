@@ -1,0 +1,145 @@
+baseURL: 'https://4s3ti.net/'
+languageCode: 'pt-pt'
+theme: "hello-friend-4s3ti"
+author: 
+  name: "4s3tidotnet"
+title: '4s3ti.net'
+copyright: "All Rights Reserved"
+IsMultiLingual: true
+defaultContentLanguage: pt-pt
+
+languages:
+  pt-pt:
+    weight: 1
+    languageName: "Portugues"
+  en:
+    weight: 2
+    params: 
+      backgroundImage: "../assets/4s3tibg.gif"
+    menu: 
+      main:
+        - identifier: "posts"
+          name: "Posts"
+          url: "/posts" 
+          weight: 1
+
+        - identifier: "about"
+          name: "About"
+          url: "https://cv.4s3ti.net"
+          weight: 2
+
+        - identifier: "projects"
+          name: "Projects"
+          url: "/projects"
+        - identifier: "PiVPN"
+          name: "PiVPN"
+          url: "https://pivpn.io"
+          parent: "projects"
+        - identifier: "tools"
+          name: "Tools"
+        - identifier: "short"
+          name: "Short Links"
+          url: "https://s.4s3ti.net"
+          parent: "tools"
+    #     weight: 10
+        - identifier: "wb"
+          name: "Whiteboard"
+          parent: "tools"
+
+
+
+params:
+  defaultTheme: "dark"
+  EnableThemeToggle: true 
+# gitUrl: "https://github.com/4s3ti"
+  EnableSharingButtons: true
+  EnableGlobalLanguageMenu: true
+  backgroundImage: "assets/4s3tibg.gif"
+  backgroundEffects: true
+  showPosts: true
+  tags: true
+# hideReadMore: true
+  ReadMoreText: true
+# ReadMore: "foo"
+# socialIcons: true
+# homeTitle: "Title"
+# homeSubtitle: "Subtitle"
+  fontAwesome:
+    KitURL: "https://kit.fontawesome.com/0ed5cec925.js"
+  ShowReadingTime: true
+  LastModDisplay: true
+  tags: true
+  logo:
+    logoText: "4s3ti.net"
+    logoCursorColor: "#ffffff"
+  social:
+    - name: "github"
+      url: "https://github.com/4s3ti"
+    - name: "CV"
+      url: "https://cv.4s3ti.net"
+      icon: fa-solid fa-terminal
+    - name: "youtube"
+      url: "https://youtube.com/cfcolaco"
+    - name: "twitter"
+      url: "https://twitter.com/4s3ti/"
+    - name: "instagram"
+      url: "https://www.instagram.com/c4colaco/"
+    - name: "twitch"
+      url: "https://twitch.tv/4s3ti"
+    - name: "Buy me a coffee"
+      url: "https://www.buymeacoffee.com/4s3ti"
+      icon: fa-solid fa-coffee
+  footer:
+    showVersion: true
+    socialIcons: true
+    author: true
+    rss: true
+    trademark: true
+    copyright: true
+#   topText:  ["Footer Top text"]
+    bottomText: [
+      "Powered by <a href=\"http://gohugo.io\">Hugo</a>", 
+      "with <a href=\"#\">Hello-friend-4s3ti</a>",
+    ]
+    
+
+
+taxonomies:
+  tag: "tags"
+  category: "blog"
+
+menu:
+  main:
+    - identifier: "about"
+      name: "Sobre"
+      url: "https://cv.4s3ti.net"
+      weight: 2
+
+    - identifier: "posts"
+      name: "Posts"
+      url: "/posts"
+      weight: 1
+
+    - identifier: "tools"
+      name: "Ferramentas"
+
+    - identifier: "projects"
+      name: "Projetos"
+      url: "/projects"
+
+    - identifier: "PiVPN"
+      name: "PiVPN"
+      url: "https://pivpn.io"
+      parent: "projects"
+    - identifier: "short"
+      name: "Diminuir Links"
+      url: "https://s.4s3ti.net"
+      parent: "tools"
+    - identifier: "whiteboard"
+      name: "Quadro Branco"
+      parent: "tools"
+      url: "https://wb.4s3ti.net"
+    - identifier: "PrivateBin"
+      name: "PrivateBin"
+      parent: "tools"
+      url: "httls://paste.4s3ti.net"
