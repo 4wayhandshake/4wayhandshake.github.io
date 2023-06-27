@@ -3,6 +3,9 @@
 
 
 ## HackTheBox:
+
+- [~~Pilgrimage~~](/pilgrimage/walkthrough.html) (Still active)
+- [~~Sandworm~~](/sandworm/walkthrough.html) (Still active)
 - [~~MonitorsTwo~~](/monitorstwo/walkthrough.html) (Still active)
 - [~~Busqueda~~](/busqueda/walkthrough.html) (Still active)
 - [Soccer](/soccer/walkthrough.html)
