@@ -16,7 +16,7 @@ html, body {
         .article-nav {
             order: 1;
             position: sticky;
-            top: 2rem;
+            top: 5rem;
             align-self: start;
         }
         .article-text {
@@ -25,6 +25,25 @@ html, body {
     }
 }
 
-#TableOfContents li.active {
-    font-weight: bolder;
+#TableOfContents li {
+    a {
+        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    &.active {
+        font-weight: bolder;
+    }
+}
+
+#toc {
+    margin-left: 2rem;
+    padding-left: 0.5rem;
+    border-left: 3px solid;
+    ul {
+        // list-style-type: none;
+        margin: 0 1rem;
+        padding: 0;
+    }
 }

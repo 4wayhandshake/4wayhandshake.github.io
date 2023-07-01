@@ -20,6 +20,8 @@ The real action, as the name of the box suggests, is at the admin panel that man
 **Warning: This walkthrough contains many spoilers.**
 **No spoilers will be unexpected if you read the walkthrough sequentially.
 
+![index page](index%20page.png)
+
 ## RECON
 
 I followed my typical first steps. I set up a directory for the box, with a ``nmap`` subdirectory. Then set $RADDR to my target machine's IP, and scanned it with my typical nmap "init" scan:
