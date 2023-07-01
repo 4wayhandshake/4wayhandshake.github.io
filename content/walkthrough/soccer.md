@@ -9,10 +9,6 @@ tags: ["RCE", "Default credentials", "Websockets"]
 categories: ["Walkthrough", "HTB", "Linux", "Easy"]
 ---
 
-Linux, Easy, Released 2022-12-18
-
-<!-- ![index page](index%20page.png) -->
-
 ## INTRODUCTION
 
 At first, the target seems like a half-built Apache server. After a little enumeration, it seems like a single server hosting four website templates: one for music, one for interior design, one for artwork, and one that is generally-applicable.

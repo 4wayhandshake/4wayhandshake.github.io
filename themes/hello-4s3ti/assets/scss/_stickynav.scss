@@ -1,1 +1,30 @@
+html, body {
+    scroll-padding-top: 100px;
+}
 
+.header.sticky {
+    position: -webkit-sticky; /* for Safari */
+    position: sticky;
+    top: 0;
+}
+
+.post-article {
+    @media screen and (min-width: 685px) {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 15em;
+        grid-auto-flow: dense;
+        .article-nav {
+            order: 1;
+            position: sticky;
+            top: 2rem;
+            align-self: start;
+        }
+        .article-text {
+            order: 0;
+        }
+    }
+}
+
+#TableOfContents li.active {
+    font-weight: bolder;
+}

@@ -1,11 +1,11 @@
 .post {
   width: 100%;
-  max-width: 800px;
+  max-width: 1000px; /* formerly 800px */
   text-align: left;
   padding: 20px;
   margin: 20px auto;
   @media #{$media-size-tablet} {
-    max-width: 600px;
+    max-width: 800px; /* formerly 600px */
   }
 
   &-date {
@@ -41,14 +41,16 @@
 
   &-cover {
     border-radius: 8px;
-    margin: 40px -50px;
-    width: $max-width;
+    margin: 0 auto; /* formerly 40px -50px; */
+    width: 80%;  /* formerly $max-width; */
     max-width: $max-width;
     overflow: hidden;
+    /*max-width: $max-width;*/  /* formerly $max-width;
     @media #{$media-size-tablet} {
       margin: 20px 0;
       width: 100%;
     }
+    */
   }
 
   &-excerpt {
