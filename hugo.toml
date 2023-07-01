@@ -1,34 +1,36 @@
 baseURL = 'localhost'
 languageCode = 'en-us'
 title = '4wayhandshake - Infosec Blog'
+theme = "hello-4s3ti"
+paginate = 10
 
-theme        = "hello-4s3ti"
-paginate     = 10
+[author]
+  name = "Tim Sullivan"
 
 [params]
   dateform        = "Jan 2, 2006"
   dateformShort   = "Jan 2"
   dateformNum     = "2006-01-02"
   dateformNumTime = "2006-01-02 15:04"
-
   # Subtitle for home
-  homeSubtitle = "A simple and beautiful blog"
-
+  homeSubtitle = "CTF Walkthroughs, Tips & Tricks"
   # Set disableReadOtherPosts to true in order to hide the links to other posts.
   disableReadOtherPosts = false
-
   # Enable sharing buttons, if you like
   enableSharingButtons = true
-
   # Metadata mostly used in document's head
   description = "My new homepage or blog"
   keywords = "homepage, blog"
   images = [""]
+  [params.footer]
+    topText = [ "This is the footer toptext" ]
+    trademark = true
+    author = "Tim Sullivan"
+    copyright = true
 
 [taxonomies]
-    category = "blog"
+    category = "categories"
     tag      = "tags"
-    series   = "series"
 
 [languages]
   [languages.en]

