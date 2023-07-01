@@ -1,1 +1,49 @@
+html, body {
+    scroll-padding-top: 100px;
+}
 
+.header.sticky {
+    position: -webkit-sticky; /* for Safari */
+    position: sticky;
+    top: 0;
+}
+
+.post-article {
+    @media screen and (min-width: 685px) {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 15em;
+        grid-auto-flow: dense;
+        .article-nav {
+            order: 1;
+            position: sticky;
+            top: 5rem;
+            align-self: start;
+        }
+        .article-text {
+            order: 0;
+        }
+    }
+}
+
+#TableOfContents li {
+    a {
+        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    &.active {
+        font-weight: bolder;
+    }
+}
+
+#toc {
+    margin-left: 2rem;
+    padding-left: 0.5rem;
+    border-left: 3px solid;
+    ul {
+        // list-style-type: none;
+        margin: 0 1rem;
+        padding: 0;
+    }
+}

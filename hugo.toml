@@ -22,6 +22,7 @@ paginate = 10
   description = "My new homepage or blog"
   keywords = "homepage, blog"
   images = [""]
+  customJS = ["/scripts/main.js"]
   [params.footer]
     topText = [ "This is the footer toptext" ]
     trademark = true

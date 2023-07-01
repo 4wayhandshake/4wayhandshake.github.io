@@ -1,6 +1,24 @@
-# OpenAdmin
+---
+title: "OpenAdmin"
+date: 2023-06-07T18:00:00-00:00
+draft: false
+hideTitle: false
+Cover: /htb-info-cards/OpenAdmin.png
+toc: true
+tags: ["RCE", "Default credentials", "Websockets"]
+categories: ["Walkthrough", "HTB", "Linux", "Easy"]
+---
 
-Linux, Easy, Released 2020-01-05
+## INTRODUCTION
+
+At first, the target seems like a half-built Apache server. After a little enumeration, it seems like a single server hosting four website templates: one for music, one for interior design, one for artwork, and one that is generally-applicable.
+
+> It's funny, but some of these seem like really nice templates.
+
+The real action, as the name of the box suggests, is at the admin panel that manages the templates. It's a site for typical web hosting tasks like managing hosts, editing DNS, adding users, etc.
+
+**Warning: This walkthrough contains many spoilers.**
+**No spoilers will be unexpected if you read the walkthrough sequentially.**
 
 ![music navbar](music%20navbar.png)
 
@@ -10,29 +28,12 @@ Linux, Easy, Released 2020-01-05
 
 ![generally applicable](generally%20applicable.png)
 
-## INTRODUCTION
-
-At first, the target seems like a half-built Apache server. After a little enumeration, it seems like a single server hosting four website templates: one for music, one for interior design, one for artwork, and one that is generally-applicable. 
-
-> It's funny, but some of these seem like really nice templates.
-
-The real action, as the name of the box suggests, is at the admin panel that manages the templates. It's a site for typical web hosting tasks like managing hosts, editing DNS, adding users, etc.
-
-**Warning: This walkthrough contains many spoilers.**
-**No spoilers will be unexpected if you read the walkthrough sequentially.**
-
-
-
-[TOC]
-
-
-
 ## RECON
 
 I followed my typical first steps. I set up a directory for the box, with a ``nmap`` subdirectory. Then set $RADDR to my target machine's IP, and scanned it with my typical nmap "init" scan:
 
 ```bash
-nmap -sV -sC -O -n -Pn -oA nmap/init-scan $RADDR 
+nmap -sV -sC -O -n -Pn -oA nmap/init-scan $RADDR
 ```
 
 > ##### My "init" nmap scan: explained
@@ -53,7 +54,7 @@ Host is up (0.17s latency).
 Not shown: 998 closed tcp ports (reset)
 PORT   STATE SERVICE VERSION
 22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
-| ssh-hostkey: 
+| ssh-hostkey:
 |   2048 4b98df85d17ef03dda48cdbc9200b754 (RSA)
 |   256 dceb3dc944d118b122b4cfdebd6c7a54 (ECDSA)
 |_  256 dcadca3c11315b6fe6a489347c9be550 (ED25519)
@@ -88,7 +89,7 @@ Results of the strategy will be summarized at the end of the section.
 
    > :point_up: I use ``tee`` instead of the append operator ``>>`` so that I don't accidentally blow away my ``/etc/hosts`` file with a typo of ``>`` when I meant to write ``>>``.
 
-   
+
 
 2. Download the source code & **extract all the links**.
 
@@ -98,7 +99,7 @@ Results of the strategy will be summarized at the end of the section.
    2. Use ``strings`` to extract all strings from the source code
    3. Use regex to parse all strings. I look for text following an ``href`` attribute and anything with ``http`` or ``https``
 
-   
+
 
 3. Perform **vhost enumeration** on the target.
 
@@ -106,7 +107,7 @@ Results of the strategy will be summarized at the end of the section.
    ffuf -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt -u http://10.10.10.68:80/ -H "Host: FUZZ.bashed.htb" -c -t 40 -o ./Bashed/fuzzing/vhost-bashed.htb.md -of md -timeout 4 -ic -ac -mc 200,204,301,307,401,403,405,500,404
    ```
 
-   
+
 
 4. Perform **subdomain enumeration** on the target.
 
@@ -114,7 +115,7 @@ Results of the strategy will be summarized at the end of the section.
    ffuf -w /usr/share/seclists/Discovery/Web-Content/raft-small-directories-lowercase.txt -u http://FUZZ.bashed.htb -c -t 40 -o ./Bashed/fuzzing/subdomain-bashed.htb.md -of md -timeout 4 -ic -ac
    ```
 
-   
+
 
 5. Perform **directory enumeration** on the target domain and any domains collected in steps (3) or (4).
 
@@ -122,13 +123,13 @@ Results of the strategy will be summarized at the end of the section.
    feroxbuster -w /usr/share/seclists/Discovery/Web-Content/raft-small-directories-lowercase.txt -u http://bashed.htb -A -d 1 -t 100 -T 4 --burp --smart -o ./Bashed/fuzzing/directory-bashed.htb.json
    ```
 
-> - For vhost and subdomain enumeration, ANY RESULTS may be important. 
+> - For vhost and subdomain enumeration, ANY RESULTS may be important.
 > - For directory enumeration, there are many false-positives. READ THROUGH THE RESULTS MANUALLY and look for important results. I sometimes run this twice, filtering out the byte size for unimportant pages.
 
 6. Check each page for a ``form`` with a POST method, using the list of pages from directory enumeration. I use a handy tool called **Selenium Oxide**. Below is a snippet that shows how I do this:
 
    ```python
-   exploit = ExploitBuilder('http', addr, use_proxy=args.proxy) 
+   exploit = ExploitBuilder('http', addr, use_proxy=args.proxy)
    with open(f'./{dirname}/discovered_uris.txt', 'r') as f:
        for f_url in f:
            # Change subdomains
@@ -148,15 +149,15 @@ Results of the strategy will be summarized at the end of the section.
 
    > Note that this check could also be performed using regex, but regex parsing of HTML is really difficult and error-prone in my experience.
 
-   
 
-7. Do **banner-grabbing** on the target. 
+
+7. Do **banner-grabbing** on the target.
 
    ```bash
    whatweb $RADDR && curl -IL $RADDR
    ```
 
-   
+
 
 8. Check **Wappalyzer**, a tool used for identifying the underlying technologies of a website. I use the official **Wappalyzer** plugin for firefox.
 
@@ -203,9 +204,9 @@ Database Context Color	#D3DBFF
 
 OK cool, a database user. Also, we now know that it is using MySQL (which I would have assumed anyway, but it's good to know for sure.) That might be helpful later. The username especially.
 
-After reading fully through the [installation and configuration instructions on the git repo](https://github.com/opennetadmin/ona/wiki), it is clear that ona_sys will have UPDATE access to the database, but should already have a password defined. 
+After reading fully through the [installation and configuration instructions on the git repo](https://github.com/opennetadmin/ona/wiki), it is clear that ona_sys will have UPDATE access to the database, but should already have a password defined.
 
-Not seeing anything else particularly interesting on this page, it might be time to move on. 
+Not seeing anything else particularly interesting on this page, it might be time to move on.
 
 
 
@@ -238,9 +239,9 @@ check
 run
 ```
 
-Unfortunately, even though the exploit passed the check, a reverse shell did not connect. 
+Unfortunately, even though the exploit passed the check, a reverse shell did not connect.
 
-However, there was still one other really juicy-looking exploit that was listed on searchsploit. Let's check that out instead. 
+However, there was still one other really juicy-looking exploit that was listed on searchsploit. Let's check that out instead.
 
 On my machine, the exploit is present at `/usr/share/exploitdb/exploits/php/webapps/47691.sh `. Reading though the script, it looks like the script only expects a single parameter, the target URL:
 
@@ -359,7 +360,7 @@ So what can ``www-data`` do? Whenever I gain foothold on a new box, I like to ta
    id && cat /etc/passwd | grep $USER
    ```
 
-   
+
 
 2. Check if the user can sudo
 
@@ -367,7 +368,7 @@ So what can ``www-data`` do? Whenever I gain foothold on a new box, I like to ta
    sudo -l
    ```
 
-   
+
 
 3. Check locations that are writable by the user or its group
 
@@ -376,7 +377,7 @@ So what can ``www-data`` do? Whenever I gain foothold on a new box, I like to ta
    find / -group [groupname] 2>/dev/null
    ```
 
-   
+
 
 4. Does the user already have any useful tools?
 
@@ -384,7 +385,7 @@ So what can ``www-data`` do? Whenever I gain foothold on a new box, I like to ta
    which nc netcat socat python perl php
    ```
 
-   
+
 
 5. Check for any active and listening sockets
 
@@ -394,7 +395,7 @@ So what can ``www-data`` do? Whenever I gain foothold on a new box, I like to ta
 
    > :point_up: also try ``netstat -antp``
 
-   
+
 
 6. Does the user have anything in cron?
 
@@ -402,7 +403,7 @@ So what can ``www-data`` do? Whenever I gain foothold on a new box, I like to ta
    crontab -l
    ```
 
-   
+
 
 7. Does the system or root have anything in cron?
 
@@ -411,7 +412,7 @@ So what can ``www-data`` do? Whenever I gain foothold on a new box, I like to ta
    ls -laR /etc/cron*
    ```
 
-   
+
 
 8. Find any SUID or SGID executables that are accessible by the user
 
@@ -419,17 +420,17 @@ So what can ``www-data`` do? Whenever I gain foothold on a new box, I like to ta
    find / -type f \( -perm -4000 -o -perm -2000 \) -exec ls -l {} \; 2>/dev/null | grep -v '/proc'
    ```
 
-   
+
 
 9. Download the toolbox (not covered in-depth here).
 
-   > My toolbox includes **linpeas**, **linenum**, **pspy**, and **chisel**. 
+   > My toolbox includes **linpeas**, **linenum**, **pspy**, and **chisel**.
    >
-   > Since HTB boxes are not connected to the internet, I usually get my tools onto the target box by standing up a python webserver and using any available tool (nc, wget, or curl) to download the tools from my attacker machine onto the target box. I also use this webserver for moving exploit code from my attacker box onto the target. 
+   > Since HTB boxes are not connected to the internet, I usually get my tools onto the target box by standing up a python webserver and using any available tool (nc, wget, or curl) to download the tools from my attacker machine onto the target box. I also use this webserver for moving exploit code from my attacker box onto the target.
    >
    > I've prepared a small toolbox for myself, including a short index.html page, that is generally applicable for any CTF box. I suggest any reader of this walkthough does the same.
 
-   
+
 
 10. Run **pspy** and take a look at any running processes. Since **pspy** is closed with ``ctrl+c``, and your reverse shell may not be fully interactive, it is best to run this on a timeout:
 
@@ -437,7 +438,7 @@ So what can ``www-data`` do? Whenever I gain foothold on a new box, I like to ta
     timeout 5m ./pspy
     ```
 
-    
+
 
 11. Run pre-scripted enumeration tools, such as **LinEnum** or **linpeas**
 
@@ -453,7 +454,7 @@ I only did steps (1) through (5) and saved the rest for later. Notable results f
 - (1) revealed that there are three important users on the box: `www-data`, `joanna`, and `jimmy`.
 - (3) revealed that `www-data` can write to any of the typical apache directories
 - (4) revealed that `nc`, `netcat`, `wget`, `curl`, `perl`, and `php` are all present.
-- (5) revealed that SSH, DNS, MySQL, and *something on port 52846* were all running. 
+- (5) revealed that SSH, DNS, MySQL, and *something on port 52846* were all running.
 
 
 
@@ -473,7 +474,7 @@ No dice :game_die:  None of those were correct. Let's take a look around for sus
 
 ```
 www-data@openadmin:/opt/ona/$ ls /opt/ona/sql
-www-data@openadmin:/opt/ona/sql$ cat list_all_hosts.sql 
+www-data@openadmin:/opt/ona/sql$ cat list_all_hosts.sql
 www-data@openadmin:/opt/ona/www/config$ cat config.inc.php
 www-data@openadmin:/opt/ona/www/local/config$ cat database_settings.inc.php
 ```
@@ -484,11 +485,11 @@ Beautiful! `database_settings.inc.php` has some useful info inside:
 <?php
 
 $ona_contexts=array (
-  'DEFAULT' => 
+  'DEFAULT' =>
   array (
-    'databases' => 
+    'databases' =>
     array (
-      0 => 
+      0 =>
       array (
         'db_type' => 'mysqli',
         'db_host' => 'localhost',
@@ -546,7 +547,7 @@ Let's see if we can do anything odd using MySQL. Sometimes it's possible to leak
 ```
 mysql> select * from GLOBAL_VARIABLES;
 ERROR 3167 (HY000): The 'INFORMATION_SCHEMA.GLOBAL_VARIABLES' feature is disabled; see the documentation for 'show_compatibility_56'
-mysql> select * from USER_PRIVILEGES; 
+mysql> select * from USER_PRIVILEGES;
 +-----------------------+---------------+----------------+--------------+
 | GRANTEE               | TABLE_CATALOG | PRIVILEGE_TYPE | IS_GRANTABLE |
 +-----------------------+---------------+----------------+--------------+
@@ -570,7 +571,7 @@ mysql> select LOAD_FILE("/home/joanna/user.txt");
 +------------------------------------+
 1 row in set (0.00 sec)
 
-mysql> select LOAD_FILE("/home/jimmy/user.txt"); 
+mysql> select LOAD_FILE("/home/jimmy/user.txt");
 +-----------------------------------+
 | LOAD_FILE("/home/jimmy/user.txt") |
 +-----------------------------------+
@@ -582,18 +583,18 @@ mysql> select LOAD_FILE("/home/jimmy/user.txt");
 
 :expressionless: Unfortunately, it looks like the database is protected against file shenanigans.
 
-After checking several other tables in the database ona_default, it seems like the only benefit may have been obtaining those password hashes. Other tables were default or empty. I'll keep the database access in-mind, but for now I'll move on. 
+After checking several other tables in the database ona_default, it seems like the only benefit may have been obtaining those password hashes. Other tables were default or empty. I'll keep the database access in-mind, but for now I'll move on.
 
-> The `permission`, `permission_assignments`, and `users` tables collectively describe what permissions each user has. 
+> The `permission`, `permission_assignments`, and `users` tables collectively describe what permissions each user has.
 > For what it's worth, it seems that the admin user has all permissions, and the guest user has none.
 
 
 
 ### www-data (continued)
 
-Now that I've investigated MySQL, I'll go back and enumerate the www-data user properly. Prior to this, I had only done steps (1) to (5) of my [Linux Foothold Strategy](#Linux foothold strategy). 
+Now that I've investigated MySQL, I'll go back and enumerate the www-data user properly. Prior to this, I had only done steps (1) to (5) of my [Linux Foothold Strategy](#Linux foothold strategy).
 
-Checking the listening 
+Checking the listening
 
 ```bash
 netstat -tulpn | grep LISTEN
@@ -697,7 +698,7 @@ Uhh... it's not working?
 
 ![chisel fail 1](chisel%20fail%202.png)
 
-This is what I'm seeing from the process running chisel server: 
+This is what I'm seeing from the process running chisel server:
 
 ![chisel fail 2](chisel%20fail%201.png)
 
@@ -722,7 +723,7 @@ curl localhost:52848
 
 #### Login form at port 52846
 
-That's great, but I could have used ``curl`` locally on the target box via my reverse shell. 
+That's great, but I could have used ``curl`` locally on the target box via my reverse shell.
 The point was that I wanted to see this rendered in a browser (and also be able to use it with Burp, etc.):
 
 ![chisel success 2](chisel%20success%202.png)
@@ -756,9 +757,9 @@ hydra -l jimmy -P $PASSWORDS -s 52848 localhost http-post-form "/index.php:usern
 
 Still nothing. OK... Time to regroup and review what I've done so far :sweat:
 
-> :bulb: I realize now that, even though I found a credential, I forgot to try it *everywhere*. 
+> :bulb: I realize now that, even though I found a credential, I forgot to try it *everywhere*.
 >
-> I've tried combinations of users `admin` / `joanna` / `jimmy` with passwords `admin` / `test` / `n1nj4W4rri0R!` on every login page that I've encountered, and it ended up getting me into the MySQL database. But I'm realizing that I forgot to try one service, maybe the most important one: **SSH**. 
+> I've tried combinations of users `admin` / `joanna` / `jimmy` with passwords `admin` / `test` / `n1nj4W4rri0R!` on every login page that I've encountered, and it ended up getting me into the MySQL database. But I'm realizing that I forgot to try one service, maybe the most important one: **SSH**.
 
 Trying those same three passwords (admin, test, n1nj4W4rri0R!) with the two confirmed users on the box (joanna, jimmy):
 
@@ -770,7 +771,7 @@ Now  that I'm logged in as ``jimmy``, I can read the directory ``/var/www/intern
 
 ![internal login form](internal%20login%20form.png)
 
-My suspicion was correct: that form *only* accepts ``jimmy`` as a user. And the form requires all three fields: username, password, and login. Also,  the source code of ``index.php`` reveals the **hash of the password** and the **hashing algorithm** for it: 
+My suspicion was correct: that form *only* accepts ``jimmy`` as a user. And the form requires all three fields: username, password, and login. Also,  the source code of ``index.php`` reveals the **hash of the password** and the **hashing algorithm** for it:
 
 | sha512 | 00e302ccdcf1c60b8ad50ea50cf72b939705f49f40f0dc658801b4680b7d758eebdc2e9f9ba8ba3ef8a8bb9a796d34ba2e856838ee9bdde852b8ec3b3a0523b1 |
 | ------ | ------------------------------------------------------------ |
@@ -813,7 +814,7 @@ Getting back to what I was so excited about, I'll proceed with inspecting the so
 
 ![main php source](main%20php%20source.png)
 
-But why does that php script work? Why can ``shell_exec()`` read a file owned by ``joanna``? It must be that the process is spawned by ``joanna``. 
+But why does that php script work? Why can ``shell_exec()`` read a file owned by ``joanna``? It must be that the process is spawned by ``joanna``.
 
 To test this, I copied ``main.php`` to an adjacent file, ``shell.php``. I then removed pretty much everything but the ``shell_exec()`` and turned it into a little webshell:
 
@@ -835,7 +836,7 @@ It will run ``id`` if given no parameters. Indeed, the script is being ran by ``
 
 Webshells are handy in a pinch, but can be a bit restrictive. Since this is all being executed as ``joanna``, I'll start a new reverse shell so we can investigate ``joanna`` more thoroughly. First, as ``jimmy``, download a copy of the good 'ol **php-reverse-shell.php** (that is still being served by my python webserver):
 
-> :point_up: Remember to modify `php-reverse-shell.php` to use the new port, 5555. 
+> :point_up: Remember to modify `php-reverse-shell.php` to use the new port, 5555.
 
 ![download php reverse shell](download%20php%20reverse%20shell.png)
 
@@ -889,9 +890,9 @@ Now that we have a nice shell as `Joanna`, it makes sense to enumerate the user 
 
 ![joanna sudo](joanna%20sudo.png)
 
-But from what I've observed, `joanna` definitely <u>cannot</u> `sudo` anything. If `joanna` is in the `sudoers` file, why is `sudo` not allowed? 
+But from what I've observed, `joanna` definitely <u>cannot</u> `sudo` anything. If `joanna` is in the `sudoers` file, why is `sudo` not allowed?
 
-> To be honest, I couldn't find anything written online that adequately explained what was going on. 
+> To be honest, I couldn't find anything written online that adequately explained what was going on.
 > I only found the cause of this problem by reading through a bunch of notes of other people working on this box that encountered the same problem.
 >
 > Short story: this discrepancy is **because I'm using a reverse shell for `joanna` instead of SSH.**
@@ -914,7 +915,7 @@ The difference between the two is immediately apparent:
 
 ![rsa keys compare](rsa%20keys%20compare.png)
 
-The preamble at the beginning of `id_rsa_test_pass` is due to the addition of a passphrase! 
+The preamble at the beginning of `id_rsa_test_pass` is due to the addition of a passphrase!
 This confirms the suspicion that the RSA key was not working earlier because the key contained a passphrase.
 
 So how to find the passphrase? Well, this format of encryption is notoriously easy to crack, so let's give it a go. First, convert the ssh key to a hash that is crackable with `john`:
@@ -941,7 +942,7 @@ Wonderful! Not only that, but also the ``sudo -l`` that causing an error earlier
 
 ### Privilege Escalation
 
-The output of `sudo -l` indicates (as was exposed by linpeas earlier) that `joanna` can run `sudo /bin/nano /opt/priv` without entering a password. This will run `nano` with elevated permissions. 
+The output of `sudo -l` indicates (as was exposed by linpeas earlier) that `joanna` can run `sudo /bin/nano /opt/priv` without entering a password. This will run `nano` with elevated permissions.
 
 Just like other text editors, like `vim`, `nano` has a feature that allows a user to run shell commands without leaving the editor. See [this GTFObins page](https://gtfobins.github.io/gtfobins/nano/) for a description of several ways to do this. This makes `nano` a perfect privilege escalation vector.
 
@@ -988,7 +989,7 @@ cat /root/root.txt
 
 
 
-That was a lot of fun! It was a long box, involving many tricks. Thankfully, most of the tricks didn't take too long to find (just that one about using SSH instead of a reverse shell for `joanna` was not obvious). 
+That was a lot of fun! It was a long box, involving many tricks. Thankfully, most of the tricks didn't take too long to find (just that one about using SSH instead of a reverse shell for `joanna` was not obvious).
 
 I think it went well, and I can honestly say I've never been seven shells deep before (I'm counting the chisel tunnel as one):
 
@@ -1000,11 +1001,11 @@ I think it went well, and I can honestly say I've never been seven shells deep b
 
 ### Attacker
 
-- Take note of **everything that requires a login**: services on the box, pages of a website, databases... everything: write them down. Every time you find a new credential (or just a password), review this list and try logging in to each service again using that credential. 
-  I don't want to admit how many times I've found a password and neglected to go try that password in SSH. 
+- Take note of **everything that requires a login**: services on the box, pages of a website, databases... everything: write them down. Every time you find a new credential (or just a password), review this list and try logging in to each service again using that credential.
+  I don't want to admit how many times I've found a password and neglected to go try that password in SSH.
 - If you come across an RSA private key, and it is marked ENCRYPTED, you won't be able to use it right away. **Crack it first** using `ssh2john + john`.
 - An SSH connection is always preferable to a reverse shell, even an upgraded one. If it seems like SSH is a possibility, go for it.
-- If you check for listening processes using `netstat -tulpn` and find a listening process that is not exposed to the internet (and thus not found by your initial nmap scanning), **don't hesitate to use chisel**: it's much easier than it looks, once you wrap your head around it. 
+- If you check for listening processes using `netstat -tulpn` and find a listening process that is not exposed to the internet (and thus not found by your initial nmap scanning), **don't hesitate to use chisel**: it's much easier than it looks, once you wrap your head around it.
 
 ### Defender
 
@@ -1018,6 +1019,5 @@ I think it went well, and I can honestly say I've never been seven shells deep b
 
 Thanks for reading
 
-🤝 🤝 🤝 🤝 
+🤝 🤝 🤝 🤝
 @4wayhandshake
-
