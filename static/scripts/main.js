@@ -26,6 +26,9 @@ function clearAllActiveNavItems() {
 
 window.addEventListener('DOMContentLoaded', () => {
 
+    const scrollableElement = document.querySelector('#toc');
+    if (!scrollableElement) return;
+
 	const observer = new IntersectionObserver(elements => {
         elements.forEach(ele => {
             const id = ele.target.getAttribute('id');
@@ -35,6 +38,11 @@ window.addEventListener('DOMContentLoaded', () => {
     			const anchorEle = document.querySelector(`nav li a[href="#${id}"]`)
                 if (anchorEle) {
                     anchorEle.parentElement.classList.add('active');
+                    scrollableElement.scrollTo({
+                        top: anchorEle.offsetTop,
+                        left: 0,
+                        behavior: "smooth",
+                    });
                 }
 
     		}

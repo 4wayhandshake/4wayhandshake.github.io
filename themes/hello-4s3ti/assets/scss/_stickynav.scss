@@ -41,6 +41,8 @@ html, body {
     margin-left: 2rem;
     padding-left: 0.5rem;
     border-left: 3px solid;
+    overflow-y: scroll;
+    height: 80vh;
     ul {
         // list-style-type: none;
         margin: 0 1rem;
