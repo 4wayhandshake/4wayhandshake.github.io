@@ -25,6 +25,7 @@ html, body {
 }
 
 #TableOfContents li {
+    font-size: 0.85rem;
     a {
         text-decoration: none;
         &:hover {
@@ -43,7 +44,7 @@ html, body {
     overflow-y: scroll;
     height: 80vh;
     ul {
-        // list-style-type: none;
+        list-style-type: none;
         margin: 0 1rem;
         padding: 0;
     }
