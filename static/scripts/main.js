@@ -26,8 +26,16 @@ function clearAllActiveNavItems() {
 
 window.addEventListener('DOMContentLoaded', () => {
 
+    // Hugo's Table of Contents only tracks the largest three heading types
+    const headingTypes = ['h1','h2','h3'];
+
+    const scrollableElement = document.querySelector('#toc');
+    if (!scrollableElement) return;
+
 	const observer = new IntersectionObserver(elements => {
-        elements.forEach(ele => {
+        elements.filter( ele => {
+            return headingTypes.includes(ele.target.tagName.toLowerCase())
+        }).forEach(ele => {
             const id = ele.target.getAttribute('id');
     		if (ele.intersectionRatio > 0) {
                 console.log(`Setting active for #${id}`);
@@ -35,14 +43,18 @@ window.addEventListener('DOMContentLoaded', () => {
     			const anchorEle = document.querySelector(`nav li a[href="#${id}"]`)
                 if (anchorEle) {
                     anchorEle.parentElement.classList.add('active');
+                    scrollableElement.scrollTo({
+                        top: anchorEle.offsetTop,
+                        left: 0,
+                        behavior: "smooth",
+                    });
                 }
-
     		}
         });
 	});
 
 	// Track all headings that have an `id` applied
-    ['h1','h2','h3','h4','h5','h6'].forEach((headingType) => {
+    headingTypes.forEach((headingType) => {
         document.querySelectorAll(`${headingType}[id]`).forEach((headingElement) => {
             observer.observe(headingElement);
         });
