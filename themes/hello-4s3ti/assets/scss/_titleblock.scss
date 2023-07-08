@@ -23,7 +23,11 @@
         margin-top: 1rem;
         display: flex;
         flex-direction: row;
-        flex-wrap: wrap-reverse;
+        flex-wrap: wrap;
+        align-items: center;
+        span {
+            margin: 0.25rem;
+        }
     }
     svg {
         font-size: 2.0rem;

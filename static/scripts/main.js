@@ -38,7 +38,7 @@ window.addEventListener('DOMContentLoaded', () => {
         }).forEach(ele => {
             const id = ele.target.getAttribute('id');
     		if (ele.intersectionRatio > 0) {
-                console.log(`Setting active for #${id}`);
+                // Setting 'active' class on found element
                 clearAllActiveNavItems();
     			const anchorEle = document.querySelector(`nav li a[href="#${id}"]`)
                 if (anchorEle) {

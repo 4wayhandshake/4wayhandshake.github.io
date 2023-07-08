@@ -6,7 +6,7 @@ draft: false
 hideTitle: false
 Cover: /htb-info-cards/Soccer.png
 toc: true
-tags: ["RCE", "Default credentials", "Websockets"]
+tags: ["RCE", "Default credentials", "Websockets", "ExampleTag", "ExampleTag", "ExampleTag", "ExampleTag", "ExampleTag"]
 categories: ["Walkthrough", "HTB", "Linux", "Easy"]
 ---
 
