@@ -19,14 +19,15 @@
             text-decoration: none;
         }
     }
-    p{
-        margin-top: 2rem;
-        line-height: 2.5rem;
+    .horizontal-wrap {
+        margin-top: 1rem;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap-reverse;
     }
     svg {
         font-size: 2.0rem;
         position: relative;
-        top: 0.5rem;
         margin: 0 0.5rem 0 0;
     }
     h1 {
@@ -39,6 +40,12 @@
         text-align: right;
         font-weight: lighter;
         font-size: 0.85rem;
+    }
+    .post-info {
+        margin-top: inherit;
+    }
+    @media screen and (max-width: 684px) {
+        padding: 0.25rem 0.5rem 0.25rem 0.5rem;
     }
 }
 

@@ -22,4 +22,14 @@
             padding-bottom: 1rem;
         }
     }
+    @media screen and (max-width: 684px) {
+        padding: 0.25rem 0.5rem 0.5rem 0.5rem;
+        ul {
+            margin-left: -0.25rem;
+            padding: 0.5rem;
+            li {
+                padding-bottom: 0.5rem;
+            }
+        }
+    }
 }
