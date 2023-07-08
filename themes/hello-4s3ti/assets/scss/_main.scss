@@ -3,6 +3,12 @@ html {
   line-height: 1.6;
   letter-spacing: 0.06em;
   scroll-behavior: smooth;
+  @media screen and (max-width: 684px) {
+      font-size: 0.85rem;
+      code {
+          font-size: 0.75rem;
+      }
+  }
 }
 
 *,
@@ -118,7 +124,7 @@ a {
         text-decoration: none;
         text-align: center;
         font-weight: 500px;
-        
+
         &.read-more:hover::before {
           content: "{"
         }
@@ -290,15 +296,15 @@ pre {
     @media (prefers-color-scheme: dark) {
       color: inherit;
     }
-  
+
     @media (prefers-color-scheme: light) {
       color: #ccc;
     }
-  
+
     [data-theme=dark] & {
       color: inherit;
     }
-  
+
     [data-theme=light] & {
       color: #ccc;
     }
@@ -522,7 +528,7 @@ ul.icons {
   cursor: default;
   list-style: none;
   padding-left: 0;
-  
+
   [data-theme=dark] & {
     color: $dark-color
   }
