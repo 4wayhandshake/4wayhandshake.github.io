@@ -1,5 +1,7 @@
 {{ define "main" }}
 
+{{ $teaserOnly := (lt now .PublishDate) }}
+
 {{ if .Params.Cover }}
 <figure class="post-cover">
     <img src="{{ .Params.Cover | absURL }}" alt="{{ .Title }}" />
@@ -21,6 +23,26 @@
     {{ end }}
 </div>
 
+{{ if $teaserOnly }}
+<main class="post">
+    <div class="modal-overlay">
+        <div class="teaser-only-box">
+            <h2>ACTIVE BOX</h2>
+            <hr>
+            <p>This box is <strong>currently active</strong>, so the walkthrough cannot be displayed.</p>
+            <p>Please <strong>wait for the retire date</strong> to view this walkthrough</p>
+            <div class="svg-container">
+                <svg xmlns="http://www.w3.org/2000/svg" height="3em" viewBox="0 0 512 512" fill="whitesmoke">
+                    <!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                    <path d="M464 256A208 208 0 1 1 48 256a208 208 0 1 1 416 0zM0 256a256 256 0 1 0 512 0A256 256 0 1 0 0 256zM232 120V256c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2V120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"/>
+                </svg>
+            </div>
+            <p>Retires {{ .PublishDate.Format "2006-01-02 15:04" }}</p>
+        </div>
+    </div>
+</main>
+{{ else }}
+
 <main class="post">
 
     <article class="post-article">
@@ -37,7 +59,9 @@
 
         <div class="article-text">
 
-            {{if .Params.hideTitle }}
+            {{ partial "titleblock" . }}
+
+            <!-- {{if .Params.hideTitle }}
             {{ else }}
             <h1 class="post-title"><a href="{{ .Permalink }}">{{ .Title | markdownify }}</a></h1>
             {{ end }}
@@ -49,7 +73,7 @@
                 <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-commit"><circle cx="12" cy="12" r="4"></circle><line x1="1.05" y1="12" x2="7" y2="12"></line><line x1="17.01" y1="12" x2="22.96" y2="12"></line></svg><a href="{{ .Site.Params.gitUrl -}}{{ .GitInfo.Hash }}" target="_blank" rel="noopener">{{ .GitInfo.AbbreviatedHash }}</a> @ {{ if .Site.Params.dateformNum }}{{ dateFormat .Site.Params.dateformNum .GitInfo.AuthorDate.Local }}{{ else }}{{ dateFormat "2006-01-02" .GitInfo.AuthorDate.Local }}{{ end }}</p>
                 {{- end }}
                 <br>
-            </div>
+            </div> -->
 
             <div class="post-content">
                 {{ .Content }}
@@ -63,4 +87,5 @@
 
     <hr />
 </main>
+{{ end }}
 {{ end }}

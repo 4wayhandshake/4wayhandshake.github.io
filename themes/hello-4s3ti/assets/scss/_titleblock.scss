@@ -1,0 +1,98 @@
+.titleblock-container {
+    padding: 1rem 2rem 1rem 2rem;
+    border-radius: 1rem;
+    background-color: rgba(32,48,0,0.5);
+    border: 6px solid rgba(159, 240, 0, 0.95);
+    .tag {
+        position: relative;
+        transition: all ease-in-out 0.25s;
+        padding: 0.5rem;
+        margin-left: 0.15rem;
+        border: 1px solid;
+        border-radius: 30px;
+        top: 0;
+        &:hover {
+            top:-3px;
+            box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2);
+        }
+        a {
+            text-decoration: none;
+        }
+    }
+    p{
+        margin-top: 2rem;
+        line-height: 2.5rem;
+    }
+    svg {
+        font-size: 2.0rem;
+        position: relative;
+        top: 0.5rem;
+        margin: 0 0.5rem 0 0;
+    }
+    h1 {
+        display: inline-block;
+    }
+    .titleblock-extra-info {
+        display: inline-block;
+        float: right;
+        margin-top: 0.5rem;
+        text-align: right;
+    }
+}
+
+@keyframes pulse {
+  from {font-size: 2rem;}
+  to {font-size: 2.25rem;}
+}
+
+.teaser-only-box {
+    width: 80%;
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 1rem 2rem 1rem 2rem;
+    border-radius: 1rem;
+    background-color: rgba(32,48,0,0.85);
+    box-shadow: 0 0 40px 40px rgba(0, 0, 0, 0.9);
+    border: 6px solid rgba(159, 240, 0, 0.95);
+    text-align: center;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: white;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+
+    h2 {
+        justify-content: center;
+        margin-top: 1.5rem;
+    }
+    hr {
+        margin: 2rem 0;
+    }
+    svg {
+        animation-name: pulse;
+        animation-duration: 0.5s;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+    }
+    .svg-container {
+        height: 8rem;
+        display:inline-flex;
+        vertical-align: top;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.modal-overlay {
+  position: fixed; /* Sit on top of the page content */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.50); /* Black background with opacity */
+  z-index: 10;
+}

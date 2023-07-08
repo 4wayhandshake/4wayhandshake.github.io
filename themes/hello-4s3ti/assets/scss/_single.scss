@@ -1,6 +1,6 @@
 .post {
   width: 100%;
-  max-width: 1000px; /* formerly 800px */
+  max-width: $max-width; /* formerly 800px */
   text-align: left;
   padding: 20px;
   margin: 20px auto;
@@ -41,10 +41,12 @@
 
   &-cover {
     border-radius: 8px;
-    margin: 0 auto; /* formerly 40px -50px; */
+    margin: 30px auto 0 auto; /* formerly 40px -50px; */
     width: 80%;  /* formerly $max-width; */
-    max-width: $max-width;
+    max-width: 800px;
     overflow: hidden;
+    border: 6px solid;
+    box-shadow: 0 0 10px 10px;
     /*max-width: $max-width;*/  /* formerly $max-width;
     @media #{$media-size-tablet} {
       margin: 20px 0;

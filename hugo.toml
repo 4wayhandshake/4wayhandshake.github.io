@@ -24,7 +24,7 @@ paginate = 10
   images = [""]
   customJS = ["/scripts/main.js"]
   [params.footer]
-    topText = [ "This is the footer toptext" ]
+    topText = [ "4wayhandshake - CTF Walkthroughs, Tips & Tricks" ]
     trademark = true
     author = "Tim Sullivan"
     copyright = true
