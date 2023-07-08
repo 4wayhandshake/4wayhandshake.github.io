@@ -999,6 +999,7 @@ I think it went well, and I can honestly say I've never been seven shells deep b
 
 ## LESSONS LEARNED
 
+{{% lessons-learned attacker=true %}}
 ### Attacker
 
 - Take note of **everything that requires a login**: services on the box, pages of a website, databases... everything: write them down. Every time you find a new credential (or just a password), review this list and try logging in to each service again using that credential.
@@ -1006,18 +1007,12 @@ I think it went well, and I can honestly say I've never been seven shells deep b
 - If you come across an RSA private key, and it is marked ENCRYPTED, you won't be able to use it right away. **Crack it first** using `ssh2john + john`.
 - An SSH connection is always preferable to a reverse shell, even an upgraded one. If it seems like SSH is a possibility, go for it.
 - If you check for listening processes using `netstat -tulpn` and find a listening process that is not exposed to the internet (and thus not found by your initial nmap scanning), **don't hesitate to use chisel**: it's much easier than it looks, once you wrap your head around it.
+{{% /lessons-learned %}}
 
+{{% lessons-learned defender=true %}}
 ### Defender
 
 - Always keep external-facing services fully updated. None of this would have been possible if it weren't for the initial RCE exploit against the outdated version of OpenNetAdmin.
 - Lock down directory permissions and restrict users from accessing anything other than what is necessary. For example, there is no obvious reason for ``joanna`` to be able to `sudo nano /opt/priv` without a password.
 - Hiding something as an "internal" service becomes completely meaningless as soon as an external attacker gains a foothold on the system. I get that `internal.openadmin.htb` was a bit contrived, but it is important to remember that nothing is "internal" once an attacker can build a tunnel.
-
-
-
-------
-
-Thanks for reading
-
-🤝 🤝 🤝 🤝
-@4wayhandshake
+{{% /lessons-learned %}}

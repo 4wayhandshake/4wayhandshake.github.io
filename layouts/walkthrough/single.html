@@ -23,8 +23,6 @@
 
 <main class="post">
 
-    <h1>THIS IS THE DEFAULT LAYOUT</h1>
-
     <article class="post-article">
 
         {{ if .Params.toc }}
@@ -56,6 +54,9 @@
             <div class="post-content">
                 {{ .Content }}
             </div>
+
+            {{ partial "signature" . }}
+
         </div>
 
     </article>

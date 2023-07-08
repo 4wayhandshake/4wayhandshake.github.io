@@ -49,8 +49,11 @@ paginate = 10
     # path = "/img/your-example-logo.svg"
     # alt = "Your example logo alt text"
 
-  # And you can even create generic menu
-  [[menu.main]]
+# And you can even create generic menu
+[[menu.main]]
     identifier = "walkthroughs"
     name       = "Walkthroughs"
     url        = "/walkthrough"
+
+[markup.goldmark.renderer]
+    unsafe = true

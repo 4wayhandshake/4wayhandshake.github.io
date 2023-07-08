@@ -1,0 +1,4 @@
+<div class='lessons-container {{ if (.Get "attacker")}}attacker{{ else }}defender{{end}}'>
+    <img class="lessons-image" src='{{ if (.Get "attacker")}}/images/swords-128.png{{ else }}/images/shield-128.png{{ end }}' alt="two crossed swords"/>
+    {{.Inner}}
+</div>

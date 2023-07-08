@@ -898,9 +898,9 @@ It worked fine.
 Now just simply ``cat`` out the flag to finish the box.
 
 
-
 ## LESSONS LEARNED
 
+{{% lessons-learned attacker=true %}}
 ### Attacker
 
 - I accidentally wasted a lot of time on subdomain enumeration. My scans kept returning random subdomains, which would enqueue another sub-subdomain, which would enqueue a sub-sub-subdomain... etc.  
@@ -909,19 +909,13 @@ Now just simply ``cat`` out the flag to finish the box.
 - In HTB, **cracking hashes is almost never the way**. If you are trying to crack a hash, and can't do the job with just *rockyou*, then you're probably on the wrong track.
 - When you reach new milestones in your entry into a system (foothold -> user flag, user -> privesc), remember to **review your notes**.
   In this box, when I got a shell as `player`, I already knew the trick that I was going to use for privilege escalation (`doas` + `dstat`).
+{{% /lessons-learned %}}
 
+{{% lessons-learned defender=true %}}
 ### Defender
 
 - As a developer, you must **clean up after yourself**. I'm not sure if http://soc-player.soccer.htb/ was under development and http://soccer.htb/ was in production, but there is no reason to have both running concurrently.
 - **Security by obscurity is never the answer**. Having a subdomain like http://soc-player.soccer.htb/ slows down an attacker, but any attacker with good enumeration skills will easily find this type of thing.
 - **Never store passwords in plaintext**. Does this even need explanation? Better yet, try externalizing the risk by using some kind of SSO service.
 - **Avoid granting unnecessary permissions**. There is no reason that `player` needed to be able to `dstat` as root.
-
-
-
-------
-
-Thanks for reading
-
-🤝 🤝 🤝 🤝
-@4wayhandshake
+{{% /lessons-learned %}}
