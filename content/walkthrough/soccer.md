@@ -6,7 +6,7 @@ draft: false
 hideTitle: false
 Cover: /htb-info-cards/Soccer.png
 toc: true
-tags: ["RCE", "Default credentials", "Websockets", "ExampleTag", "ExampleTag", "ExampleTag", "ExampleTag", "ExampleTag"]
+tags: ["Insecure Upload", "Dev Environment", "Websockets", "SQLi (Blind)", "Credential Re-use", "Malicious Plugin"]
 categories: ["Walkthrough", "HTB", "Linux", "Easy"]
 ---
 
@@ -143,7 +143,7 @@ Results of the strategy will be summarized at the end of the section.
    echo "10.10.11.194 soccer.htb" | sudo tee -a /etc/hosts
    ```
 
-   > :point_up: I use ``tee`` instead of the append operator ``>>`` so that I don't accidentally blow away my ``/etc/hosts`` file with a typo of ``>`` when I meant to write ``>>``.
+   > ☝️ I use ``tee`` instead of the append operator ``>>`` so that I don't accidentally blow away my ``/etc/hosts`` file with a typo of ``>`` when I meant to write ``>>``.
 
 
 
@@ -268,7 +268,7 @@ Trying the **admin** credentials on ``/tiny/tinyfilemanager.php`` leads to a suc
 
 Clearly, the site runs PHP, so let's try using ``php-reverse-shell.php``
 
-> :point_up: This reverse shell is built in to kali, found at ``/usr/share/webshells/php/php-reverse-shell.php``. Remember to modify it for your current IP and the port of your reverse shell's listener.
+> ☝️ This reverse shell is built in to kali, found at ``/usr/share/webshells/php/php-reverse-shell.php``. Remember to modify it for your current IP and the port of your reverse shell's listener.
 
 Remember to set a new firewall rule for the reverse shell (and heck, while we're at it, do one for a webserver too):
 
@@ -292,7 +292,7 @@ But unfortunately, uploading directly to `/var/www/html` isnt possible because t
 
 ![revshell upload success](revshell%20upload%20success.png)
 
-:thinking: Hmm... Even after "uploading" it, it still doesn't seem to be uploaded. Upload from URL doesn't seem to work either.
+🤔 Hmm... Even after "uploading" it, it still doesn't seem to be uploaded. Upload from URL doesn't seem to work either.
 
 However, clicking the **New Item** button in the top right of the page allows you to create a new directory. It seems possible to create a new directory in `/tiny/uploads`, so I created `/tiny/uploads/test` and uploaded the same reverse shell to there:
 
@@ -300,7 +300,7 @@ However, clicking the **New Item** button in the top right of the page allows yo
 
 The reverse shell can then be triggered by performing an http request to http://soccer.htb/tiny/uploads/test/php-reverse-shell.php or simply by clicking the **Direct Link** button (second from the right in the Actions column.)
 
-:smile: And now we have a reverse shell, as ``www.data``!
+😄 And now we have a reverse shell, as ``www.data``!
 
 ![www-data revshell](www-data%20revshell.png)
 
@@ -325,7 +325,7 @@ fg [enter] [enter]
 export TERM=xterm256-color
 ```
 
-The shell will be backgrounded, then enable echo mode with ``stty``, then brought back to the foreground. This should make the shell much more comfortable to use. Enjoy your tab-completion and colours :rainbow:.
+The shell will be backgrounded, then enable echo mode with ``stty``, then brought back to the foreground. This should make the shell much more comfortable to use. Enjoy your tab-completion and colours 🌈.
 
 
 
@@ -377,7 +377,7 @@ So what can ``www-data`` do? Whenever I gain foothold on a new box, I like to ta
    netstat -tulpn | grep LISTEN
    ```
 
-   > :point_up: also try ``netstat -antp``
+   > ☝️ also try ``netstat -antp``
 
 
 
@@ -562,7 +562,7 @@ Based on the **server_name** property, there should be a subdomain that didn't a
 
 ![soc-player](soc-player.png)
 
-:thinking: That page looks a lot like ``soccer.htb`` did, but with some extra menu items. Having found a new subdomain, I'll perform directory enumeration on it:
+🤔 That page looks a lot like ``soccer.htb`` did, but with some extra menu items. Having found a new subdomain, I'll perform directory enumeration on it:
 
 ![soc-player directory enum](soc-player%20directory%20enum.png)
 
@@ -659,11 +659,11 @@ Test for generic Cross-site WebSocket Hijacking (CSWSH):
 ['>>>VANILLA CSWSH DETECTED: ws://10.10.11.194:9091 likely vulnerable to vanilla CSWSH (any origin)']
 ```
 
-Unfortunately, like other XSS-adjacent vulnerabilities, this is only useful if I'm attempting to steal data from another user's interaction with the server. And as far as I know, I'm the only user on this box right now :eyes:.
+Unfortunately, like other XSS-adjacent vulnerabilities, this is only useful if I'm attempting to steal data from another user's interaction with the server. And as far as I know, I'm the only user on this box right now 👀.
 
-This got me thinking about what kind of vulnerability I really needed to find... :thinking: Clearly this ticket ID is being checked against some database (probably the MySQL database identified earlier). Really, the best thing would be an SQL injection. I did some searching on SQL Injection against websockets, and found [this page talking about it](https://rayhan0x01.github.io/ctf/2021/04/02/blind-sqli-over-websocket-automation.html) in the context of CTFs.
+This got me thinking about what kind of vulnerability I really needed to find... 🤔 Clearly this ticket ID is being checked against some database (probably the MySQL database identified earlier). Really, the best thing would be an SQL injection. I did some searching on SQL Injection against websockets, and found [this page talking about it](https://rayhan0x01.github.io/ctf/2021/04/02/blind-sqli-over-websocket-automation.html) in the context of CTFs.
 
-> :bulb: Note to self:
+> 💡 Note to self:
 > Could I eavesdrop on the connection from **9091** to MySQL on **3306** (or **33060**)?
 > If a new connection is formed for every DB transaction, might be able to grab the connection string that way. Since it's local, that communication is unlikely to be encrypted. I'll check this out later.
 
@@ -763,7 +763,7 @@ available databases [5]:
 [*] sys
 ```
 
-Don't get me wrong, I'm glad it's injectable, but time-based blind injections take f...o...r...e...v...e...r..... :skull:
+Don't get me wrong, I'm glad it's injectable, but time-based blind injections take f...o...r...e...v...e...r..... 💀
 Thankfully, we have direct access to the database, so all we really need are some credentials. So instead of dumping the database contents, I'll just obtain the password hashes and get cracking.
 
 After a few hours, finally a few hashes were recovered:
@@ -819,7 +819,7 @@ Table: accounts
 +------+-------------------+----------------------+----------+
 ```
 
-Nice. Storing passwords in plaintext - always a smart move :wink:
+Nice. Storing passwords in plaintext - always a smart move 😉
 So we've obtained a new credential: **player** / **PlayerOftheMatch2022**
 
 Keeping credential re-use in mind, let's try logging into mysql locally using the above credential:
@@ -833,7 +833,7 @@ Success! Now that I'm not waiting hours for a time based blind SQL injection, I'
 
 We already know that **SSH** is running on the box, so it makes sense to try the **player** credential there, too.
 
-:tada: Awesome! That credential was successful for **SSH**. We're now logged in as **player**:
+🎉 Awesome! That credential was successful for **SSH**. We're now logged in as **player**:
 
 ![player ssh](player%20ssh.png)
 
@@ -858,7 +858,7 @@ Having just obtained access to a new user, I'll go through my usual [Linux footh
 
 I'm not familiar with **doas**, so I did some research on what it is and how it works.
 
-:heart_eyes: It's like `sudo` and `su` rolled together. Like a privilege escalation dream come true. It looks like I can use `doas` as `player` but only with ``/usr/bin/dstat``. I've also never used ``dstat``, but there was some useful [info on GTFObins](https://gtfobins.github.io/gtfobins/dstat/#shell) on how to make use of it.
+😍 It's like `sudo` and `su` rolled together. Like a privilege escalation dream come true. It looks like I can use `doas` as `player` but only with ``/usr/bin/dstat``. I've also never used ``dstat``, but there was some useful [info on GTFObins](https://gtfobins.github.io/gtfobins/dstat/#shell) on how to make use of it.
 
 Apparently `dstat` can be used for PE because it can load arbitrary python plugins. I'll follow the procedure on how to create a `dstat` "plugin" for privilege escalation:
 
@@ -894,7 +894,7 @@ It worked fine.
 
 ![dstat pe success](dstat%20pe%20success.png)
 
-:tada: Hooray, a root shell!
+🎉 Hooray, a root shell!
 
 Now just simply ``cat`` out the flag to finish the box.
 
@@ -910,7 +910,7 @@ Now just simply ``cat`` out the flag to finish the box.
 - In HTB, **cracking hashes is almost never the way**. If you are trying to crack a hash, and can't do the job with just *rockyou*, then you're probably on the wrong track.
 - When you reach new milestones in your entry into a system (foothold -> user flag, user -> privesc), remember to **review your notes**.
   In this box, when I got a shell as `player`, I already knew the trick that I was going to use for privilege escalation (`doas` + `dstat`).
-{{% /lessons-learned %}}
+  {{% /lessons-learned %}}
 
 {{% lessons-learned defender=true %}}
 ### Defender

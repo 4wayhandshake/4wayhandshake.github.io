@@ -6,7 +6,7 @@ draft: false
 hideTitle: false
 Cover: /htb-info-cards/OpenAdmin.png
 toc: true
-tags: ["RCE", "Default credentials", "Websockets"]
+tags: ["RCE", "Default Credentials", "Websockets"]
 categories: ["Walkthrough", "HTB", "Linux", "Easy"]
 ---
 
@@ -88,7 +88,7 @@ Results of the strategy will be summarized at the end of the section.
    echo "10.10.10.171 bashed.htb" | sudo tee -a /etc/hosts
    ```
 
-   > :point_up: I use ``tee`` instead of the append operator ``>>`` so that I don't accidentally blow away my ``/etc/hosts`` file with a typo of ``>`` when I meant to write ``>>``.
+   > ☝️ I use ``tee`` instead of the append operator ``>>`` so that I don't accidentally blow away my ``/etc/hosts`` file with a typo of ``>`` when I meant to write ``>>``.
 
 
 
@@ -260,11 +260,11 @@ Ok, let's try it out against the target ``/ona``:
 
 ![47691 fail](47691%20fail.png)
 
-:thumbsdown: Nope, that didn't work
+👎 Nope, that didn't work
 
 ![47691 success](47691%20success.png)
 
-:thumbsup: YUP that worked!  Wonderful!
+👍 YUP that worked!  Wonderful!
 
 This exploit provides a non-interactive shell at ``/opt/ona/www/`` (which itself is symlinked from the Apache directory `/var/www/ona`)
 
@@ -292,7 +292,7 @@ drwxrwxr-x  3 www-data www-data 4096 Jan  3  2018 workspace_plugins
 
 ```
 
-Haha alright, so it's the whole `/ona` site and related PHP. Since there are PHP scripts right in this directory, it stands to reason that *other php* could be ran from this same directory :thinking: This non-interactive shell is kind of a pain, so perhaps I could add a new reverse shell?
+Haha alright, so it's the whole `/ona` site and related PHP. Since there are PHP scripts right in this directory, it stands to reason that *other php* could be ran from this same directory 🤔 This non-interactive shell is kind of a pain, so perhaps I could add a new reverse shell?
 
 I grabbed a copy of my toolbox, and added an easy PHP reverse shell to it. The reverse shell I got was one that came with kali: `/usr/share/webshells/php/php-reverse-shell.php`. I'm sure many reverse shells would have worked, but this is one I've tried before so I'll use it first. I hosted my toolbox, including a copy of this reverse shell, from my attacker machine. First, I set a new firewall rule:
 
@@ -344,7 +344,7 @@ fg [enter] [enter]
 export TERM=xterm256-color
 ```
 
-The shell will be backgrounded, then enable echo mode with ``stty``, then brought back to the foreground. This should make the shell much more comfortable to use. Enjoy your tab-completion and colours :rainbow:.
+The shell will be backgrounded, then enable echo mode with ``stty``, then brought back to the foreground. This should make the shell much more comfortable to use. Enjoy your tab-completion and colours 🌈.
 
 
 
@@ -394,7 +394,7 @@ So what can ``www-data`` do? Whenever I gain foothold on a new box, I like to ta
    netstat -tulpn | grep LISTEN
    ```
 
-   > :point_up: also try ``netstat -antp``
+   > ☝️ also try ``netstat -antp``
 
 
 
@@ -471,7 +471,7 @@ Tried several guesses at credentials:
 - ona_sys : ona_sys
 - And several others...
 
-No dice :game_die:  None of those were correct. Let's take a look around for suspicious config files. After all, if the ``/ona`` admin page was left with default credentials admin : admin, there is a good chance that the database credentials were left in some config file.
+No dice 🎲  None of those were correct. Let's take a look around for suspicious config files. After all, if the ``/ona`` admin page was left with default credentials admin : admin, there is a good chance that the database credentials were left in some config file.
 
 ```
 www-data@openadmin:/opt/ona/$ ls /opt/ona/sql
@@ -513,7 +513,7 @@ Let's try logging into MySQL with that credential:
 
 ![mysql 1](mysql%201.png)
 
-Success! We're in the database :grin:
+Success! We're in the database 😁
 
 Then, issue the following commands into MySQL to poke around the database a bit:
 
@@ -582,7 +582,7 @@ mysql> select LOAD_FILE("/home/jimmy/user.txt");
 
 ```
 
-:expressionless: Unfortunately, it looks like the database is protected against file shenanigans.
+😑 Unfortunately, it looks like the database is protected against file shenanigans.
 
 After checking several other tables in the database ona_default, it seems like the only benefit may have been obtaining those password hashes. Other tables were default or empty. I'll keep the database access in-mind, but for now I'll move on.
 
@@ -703,7 +703,7 @@ This is what I'm seeing from the process running chisel server:
 
 ![chisel fail 2](chisel%20fail%201.png)
 
-Ah, I see the problem :disappointed_relieved:
+Ah, I see the problem 😥
 Got too excited about building the tunnel, and forgot to open my firewall
 
 ```bash
@@ -716,7 +716,7 @@ Try the tunnel again?
 curl localhost:52848
 ```
 
-:muscle: Success!
+💪 Success!
 
 ![chisel success 1](chisel%20success%201.png)
 
@@ -756,9 +756,9 @@ PASSWORDS=/usr/share/seclists/Passwords/xato-net-10-million-passwords-100000.txt
 hydra -l jimmy -P $PASSWORDS -s 52848 localhost http-post-form "/index.php:username=^USER^&password=^PASS^&login=:F=Enter Username and Password"
 ```
 
-Still nothing. OK... Time to regroup and review what I've done so far :sweat:
+Still nothing. OK... Time to regroup and review what I've done so far 😓
 
-> :bulb: I realize now that, even though I found a credential, I forgot to try it *everywhere*.
+> 💡 I realize now that, even though I found a credential, I forgot to try it *everywhere*.
 >
 > I've tried combinations of users `admin` / `joanna` / `jimmy` with passwords `admin` / `test` / `n1nj4W4rri0R!` on every login page that I've encountered, and it ended up getting me into the MySQL database. But I'm realizing that I forgot to try one service, maybe the most important one: **SSH**.
 
@@ -766,7 +766,7 @@ Trying those same three passwords (admin, test, n1nj4W4rri0R!) with the two conf
 
 ![credential reuse](credential%20reuse.png)
 
-:grin: NICE! Thank you, ninjawarrior :crossed_swords:
+😁 NICE! Thank you, ninjawarrior ⚔️
 
 Now  that I'm logged in as ``jimmy``, I can read the directory ``/var/www/internal`` that I was locked out of as ``www-data``. Let's see how that login form works:
 
@@ -799,7 +799,7 @@ Then I tried using this key for SSH login, as both ``jimmy`` and ``joanna``. Tak
 
 ![ssh with key only](ssh%20with%20key%20only.png)
 
-Unfortunately, none of  these attempts were successful. If this key is for ``joanna``, then the key must have been generated with a passphrase, and that passphrase is not "n1nj4W4rri0R!" :thinking:
+Unfortunately, none of  these attempts were successful. If this key is for ``joanna``, then the key must have been generated with a passphrase, and that passphrase is not "n1nj4W4rri0R!" 🤔
 
 
 
@@ -831,13 +831,13 @@ It will run ``id`` if given no parameters. Indeed, the script is being ran by ``
 
 ![webshell 1](webshell%201.png)
 
-:tada: And thankfully, the browser performs url-encoding by itself, so no need to fuss about spaces:
+🎉 And thankfully, the browser performs url-encoding by itself, so no need to fuss about spaces:
 
 ![webshell 2](webshell%202.png)
 
 Webshells are handy in a pinch, but can be a bit restrictive. Since this is all being executed as ``joanna``, I'll start a new reverse shell so we can investigate ``joanna`` more thoroughly. First, as ``jimmy``, download a copy of the good 'ol **php-reverse-shell.php** (that is still being served by my python webserver):
 
-> :point_up: Remember to modify `php-reverse-shell.php` to use the new port, 5555.
+> ☝️ Remember to modify `php-reverse-shell.php` to use the new port, 5555.
 
 ![download php reverse shell](download%20php%20reverse%20shell.png)
 
@@ -929,7 +929,7 @@ Then use `john` to crack the hash. Most hash-cracking on HTB seems intentionally
 
 ![cracking rsa key](cracking%20rsa%20key.png)
 
-:zap: And just 6 seconds later, there's the passphrase!
+⚡ And just 6 seconds later, there's the passphrase!
 
 Let's try the SSH key now, with the passphrase **bloodninjas**:
 
@@ -968,7 +968,7 @@ Then, on the target box, inside the root shell within `nano`, form the reverse s
 
 ![root reverse shell 1](root%20reverse%20shell%201.png)
 
-:tada: On the attacker box, the reverse shell is caught!
+🎉 On the attacker box, the reverse shell is caught!
 
 ![root reverse shell 2](root%20reverse%20shell%202.png)
 
