@@ -2,9 +2,11 @@
 title: "RedPanda"
 date: 2023-02-06T18:00:00-00:00
 publishdate: 2023-03-09T18:00:00-00:00
+releasedate: 2022-07-09T18:00:00-00:00
 draft: false
 hideTitle: false
 Cover: /htb-info-cards/RedPanda.png
+icon: /htb-box-icons/RedPanda.png
 toc: true
 tags: ["SSTI", "Java", "XXE", "Exiftool", "Scheduled Process"]
 categories: ["Walkthrough", "HTB", "Linux", "Easy"]

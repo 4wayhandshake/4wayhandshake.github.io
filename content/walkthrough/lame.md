@@ -2,9 +2,11 @@
 title: "Lame"
 date: 2023-06-02T18:00:00-00:00
 publishdate: 2017-11-14T18:00:00-00:00
+releasedate: 2017-03-14T18:00:00-00:00
 draft: false
 hideTitle: false
 Cover: /htb-info-cards/Lame.png
+icon: /htb-box-icons/Lame.png
 toc: true
 tags: ["Samba", "CVE", "Metasploit"]
 categories: ["Walkthrough", "HTB", "Linux", "Easy"]

@@ -2,9 +2,11 @@
 title: "Precious"
 date: 2023-02-06T18:00:00-00:00
 publishdate: 2023-05-20T18:00:00-00:00
+releasedate: 2022-11-26T18:00:00-00:00
 draft: false
 hideTitle: false
 Cover: /htb-info-cards/Precious.png
+icon: /htb-box-icons/Precious.png
 toc: true
 tags: ["Ruby", "CVE", "Plaintext Credentials", "Path Abuse", "Insecure Deserialization"]
 categories: ["Walkthrough", "HTB", "Linux", "Easy"]

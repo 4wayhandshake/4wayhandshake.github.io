@@ -1,10 +1,12 @@
 ---
 title: "OpenAdmin"
 date: 2023-06-07T18:00:00-00:00
-publishdate: 2020-08-04T18:00:00-00:00
+publishdate: 2020-09-04T18:00:00-00:00
+releasedate: 2020-01-04T18:00:00-00:00
 draft: false
 hideTitle: false
 Cover: /htb-info-cards/OpenAdmin.png
+icon: /htb-box-icons/OpenAdmin.png
 toc: true
 tags: ["RCE", "Default Credentials", "Websockets"]
 categories: ["Walkthrough", "HTB", "Linux", "Easy"]

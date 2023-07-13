@@ -2,9 +2,11 @@
 title: "Busqueda"
 date: 2023-06-11T18:00:00-00:00
 publishdate: 2023-12-08T18:00:00-00:00
+releasedate: 2023-04-08T18:00:00-00:00
 draft: false
 hideTitle: false
 Cover: /htb-info-cards/Busqueda.png
+icon: /htb-box-icons/Busqueda.png
 toc: true
 tags: ["Command Injection", "Perl", "Subdomain", "Credential Re-use", "Git", "Path Abuse"]
 categories: ["Walkthrough", "HTB", "Linux", "Easy"]

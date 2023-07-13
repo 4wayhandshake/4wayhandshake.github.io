@@ -2,9 +2,11 @@
 title: "MonitorsTwo"
 date: 2023-06-17T18:00:00-00:00
 publishdate: 2023-12-29T18:00:00-00:00
+releasedate: 2023-04-29T18:00:00-00:00
 draft: false
 hideTitle: false
 Cover: /htb-info-cards/MonitorsTwo.png
+icon: /htb-box-icons/MonitorsTwo.png
 toc: true
 tags: ["CVE", "Password Cracking", "Lax Capabilities", "Docker", "OverlayFS"]
 categories: ["Walkthrough", "HTB", "Linux", "Easy"]

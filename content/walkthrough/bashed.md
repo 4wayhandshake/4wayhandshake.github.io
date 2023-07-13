@@ -1,10 +1,12 @@
 ---
 title: "Bashed"
 date: 2023-06-05T18:00:00-00:00
-publishdate: 2018-06-10T00:00:00-00:00
+publishdate: 2018-08-10T00:00:00-00:00
+releasedate: 2017-12-09T00:00:00-00:00
 draft: false
 hideTitle: false
 Cover: /htb-info-cards/Bashed.png
+icon: /htb-box-icons/Bashed.png
 toc: true
 tags: ["Webshell", "Path Abuse", "Scheduled Process"]
 categories: ["Walkthrough", "HTB", "Linux", "Easy"]

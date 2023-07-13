@@ -2,9 +2,11 @@
 title: "Horizontall (images only)"
 date: 2021-08-29T18:00:00-00:00
 publishdate: 2022-04-28T18:00:00-00:00
+releasedate: 2021-08-28T18:00:00-00:00
 draft: false
 hideTitle: false
 Cover: /htb-info-cards/Horizontall.png
+icon: /htb-box-icons/Horizontall.png
 toc: true
 tags: ["Laravel"]
 categories: ["Walkthrough", "HTB", "Linux", "Easy"]

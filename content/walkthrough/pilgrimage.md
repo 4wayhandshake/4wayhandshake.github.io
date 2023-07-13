@@ -2,9 +2,11 @@
 title: "Pilgrimage"
 date: 2023-06-25T18:00:00-00:00
 publishdate: 2024-02-24T18:00:00-00:00
+releasedate: 2023-06-24T18:00:00-00:00
 draft: false
 hideTitle: false
 Cover: /htb-info-cards/Pilgrimage.png
+icon: /htb-box-icons/Pilgrimage.png
 toc: true
 tags: ["CVE", "ImageTragick", "File Disclosure", "Git", "Binwalk", "Malicious Plugin"]
 categories: ["Walkthrough", "HTB", "Linux", "Easy"]
