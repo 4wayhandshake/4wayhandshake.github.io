@@ -138,7 +138,7 @@ ll | grep beaver ; ll | grep 64975
 
 Indeed, it is smaller. 
 
-> :thinking: Given that it halved both the width and height, you'd think that it'd cut the file size down to a quarter of the original size - which it clearly did not. Seems odd. 
+> 🤔 Given that it halved both the width and height, you'd think that it'd cut the file size down to a quarter of the original size - which it clearly did not. Seems odd. 
 
 Let's keep exploring the site a bit. There's a login page at http://pilgrimage.htb/login.php. I'll try some obvious credentials like **admin : admin** just to check for low-hanging fruit, as they say. 
 
@@ -185,7 +185,7 @@ python3 poc.py -i out.png parse
 
 ![file disclosure poc](file%20disclosure%20poc.png)
 
-Success! Now I just need to figure out how I can harness this best :thinking:
+Success! Now I just need to figure out how I can harness this best 🤔
 
 But first, that got me wondering, why did one attempt at CVE-2022-44268 work while another didn't? I'll try the one from PayloadAllTheThings again and see if I messed up something obvious...
 
@@ -195,7 +195,7 @@ First, I'll use pngcrush to embed a file read into an existing png file, `exploi
 pngcrush -text a "profile" "/etc/hosts" exploit.png
 ```
 
-OH! *facepalm* I had not read the output carefully enough :scream:. This command generated a new file called `pngout.png`:
+OH! *facepalm* I had not read the output carefully enough 😱. This command generated a new file called `pngout.png`:
 
 ![pngcrush](pngcrush.png)
 
@@ -234,7 +234,7 @@ WLIST="/usr/share/seclists/Discovery/Web-Content/raft-small-directories-lowercas
 ffuf -w $WLIST:FUZZ -u http://pilgrimage.htb/.FUZZ -t 80 --recursion --recursion-depth 2 -c -timeout 4 -fc 403
 ```
 
-> :point_up: I've found that ffuf is the best at rapidly enumerating exactly what you want. It doesn't try to interpret things like a dot in the url. It just does exactly what it's supposed to do: substitute values in a wordlist for the FUZZ parameter.
+> ☝️ I've found that ffuf is the best at rapidly enumerating exactly what you want. It doesn't try to interpret things like a dot in the url. It just does exactly what it's supposed to do: substitute values in a wordlist for the FUZZ parameter.
 
 Within seconds, fuff showed that I had failed to enumerate a **.git** directory! Also, it showed three URLs giving an HTTP 200 status:
 
@@ -277,7 +277,7 @@ identify -verbose pngout-out.png
 
 This is great, but it's over 500 lines long. I copy-pasted the big block of hex into a file `db-dump-lines`. I don't want to have to strip off the line endings manually, so maybe I'll try parsing it with python?
 
-Now... this definitely isn't the prettiest python I've ever written :sweat_smile: but at least it didn't take long to scrap together (definitely shorter than manually trimming off all those line endings):
+Now... this definitely isn't the prettiest python I've ever written 😅 but at least it didn't take long to scrap together (definitely shorter than manually trimming off all those line endings):
 
 ```python
 #!/usr/bin/python3
@@ -323,11 +323,11 @@ There we go! a new credential: **emily : abigchonkyboi123**
 
 ### Just Read It
 
-I remember seeing `emily` was one of the regular / human users from `/etc/passwd`, so I'm very hopeful about credential re-use. Let's try plugging this credential into SSH :crossed_fingers:
+I remember seeing `emily` was one of the regular / human users from `/etc/passwd`, so I'm very hopeful about credential re-use. Let's try plugging this credential into SSH 🤞
 
 ![ssh success](ssh%20success.png)
 
-:tada: Alright! Finally, a shell!
+🎉 Alright! Finally, a shell!
 
 This SSH connection drops us right into `/home/emily`. Go ahead and `cat` out the user flag:
 
@@ -433,7 +433,7 @@ This time, I'll try depositing the file directly into `/var/www/pilgrimage.htb/s
 
 ![root reverse shell](root%20reverse%20shell.png)
 
-:tada: Wondrous! *The warm fuzzies of a root shell* :hugs:
+🎉 Wondrous! *The warm fuzzies of a root shell* :hugs:
 
 From there, simply `cat` out the root flag to finish the box:
 

@@ -21,8 +21,6 @@ For folks like myself that have *nada espanol*, it turns out "*busqueda*" is Spa
 
 ![index page](index%20page.png)
 
-[TOC]
-
 
 
 ## RECON
@@ -73,7 +71,7 @@ Ok no problem, looks like I'll just have to add it to `/etc/hosts` a little earl
 echo "10.10.11.208 searcher.htb" | sudo tee -a /etc/hosts
 ```
 
-> :point_up: I use ``tee`` instead of the append operator ``>>`` so that I don't accidentally blow away my ``/etc/hosts`` file with a typo of ``>`` when I meant to write ``>>``.
+> ☝️ I use ``tee`` instead of the append operator ``>>`` so that I don't accidentally blow away my ``/etc/hosts`` file with a typo of ``>`` when I meant to write ``>>``.
 
 To test this, I tried putting `searcher.htb` into my web browser and wound up at the index page of the target. 
 
@@ -123,8 +121,6 @@ curl $RADDR -L https://virus.htb
 ```
 
 OK, that's fine: I don't think I'll find anything interesting through just subdomain or vhost enumeration. Time to change strategies.
-
-
 
 
 
@@ -199,7 +195,7 @@ Response:
 [this space is intentionally left blank]
 ```
 
-:thinking: Perhaps some kind of parsing error. We know it's being parsed in python, so let's pop in a comment character to end the line:
+🤔 Perhaps some kind of parsing error. We know it's being parsed in python, so let's pop in a comment character to end the line:
 
 ```
 engine=StackOverflow&query=test'#
@@ -215,7 +211,7 @@ Same result. There's a good chance that the comment character '#' is ending the 
 
 ![test1](test1.png)
 
-:open_mouth: OK, This might mean something! Not only do we get a result, but this shows that *the expression is properly terminated by using one singlequote and a closing parenthesis*. Since this is python, we can use the concatenation operator '+' to see what we can tack-on to the expression (either before or after the closing parenthesis):
+😮 OK, This might mean something! Not only do we get a result, but this shows that *the expression is properly terminated by using one singlequote and a closing parenthesis*. Since this is python, we can use the concatenation operator '+' to see what we can tack-on to the expression (either before or after the closing parenthesis):
 
 ![test2](test2.png)
 
@@ -223,7 +219,7 @@ That didn't work. But also, it was unlikely that would work due to character enc
 
 ![test3](test3.png)
 
-:grin: Alright! Now we've got something! Since we're able to include an extra string, it makes sense that we should be able to include anything that *evaluates to a string*. So, using python, what takes a string as input and evaluates to a string? Something like `str(eval('input'))` is as close as it gets:
+😁 Alright! Now we've got something! Since we're able to include an extra string, it makes sense that we should be able to include anything that *evaluates to a string*. So, using python, what takes a string as input and evaluates to a string? Something like `str(eval('input'))` is as close as it gets:
 
 ```
 engine=Wikipedia&query=test')+str(eval('7*7'))#
@@ -363,9 +359,7 @@ fg [enter] [enter]
 export TERM=xterm256-color
 ```
 
-The shell will be backgrounded, then enable echo mode with ``stty``, then brought back to the foreground. This should make the shell much more comfortable to use. Enjoy your tab-completion and colours :rainbow:.
-
-
+The shell will be backgrounded, then enable echo mode with ``stty``, then brought back to the foreground. This should make the shell much more comfortable to use. Enjoy your tab-completion and colours 🌈.
 
 
 
@@ -420,7 +414,7 @@ The shell will be backgrounded, then enable echo mode with ``stty``, then brough
    netstat -tulpn | grep LISTEN
    ```
 
-   > :point_up: also try ``netstat -antp``
+   > ☝️ also try ``netstat -antp``
 
    
 
@@ -560,8 +554,6 @@ cat /home/svc/user.txt
 
 
 
-
-
 ## ROOT FLAG
 
 ### Check the Listening Services
@@ -588,7 +580,7 @@ find / -name "*.git" -d 2>/dev/null
 /opt/scripts/.git
 ```
 
-:scream: *Oh no... how could I have been so ignorant?!* When I initially got RCE (and also when I got a reverse shell), I forgot to use `ls -la` to check my current directory! There was a hidden `.git` directory in `/var/www/app` that I completely missed!
+😱 *Oh no... how could I have been so ignorant?!* When I initially got RCE (and also when I got a reverse shell), I forgot to use `ls -la` to check my current directory! There was a hidden `.git` directory in `/var/www/app` that I completely missed!
 
 ![gittea creds](gittea%20creds.png)
 
@@ -600,7 +592,7 @@ These credentials were a valid login for http://gitea.searcher.htb
 
 Unfortunately, there does not seem to be any useful info inside this gitea repo. There has only been one commit, so no info to be gleaned from changes to the code or secrets leftover from development. Also, under the user settings for `cody`, there is no security info and no GPG keys have been added.
 
-:thinking: It's unlikely this **gitea** thing was just a distraction. I'll keep these credentials in mind and investigate credential re-use later. For now, there are other listening ports to check out: **222**, **35085**, and of course **68** (probably DHCP), **3306** (probably mysql), and **22** (SSH)
+🤔 It's unlikely this **gitea** thing was just a distraction. I'll keep these credentials in mind and investigate credential re-use later. For now, there are other listening ports to check out: **222**, **35085**, and of course **68** (probably DHCP), **3306** (probably mysql), and **22** (SSH)
 
 ![port 222](port%20222.png)
 
@@ -649,7 +641,7 @@ Checked the following credentials:
 
 **SSH (port 22)**
 ![cred reuse 22](cred%20reuse%2022.png)
---> :tada: Success! We now know that a valid **SSH** credential is **svc / jh1usoih2bkjaspwe92**.
+--> 🎉 Success! We now know that a valid **SSH** credential is **svc / jh1usoih2bkjaspwe92**.
 
 
 
@@ -669,13 +661,13 @@ User svc may run the following commands on busqueda:
     (root) /usr/bin/python3 /opt/scripts/system-checkup.py *
 ```
 
-> :thinking: Reviewing my notes, it looks `/opt/scripts` was also one of the directories containing a `.git` directory.
+> 🤔 Reviewing my notes, it looks `/opt/scripts` was also one of the directories containing a `.git` directory.
 
 Alright, let's try it out then:
 
 ![sudo sytem_checkup fail](sudo%20sytem_checkup%20fail.png)
 
-:expressionless: Oh, woops. Take a careful look at the last line of the output of `sudo -l`. There is an asterisk following the command.  This means that I'll need some args:
+😑 Oh, woops. Take a careful look at the last line of the output of `sudo -l`. There is an asterisk following the command.  This means that I'll need some args:
 
 ![sudo sytem_checkup args](sudo%20sytem_checkup%20args.png)
 
@@ -706,7 +698,7 @@ sudo python3 /opt/scripts/system-checkup.py docker-inspect '{{json .}}' gitea
 
 ![docker-inspect dump ugly](docker-inspect%20dump%20ugly.png)
 
-:open_mouth: Whoa! I can already see that there is some juicy stuff in there. But it's a bit hard to look at...
+😮 Whoa! I can already see that there is some juicy stuff in there. But it's a bit hard to look at...
 
 Thankfully, the 'json' part of the format string worked, so it shouldn't be difficult to clean up. I ran it [through this online JS beautifier](https://beautifier.io/) to see it in a more legible format: (I've omitted the majority of it, so that the important stuff is visible).
 
@@ -793,11 +785,11 @@ Even better, in addition to the mysql database credential from the other dump, t
 - **root / jI86kGUuj87guWr3RyF**
 - **gitea / yuiu1hoiu4i5ho1uh**
 
-Hopefully, I can log in to the mysql database, and leak the flag using a file read from within, with something like `SELECT LOAD_FILE("/root/root.txt")` :crossed_fingers:
+Hopefully, I can log in to the mysql database, and leak the flag using a file read from within, with something like `SELECT LOAD_FILE("/root/root.txt")` 🤞
 
 ![mysql no login](mysql%20no%20login.png)
 
-:sweat: Bummer. Can't connect to mysql. I don't think it's a matter of bad credentials... I'm not sure why. 
+😓 Bummer. Can't connect to mysql. I don't think it's a matter of bad credentials... I'm not sure why. 
 
 Perhaps those credentials are just a distraction, but it's also possible they are re-used somewhere. First, I'll try SSH:
 
@@ -905,7 +897,7 @@ Initially, it looks like there is a vulnerability here. If it were to work, the 
 At face value, this function also looks secure. After all, it doesn't take any user input, and the `arg_list` is static, right?
 Wrong! There is definitely something we can affect about it: the **relative-path** call to `full-checkup.sh`. 
 
-> :bulb: Relative paths like this are relative to the *location from which the binary was called*, not the location of the binary itself. Thats what makes using a relative path so inherently insecure: we can make it reference a script called `full-checkup.sh` placed in any directory, as long as it is adjacent to where we call `system-checkup.py` from.
+> 💡 Relative paths like this are relative to the *location from which the binary was called*, not the location of the binary itself. Thats what makes using a relative path so inherently insecure: we can make it reference a script called `full-checkup.sh` placed in any directory, as long as it is adjacent to where we call `system-checkup.py` from.
 
 Continuing to work out of `/tmp`, let's create a special version of `full-checkup.sh`, one that pops a reverse shell.
 
@@ -943,7 +935,7 @@ Check back at the netcat listener on the attacker box:
 
 ![root shell 2](root%20shell%202.png)
 
-:tada: Hooray, a root shell!
+🎉 Hooray, a root shell!
 
 Now just simply ``cat`` out the flag to finish the box.
 

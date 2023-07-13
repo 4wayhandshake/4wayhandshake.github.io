@@ -128,7 +128,7 @@ Set the required option then run it:
 
 ![msfconsole vsftpd 2](msfconsole%20vsftpd%202.png)
 
-No dice :game_die: Perhaps this was patched on the target machine. Oh well :man_shrugging: this is only an Easy box, so it's probably safe to say ``vsftpd`` is investigated enough. Time to move on to the next lead.
+No dice 🎲 Perhaps this was patched on the target machine. Oh well 🤷‍♂ this is only an Easy box, so it's probably safe to say ``vsftpd`` is investigated enough. Time to move on to the next lead.
 
 ### Investigating SMB
 
@@ -148,7 +148,7 @@ But there's an even easier way: just plonk ``smb://10.10.10.3/tmp`` into the add
 
 The directories don't contain anything interesting. The log file seemed like a distraction. The only notable file is ``.X0-lock`` alongside the ``.X11-unix`` directory, which indicates that there is an active X11 session left open on the box. The lockfile shows the PID of the X11 session. 
 
-> :bulb: I was beginning to have a vague memories of doing an X11-hijack on another box. But for that one, there was a lot more than just a dangling PID to use. Made a mental note to come back to this if I was desperate.
+> 💡 I was beginning to have a vague memories of doing an X11-hijack on another box. But for that one, there was a lot more than just a dangling PID to use. Made a mental note to come back to this if I was desperate.
 
 Alright, nothing in ``tmp`` . The other shares either seemed uninteresting or required authentication. Might be a good time to check for an easy entry by seeing if there are any exploits for this version of smb:
 
@@ -160,7 +160,7 @@ Alright, nothing in ``tmp`` . The other shares either seemed uninteresting or re
 Samba 3.0.20 < 3.0.25rc3 - 'Username' map script' Command Execution (Metasploit) | unix/remote/16320.rb
 ```
 
-:crossed_fingers: That gives some hope. This is for CVE-2007-2447. Once again, let's check it out in metasploit:
+🤞 That gives some hope. This is for CVE-2007-2447. Once again, let's check it out in metasploit:
 
 ![msfconsole samba](msfconsole%20samba.png)
 
@@ -168,7 +168,7 @@ Set the options. Note that the LHOST should be changed to the IP of the HackTheB
 
 ![msfconsole samba 2](msfconsole%20samba%202.png)
 
-:joy: Wow, ok! Not only did the exploit work, the reverse shell gained root access?! That was easy!
+😂 Wow, ok! Not only did the exploit work, the reverse shell gained root access?! That was easy!
 
 
 
@@ -235,17 +235,17 @@ No problem, a quick search indicated that it is possible to run SSH in a mode to
 └─$ ssh -p 22 -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa -i ./id_rsa root@10.10.10.3
 ```
 
-Success! :tada:
+Success! 🎉
 
 ![sshsuccess](sshsuccess.png)
 
-Wait, what? root has new **mail..?** Alright, let's see what it is :confused:
+Wait, what? root has new **mail..?** Alright, let's see what it is 😕
 
 ![mail](mail.png)
 
 Oh, ok. This must be what happens all those times when I sudo something and the system tells me "this action will be reported" :roll_eyes:
 
-Anyway, **we now have persistence, and can log in via SSH** using just the key we generated. I'd call that a success! Congrats to you for going the extra mile to upgrade your dumb shell into SSH instead :clap:
+Anyway, **we now have persistence, and can log in via SSH** using just the key we generated. I'd call that a success! Congrats to you for going the extra mile to upgrade your dumb shell into SSH instead 👏
 
 
 

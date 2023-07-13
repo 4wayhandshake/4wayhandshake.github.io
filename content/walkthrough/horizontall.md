@@ -14,7 +14,7 @@ categories: ["Walkthrough", "HTB", "Linux", "Easy"]
 
 ## Introduction
 
-This walkthrough is just a series of screenshots showing how I got through the box. :man_shrugging: I did this box before I really worked out a process for recording my work effectively. Sorry!
+This walkthrough is just a series of screenshots showing how I got through the box. 🤷‍♂ I did this box before I really worked out a process for recording my work effectively. Sorry!
 
 If I find the time, I'll come back to this and try to document it properly. 
 
