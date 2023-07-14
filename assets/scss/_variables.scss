@@ -23,6 +23,15 @@ $dark-table-color: #4e4e57;
 $media-size-phone: "(max-width: 684px)";
 $media-size-tablet: "(max-width: 900px)";
 
+$color-green-primary: rgba(159, 240, 0, 0.95);
+$color-green-bg: rgba(32,48,0,0.5);
+
+$color-red-primary: rgba(124,38,38,0.5);
+$color-red-bg: rgba(53,32,32,0.5);
+
+$color-blue-primary: rgba(38,38,124,0.5);
+$color-blue-bg: rgba(32,32,53,0.5);
+
 /* Variables for js, must be the same as these in @custom-media queries */
 :root {
   --phoneWidth: (max-width: 684px);

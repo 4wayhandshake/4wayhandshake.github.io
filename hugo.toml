@@ -3,7 +3,7 @@ languageCode = 'en-us'
 title = '4wayhandshake - Infosec Blog'
 theme = "hello-4s3ti"
 paginate = 15
-
+enableEmoji = true
 
 [author]
     name = "Tim Sullivan"
@@ -13,7 +13,8 @@ paginate = 15
     dateformShort   = "Jan 2"
     dateformNum     = "2006-01-02"
     dateformNumTime = "2006-01-02 15:04"
-    # Subtitle for home
+
+    homeTitle = "4wayhandshake"
     homeSubtitle = "CTF Walkthroughs, Tips & Tricks"
     # Set disableReadOtherPosts to true in order to hide the links to other posts.
     disableReadOtherPosts = false
@@ -57,13 +58,20 @@ paginate = 15
 # And you can even create generic menu
 [menu]
     [[menu.main]]
-        identifier = "walkthroughs"
-        name       = "Walkthroughs"
+        identifier = "walkthrough"
+        name       = "Walkthrough"
         url        = "/walkthrough"
+        weight     = 10
     [[menu.main]]
         identifier = "ctf"
         name       = "CTF"
         url        = "/ctf"
+        weight     = 20
+    [[menu.main]]
+        identifier = "strategy"
+        name       = "Strategy"
+        url        = "/stategy"
+        weight     = 30
     # [[menu.main]] # Example of a menu child element.
     #     identifier = "challenges"
     #     name       = "Challenges"

@@ -1,0 +1,133 @@
+main{
+    width: 100%;
+    margin: 20px;
+}
+
+@keyframes glow {
+  from {text-shadow: 1px 1px 3px $color-green-primary;}
+  to {text-shadow: 1px 1px 7px $color-green-primary;}
+}
+
+.main-titles {
+    text-align: center;
+    padding: 2rem;
+    width: 50%;
+    max-width: 40rem;
+    margin: 0 auto;
+    h1 {
+        color: $color-green-primary;
+        font-size: 2rem;
+        font-weight: bold;
+        letter-spacing: -0.1rem;
+        text-transform: uppercase;
+        margin: 0;
+        text-shadow: 1px 1px 3px $color-green-primary;
+
+        animation-name: glow;
+        animation-duration: 1.79s;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+
+    }
+    h2 {
+        font-size: 1.25rem;
+        font-weight: lighter;
+        letter-spacing: 0.3rem;
+        display: inline-block;
+        text-align: center;
+        margin: 0;
+    }
+}
+
+.content-link-tile-container {
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    @media #{$media-size-tablet} {
+    }
+
+    @media #{$media-size-phone} {
+        flex-direction: column;
+    }
+
+    .content-link {
+
+        position: relative;
+        top: 0;
+        margin: 2rem;
+        padding: 1rem;
+        width: 20%;
+        max-width: 200px;
+
+        letter-spacing: 0.15rem;
+        font-weight: bolder;
+        color: $color-green-primary;
+        text-decoration: none;
+
+        border: 3px solid;
+        border-radius: 1rem;
+
+        display: flex;
+        flex-direction: column;
+
+        // box-shadow: 0 6px 12px 0 rgba(255, 255, 255, 0.2);
+        box-shadow: 0 6px 12px 0 $color-green-primary;
+        transition: all ease-in-out 0.25s;
+
+        &:hover{
+            top: -6px;
+            box-shadow: 0 8px 15px 1px $color-green-primary;
+            text-decoration: underline;
+        }
+
+        @media #{$media-size-tablet} {
+            font-size: 0.75rem;
+        }
+
+        @media #{$media-size-phone} {
+            width: 80%;
+            max-width: 400px;
+            font-size: 1.5rem;
+        }
+
+        .icon-container {
+            flex: 1;
+            padding: 3rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+
+            @media #{$media-size-tablet} {
+                padding: 1.5rem 1rem;
+            }
+
+            svg {
+                fill: $color-green-primary;
+            }
+
+        }
+    }
+
+}
+
+#ctf-card{
+    @media #{$media-size-phone} {
+        order: 2;
+    }
+}
+
+#walkthrough-card {
+    @media #{$media-size-phone} {
+        order: 1;
+    }
+}
+
+#strategy-card {
+    @media #{$media-size-phone} {
+        order: 3;
+    }
+}
