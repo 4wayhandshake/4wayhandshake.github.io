@@ -8,12 +8,12 @@
     padding: 1rem 2rem 2rem 2rem;
     border-radius: 1rem;
     &.attacker {
-        background-color: rgba(53,32,32,0.5);
-        border: 6px solid rgba(124,38,38,0.5);
+        background-color: $color-red-bg;
+        border: 6px solid $color-red-primary;
     }
     &.defender {
-        background-color: rgba(32,32,53,0.5);
-        border: 6px solid rgba(38,38,124,0.5);
+        background-color: $color-blue-bg;
+        border: 6px solid $color-blue-primary;
     }
     ul {
         margin-left: -0.5rem;

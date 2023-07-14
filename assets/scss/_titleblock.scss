@@ -1,8 +1,8 @@
 .titleblock-container {
     padding: 1rem 2rem 1rem 2rem;
     border-radius: 1rem;
-    background-color: rgba(32,48,0,0.5);
-    border: 6px solid rgba(159, 240, 0, 0.95);
+    background-color: $color-green-bg;
+    border: 6px solid $color-green-primary;
     .tag {
         position: relative;
         transition: all ease-in-out 0.25s;
@@ -88,6 +88,7 @@
         animation-duration: 0.5s;
         animation-iteration-count: infinite;
         animation-direction: alternate;
+        fill: $dark-color-variant;
     }
     .svg-container {
         height: 8rem;
