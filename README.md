@@ -6,7 +6,7 @@ My blog for infosec and CTF. This is where I post my HTB walkthroughs (and other
 
 ## To Do:
 - [x] Style homepage links and title.
-- [ ] Add Github link to header.
+- [x] Add Github link to header.
 - [ ] Add Ko-fi link to header?
 - [ ] Style `list.html` for `/walkthrough`, `/ctf`, and `/strategy`.
 - [ ] Use "page bundle" format for walkthroughs and CTF (rename each walkthrough to `index.md` and move it into the corresponding directory).
