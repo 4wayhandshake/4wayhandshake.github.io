@@ -43,11 +43,15 @@ window.addEventListener('DOMContentLoaded', () => {
     			const anchorEle = document.querySelector(`nav li a[href="#${id}"]`)
                 if (anchorEle) {
                     anchorEle.parentElement.classList.add('active');
-                    scrollableElement.scrollTo({
-                        top: anchorEle.offsetTop,
-                        left: 0,
-                        behavior: "smooth",
-                    });
+                    // Solution from here.... seems unlikely...
+                    // https://stackoverflow.com/questions/15691569/javascript-issue-with-scrollto-in-chrome
+                    setTimeout(() => {
+                        scrollableElement.scrollTo({
+                            top: anchorEle.offsetTop,
+                            left: 0,
+                            behavior: "smooth",
+                        });
+                    }, 10);
                 }
     		}
         });
