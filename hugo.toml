@@ -2,58 +2,73 @@ baseURL = 'localhost'
 languageCode = 'en-us'
 title = '4wayhandshake - Infosec Blog'
 theme = "hello-4s3ti"
-paginate = 10
+paginate = 15
+
 
 [author]
-  name = "Tim Sullivan"
+    name = "Tim Sullivan"
 
 [params]
-  dateform        = "Jan 2, 2006"
-  dateformShort   = "Jan 2"
-  dateformNum     = "2006-01-02"
-  dateformNumTime = "2006-01-02 15:04"
-  # Subtitle for home
-  homeSubtitle = "CTF Walkthroughs, Tips & Tricks"
-  # Set disableReadOtherPosts to true in order to hide the links to other posts.
-  disableReadOtherPosts = false
-  # Enable sharing buttons, if you like
-  enableSharingButtons = true
-  # Metadata mostly used in document's head
-  description = "My new homepage or blog"
-  keywords = "homepage, blog"
-  images = [""]
-  customJS = ["/scripts/main.js"]
-  [params.footer]
-    topText = [ "4wayhandshake - CTF Walkthroughs, Tips & Tricks" ]
-    trademark = true
-    author = "Tim Sullivan"
-    copyright = true
+    dateform        = "Jan 2, 2006"
+    dateformShort   = "Jan 2"
+    dateformNum     = "2006-01-02"
+    dateformNumTime = "2006-01-02 15:04"
+    # Subtitle for home
+    homeSubtitle = "CTF Walkthroughs, Tips & Tricks"
+    # Set disableReadOtherPosts to true in order to hide the links to other posts.
+    disableReadOtherPosts = false
+    # Sets the default theme
+    defaultTheme = "dark"
+    # Enable theme toggle
+    enableThemeToggle = true
+    # Enable sharing buttons, if you like
+    enableSharingButtons = true
+    # Metadata mostly used in document's head
+    description = "My new homepage or blog"
+    keywords = "homepage, blog"
+    images = [""]
+    customJS = ["/scripts/main.js"]
+    [params.footer]
+        topText = [ "4wayhandshake - CTF Walkthroughs, Tips & Tricks" ]
+        trademark = true
+        author = "Tim Sullivan"
+        copyright = true
 
 [taxonomies]
     category = "categories"
     tag      = "tags"
 
 [languages]
-  [languages.en]
-    title = "4wayhandshake"
-    copyright = '<a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a>'
-    [languages.en.params]
-      subtitle = "CTF Walkthroughs, Tips & Tricks"
-      keywords = "infosec ctf hacking security guide walkthrough strategy hackthebox htb"
-      readOtherPosts = "Read other posts"
-    [languages.en.params.logo]
-      logoText = "4wayhandshake"
-      logoHomeLink = "/"
-    # or
-    #
-    # path = "/img/your-example-logo.svg"
-    # alt = "Your example logo alt text"
+    [languages.en]
+        title = "4wayhandshake"
+        copyright = '<a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a>'
+        [languages.en.params]
+            subtitle = "CTF Walkthroughs, Tips & Tricks"
+            keywords = "infosec ctf hacking security guide walkthrough strategy hackthebox htb"
+            readOtherPosts = "Read other posts"
+        [languages.en.params.logo]
+            logoText = "4wayhandshake"
+            logoHomeLink = "/"
+# or
+#
+# path = "/img/your-example-logo.svg"
+# alt = "Your example logo alt text"
 
 # And you can even create generic menu
-[[menu.main]]
-    identifier = "walkthroughs"
-    name       = "Walkthroughs"
-    url        = "/walkthrough"
+[menu]
+    [[menu.main]]
+        identifier = "walkthroughs"
+        name       = "Walkthroughs"
+        url        = "/walkthrough"
+    [[menu.main]]
+        identifier = "ctf"
+        name       = "CTF"
+        url        = "/ctf"
+    [[menu.main]]
+        identifier = "challenges"
+        name       = "Challenges"
+        url        = "/ctf/challenges"
+        parent     = "ctf"
 
 [markup.goldmark.renderer]
     unsafe = true

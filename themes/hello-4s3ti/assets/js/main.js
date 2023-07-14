@@ -7,8 +7,10 @@
  */
 const themeToggle = document.querySelector(".theme-toggle");
 const chosenTheme = window.localStorage && window.localStorage.getItem("theme");
-const chosenThemeIsDark = chosenTheme == "dark" || true;
-const chosenThemeIsLight = chosenTheme == "light";
+//const chosenThemeIsDark = chosenTheme == "dark";
+//const chosenThemeIsLight = chosenTheme == "light";
+chosenThemeIsDark = true;
+chosenThemeIsLight = false;
 
 
 // Detect the color scheme the operating system prefers.

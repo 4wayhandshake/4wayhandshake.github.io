@@ -48,7 +48,10 @@
 }
 
 .theme-toggle {
-  display: flex;
+  //display: flex;
+  width: 0;
+  height: 0;
+  display: none;
   align-items: center;
   justify-content: center;
   line-height: 1;
