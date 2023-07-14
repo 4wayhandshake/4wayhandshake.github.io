@@ -64,11 +64,11 @@ paginate = 15
         identifier = "ctf"
         name       = "CTF"
         url        = "/ctf"
-    [[menu.main]]
-        identifier = "challenges"
-        name       = "Challenges"
-        url        = "/ctf/challenges"
-        parent     = "ctf"
+    # [[menu.main]] # Example of a menu child element.
+    #     identifier = "challenges"
+    #     name       = "Challenges"
+    #     url        = "/ctf/challenges"
+    #     parent     = "ctf"
 
 [markup.goldmark.renderer]
     unsafe = true

