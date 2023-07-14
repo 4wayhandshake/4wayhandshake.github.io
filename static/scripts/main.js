@@ -69,7 +69,11 @@ window.addEventListener('DOMContentLoaded', () => {
             const tgt = document.querySelector(anchorEle.getAttribute('href'));
             if (tgt) {
                 //console.log('Would scroll to ' + tgt.id);
-                tgt.scrollIntoView({ behavior: "smooth", block: "center", inline: "start" });
+                if (navigator.userAgent.toLowerCase().includes("chrome")) {
+                    tgt.scrollIntoView({ behavior: "instant", block: "center", inline: "start" });
+                } else {
+                    tgt.scrollIntoView({ behavior: "auto", block: "center", inline: "start" });
+                }
             }
         });
     });
