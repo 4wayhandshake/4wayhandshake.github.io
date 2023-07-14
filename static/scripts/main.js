@@ -59,4 +59,18 @@ window.addEventListener('DOMContentLoaded', () => {
             observer.observe(headingElement);
         });
     });
+
+    const navAnchors = document.querySelectorAll('#TableOfContents li a');
+    navAnchors.forEach( anchorEle => {
+        //console.log(`Found anchor element: ${anchorEle.getAttribute('href')}`);
+        anchorEle.addEventListener("click", (event) => {
+            event.preventDefault();
+            //console.log(`Clicked anchor element: ${anchorEle.getAttribute('href')}`);
+            const tgt = document.querySelector(anchorEle.getAttribute('href'));
+            if (tgt) {
+                //console.log('Would scroll to ' + tgt.id);
+                tgt.scrollIntoView({ behavior: "smooth", block: "center", inline: "start" });
+            }
+        });
+    });
 });
