@@ -2,7 +2,7 @@ baseURL = 'localhost'
 languageCode = 'en-us'
 title = '4wayhandshake - Infosec Blog'
 theme = "hello-4s3ti"
-paginate = 15
+paginate = 20
 enableEmoji = true
 
 [author]
