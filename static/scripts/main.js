@@ -60,22 +60,29 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // const navAnchors = document.querySelectorAll('#TableOfContents li a');
-    // navAnchors.forEach( anchorEle => {
-    //     //console.log(`Found anchor element: ${anchorEle.getAttribute('href')}`);
-    //     anchorEle.addEventListener("click", (event) => {
-    //         event.preventDefault();
-    //         //console.log(`Clicked anchor element: ${anchorEle.getAttribute('href')}`);
-    //         const tgt = document.querySelector(anchorEle.getAttribute('href'));
-    //         if (tgt) {
-    //             //console.log('Would scroll to ' + tgt.id);
-    //             if (navigator.userAgent.toLowerCase().includes("chrome")) {
-    //                 tgt.scrollIntoView({ behavior: "instant", block: "center", inline: "start" });
-    //             } else {
-    //                 tgt.scrollIntoView({ behavior: "auto", block: "center", inline: "start" });
-    //             }
-    //         }
-    //     });
-    // });
+    const navAnchors = document.querySelectorAll('#TableOfContents li a');
+    navAnchors.forEach( anchorEle => {
+        anchorEle.addEventListener("click", (event) => {
+            // Prevent the default scroll action
+            event.preventDefault();
+            // Find the element that this anchor links to
+            const tgt = document.querySelector(anchorEle.getAttribute('href'));
+            if (tgt) {
+                // Override normal scrolling,using (x,y) coords.
+                // Try to detect chrome browsers and circumvent smooth scrolling for them.
+                let behavior;
+                if (navigator.userAgent.toLowerCase().includes("chrome")) {
+                    behavior = "instant";
+                } else {
+                    behavior = "smooth";
+                }
+                window.scrollTo({
+                    top: tgt.offsetTop - 100,
+                    left: 0,
+                    behavior: behavior,
+                });
+            }
+        });
+    });
 
 });
