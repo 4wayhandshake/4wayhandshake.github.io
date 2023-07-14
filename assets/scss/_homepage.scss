@@ -3,6 +3,11 @@ main{
     margin: 20px;
 }
 
+@keyframes glow {
+  from {text-shadow: 1px 1px 3px $color-green-primary;}
+  to {text-shadow: 1px 1px 7px $color-green-primary;}
+}
+
 .main-titles {
     text-align: center;
     padding: 2rem;
@@ -17,6 +22,12 @@ main{
         text-transform: uppercase;
         margin: 0;
         text-shadow: 1px 1px 3px $color-green-primary;
+
+        animation-name: glow;
+        animation-duration: 1.79s;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+
     }
     h2 {
         font-size: 1.25rem;
