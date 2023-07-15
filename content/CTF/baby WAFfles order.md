@@ -5,17 +5,15 @@ publishdate: 2021-07-19T18:00:00-00:00
 releasedate: 2020-11-19T00:00:00-00:00
 draft: false
 hideTitle: false
-Cover: /images/matrix-map.png
+Cover: /images/matrix-map.jpeg
+CoverCaption: "Map of the world, shown in green zeroes and ones like the Matrix"
 icon: /images/padlock-square.png
 toc: true
 tags: ["SQL", "Broken API"]
 categories: ["Challenge", "Walkthrough", "HTB", "Web", "Easy"]
 description: "Our WAFfles and ice scream are out of this world, come to our online WAFfles house and check out our super secure ordering system API!"
 ---
-
-# baby WAFfles order
-
-## First Take
+## FIRST TAKE
 
 Download the challenge files: it is a docker, showing you the source code for the whole challenge.
 
@@ -29,8 +27,7 @@ Read all the source code, understand how the web app works. In essence, the chal
 - application/xml
 
 
-
-## Converting Request to XML
+## CONVERTING REQUEST TO XML
 
 It appears that the website is configured to submit orders as json, but the endpoint will still accept xml. Try running the docker and interacting with it: submit an order and catch the request in Burp. The POST will have content-type application/json, but go ahead and convert it to the equivalent XML request:
 
@@ -61,8 +58,7 @@ Cookie: PHPSESSID=eyJ1c2VybmFtZSI6ImZha2VuYW1lIn0%3D
 Submitting the above request shows the app is listening for XML.
 
 
-
-## Adapting to XXE
+## ADAPTING TO XXE
 
 The site is called xxe, so let's try the most basic xxe based on the above request. We already know two things:
 

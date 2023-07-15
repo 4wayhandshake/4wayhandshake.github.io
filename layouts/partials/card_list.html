@@ -1,0 +1,32 @@
+{{ $listTitle := .Title | singularize}}
+
+
+<h1>{{ .Title }}</h1>
+
+{{ if .Content }}
+    <div class="content">{{ .Content }}</div>
+{{ end }}
+
+<div class="list-container">
+{{ range .Pages }}
+
+    <a class="list-item" href="{{.Permalink}}">
+        <div class="list-item-icon-container">
+            <img src="{{.Params.icon}}" alt="Icon for {{.Title}}">
+        </div>
+        <div class="list-item-label">
+            <span>{{.Title}}</span>
+        </div>
+        <div class="list-item-details">
+            {{ range .Params.categories }}
+                {{ if ne . $listTitle }}
+                <span>{{ . }}</span>
+                {{ end }}
+            {{ end }}
+        </div>
+    </a>
+
+{{ end }}
+</div>
+
+{{ partial "pagination-list.html" . }}
