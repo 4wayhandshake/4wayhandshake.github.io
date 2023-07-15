@@ -1,9 +1,11 @@
 {{ define "main" }}
-{{ partial "search-form.html" . }}
-
-<ul id="results">
-    <li>
-        Enter a keyword above to search this site.
-    </li>
-</ul>
+<div class="search-form-container">
+    {{ partial "search-form.html" . }}
+    <hr class="search-separator"/>
+    <ul id="results">
+        <li>
+            Enter a keyword above to search this site.
+        </li>
+    </ul>
+</div>
 {{ end }}
