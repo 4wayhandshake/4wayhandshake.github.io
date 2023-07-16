@@ -1,13 +1,13 @@
 .icon-search{
     fill: $dark-color;
     vertical-align: middle;
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     display: inherit;
     &:hover {
         opacity: 0.8;
     }
     order: 1;
-    margin: 0 1rem;
+    //margin: 0 1rem; // Momved this to _header.scss
 }
 
 .form-row {
@@ -21,8 +21,14 @@
 }
 
 .search-form-container {
-    width: 80%;
+    margin: 1rem 30px;
+    width: 90%;
     max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-items: end;
+    height: 100%;
+    flex: 1;
 }
 
 form#search{
@@ -53,22 +59,33 @@ form#search{
 
 #results {
 
-    list-style-type: none;
-    margin: 0;
-
     >* {
+        display: block;
         text-align: left;
         text-decoration: none;
         margin: 0.5rem 0;
         padding: 1.0rem;
         background-color: $dark-background-secondary;
 
-        h3 {
+        .search-result-title {
             text-decoration: underline;
             margin: 0 0 0.5rem 0;
         }
-        p {
+        .search-result-category {
+            position: relative;
+            float: right;
+            top: -1.75rem;
+        }
+        .search-result-content {
+            font-weight: lighter;
+            font-size: 0.85rem;
+            text-align: justify;
+        }
+        .result-quote {
             font-style: italic;
+            &::before, &::after {
+                content: '"';
+            }
         }
     }
 }

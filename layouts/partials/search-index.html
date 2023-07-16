@@ -6,7 +6,8 @@ window.store = {
     "{{ .Permalink }}": {
         // You can customize your searchable fields using any .Page parameters
         "title": "{{ .Title  }}",
-        "tags": [{{ range .Params.Tags }}"{{ . }}",{{ end }}],
+        "tags": [{{ range .Params.tags }}"{{ . }}",{{ end }}],
+        "categories": [{{ range .Params.categories }}"{{ . }}",{{ end }}],
         "content": {{ .Content | plainify }}, // Strip out HTML tags
         "url": "{{ .Permalink }}"
     },
