@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Etherium on 4wayhandshake</title>
+    <link>//localhost:1313/tags/etherium/</link>
+    <description>Recent content in Etherium on 4wayhandshake</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Tue, 20 Feb 2024 12:49:00 +0000</lastBuildDate>
+    <atom:link href="//localhost:1313/tags/etherium/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Honor Among Thieves</title>
+      <link>//localhost:1313/ctf/honor-among-thieves/</link>
+      <pubDate>Tue, 20 Feb 2024 12:49:00 +0000</pubDate>
+      <guid>//localhost:1313/ctf/honor-among-thieves/</guid>
+      <description>INTRODUCTION This challenge is a continuation of the previous one, Distract and Destroy. Our main character, Alex, now has two others in her party. Their objective is to somehow gain the key to the treasure (the flag) by eavesdropping on a rival party.&#xA;Since a lot of the setup was done in the first challenge of the series, I won&amp;rsquo;t be covering it again. Please see the Setup section of that walkthrough for more detail.</description>
+    </item>
+  </channel>
+</rss>
