@@ -1,1 +1,20 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Difficulty on 4wayhandshake</title><link>https://4wayhandshake.github.io/categories/difficulty/</link><description>Recent content in Difficulty on 4wayhandshake</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>&lt;a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0&lt;/a></copyright><lastBuildDate>Mon, 29 Jan 2024 10:58:00 +0000</lastBuildDate><atom:link href="https://4wayhandshake.github.io/categories/difficulty/index.xml" rel="self" type="application/rss+xml"/><item><title>Boxname</title><link>https://4wayhandshake.github.io/walkthrough/surveillance/</link><pubDate>Mon, 29 Jan 2024 10:58:00 +0000</pubDate><guid>https://4wayhandshake.github.io/walkthrough/surveillance/</guid><description>ACTIVE BOX This box is active, so there is no content to see here.</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Difficulty on 4wayhandshake</title>
+    <link>//localhost:1313/categories/difficulty/</link>
+    <description>Recent content in Difficulty on 4wayhandshake</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Mon, 29 Jan 2024 10:58:00 +0000</lastBuildDate>
+    <atom:link href="//localhost:1313/categories/difficulty/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Boxname</title>
+      <link>//localhost:1313/walkthrough/blurry/</link>
+      <pubDate>Mon, 29 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>//localhost:1313/walkthrough/blurry/</guid>
+      <description>ACTIVE BOX This box is active, so there is no content to see here.</description>
+    </item>
+  </channel>
+</rss>
