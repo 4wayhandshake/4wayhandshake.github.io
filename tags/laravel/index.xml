@@ -16,4 +16,4 @@ rhost was api-prod.horizontall.htb
 lhost was 10.10.14.45
 jwt was simply the jwt from my logged-in admin session (got it from firefox web dev tools)
 url was http://api-prod.horizontall.htb/
-&lt;/code>&lt;/pr</description></item></channel></rss>
+&lt;/code>&lt;/pre>&lt;p>This is the exploit I used:&lt;/p></description></item></channel></rss>

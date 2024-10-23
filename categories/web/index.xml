@@ -15,7 +15,7 @@
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Sec-Fetch-Site&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#ae81ff">none&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Sec-Fetch-User&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#ae81ff">?1&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Sec-GPC&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pr</description></item><item><title>Server-side Request Forgery (SSRF)</title><link>https://4wayhandshake.github.io/strategy/ssrf/</link><pubDate>Mon, 17 Jun 2024 00:00:00 +0000</pubDate><guid>https://4wayhandshake.github.io/strategy/ssrf/</guid><description>&lt;h2 id="introduction">INTRODUCTION&lt;/h2>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The full list of HTTP verbs is as follows:&lt;/p></description></item><item><title>Server-side Request Forgery (SSRF)</title><link>https://4wayhandshake.github.io/strategy/ssrf/</link><pubDate>Mon, 17 Jun 2024 00:00:00 +0000</pubDate><guid>https://4wayhandshake.github.io/strategy/ssrf/</guid><description>&lt;h2 id="introduction">INTRODUCTION&lt;/h2>
 &lt;h3 id="why-write-this">Why write this?&lt;/h3>
 &lt;p>I often forget small steps about testing SSRF. It&amp;rsquo;d be good to have a checklist to remind myself of things to investigate when I find an opportunity for SSRF.&lt;/p>
 &lt;p>This is &lt;em>by no means comprehensive&lt;/em>. If you want a longer and more detailed guide, I recommend the &lt;a href="https://book.hacktricks.xyz/pentesting-web/ssrf-server-side-request-forgery">Hacktricks page&lt;/a>&lt;/p>
@@ -49,7 +49,13 @@
 &lt;p>Obvious hint: the title of the website is &lt;strong>&lt;u>xxe&lt;/u>&lt;/strong>&lt;/p>
 &lt;/blockquote>
 &lt;p>&lt;img alt="screenshot" src="https://4wayhandshake.github.io/ctf/baby-waffles-order/screenshot.png">&lt;/p>
-&lt;p>Read all the source code, understand how the web app works. In essence, the challenge is an order-taking API for a fictional restaurant, taking orders for either &lt;strong>Ice Scream&lt;/strong> or &lt;strong>WAFfles&lt;/strong>. Orders may be submitted to /api/order as:&lt;/p></description></item><item><title>Phonebook</title><link>https://4wayhandshake.github.io/ctf/phonebook/</link><pubDate>Wed, 30 Jun 2021 18:00:00 +0000</pubDate><guid>https://4wayhandshake.github.io/ctf/phonebook/</guid><description>&lt;h2 id="introduction">INTRODUCTION&lt;/h2>
+&lt;p>Read all the source code, understand how the web app works. In essence, the challenge is an order-taking API for a fictional restaurant, taking orders for either &lt;strong>Ice Scream&lt;/strong> or &lt;strong>WAFfles&lt;/strong>. Orders may be submitted to /api/order as:&lt;/p>
+&lt;ul>
+&lt;li>application/json&lt;/li>
+&lt;li>application/xml&lt;/li>
+&lt;/ul>
+&lt;h2 id="converting-request-to-xml">CONVERTING REQUEST TO XML&lt;/h2>
+&lt;p>It appears that the website is configured to submit orders as json, but the endpoint will still accept xml. Try running the docker and interacting with it: submit an order and catch the request in Burp. The POST will have content-type application/json, but go ahead and convert it to the equivalent XML request:&lt;/p></description></item><item><title>Phonebook</title><link>https://4wayhandshake.github.io/ctf/phonebook/</link><pubDate>Wed, 30 Jun 2021 18:00:00 +0000</pubDate><guid>https://4wayhandshake.github.io/ctf/phonebook/</guid><description>&lt;h2 id="introduction">INTRODUCTION&lt;/h2>
 &lt;p>At the time of writing this walkthrough, &lt;em>Phonebook&lt;/em> is currently active (Oct 2021) and worth 30 points.&lt;/p>
 &lt;h2 id="first-take">FIRST TAKE&lt;/h2>
 &lt;p>I started up the challenge and visited the website. It is a small login form.&lt;/p>
@@ -66,4 +72,4 @@
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/&lt;span style="color:#f92672">script&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pr</description></item></channel></rss>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>What could be the point of this? I tried navigating to http://139.59.183.98:31487/login?message=What%20can%20go%20here. Lo and behold:&lt;/p></description></item></channel></rss>

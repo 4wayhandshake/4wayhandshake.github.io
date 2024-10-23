@@ -8,4 +8,10 @@
 &lt;p>Obvious hint: the title of the website is &lt;strong>&lt;u>xxe&lt;/u>&lt;/strong>&lt;/p>
 &lt;/blockquote>
 &lt;p>&lt;img alt="screenshot" src="https://4wayhandshake.github.io/ctf/baby-waffles-order/screenshot.png">&lt;/p>
-&lt;p>Read all the source code, understand how the web app works. In essence, the challenge is an order-taking API for a fictional restaurant, taking orders for either &lt;strong>Ice Scream&lt;/strong> or &lt;strong>WAFfles&lt;/strong>. Orders may be submitted to /api/order as:&lt;/p></description></item></channel></rss>
+&lt;p>Read all the source code, understand how the web app works. In essence, the challenge is an order-taking API for a fictional restaurant, taking orders for either &lt;strong>Ice Scream&lt;/strong> or &lt;strong>WAFfles&lt;/strong>. Orders may be submitted to /api/order as:&lt;/p>
+&lt;ul>
+&lt;li>application/json&lt;/li>
+&lt;li>application/xml&lt;/li>
+&lt;/ul>
+&lt;h2 id="converting-request-to-xml">CONVERTING REQUEST TO XML&lt;/h2>
+&lt;p>It appears that the website is configured to submit orders as json, but the endpoint will still accept xml. Try running the docker and interacting with it: submit an order and catch the request in Burp. The POST will have content-type application/json, but go ahead and convert it to the equivalent XML request:&lt;/p></description></item></channel></rss>

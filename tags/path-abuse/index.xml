@@ -11,4 +11,6 @@
 &lt;h2 id="recon">RECON&lt;/h2>
 &lt;p>I followed my typical first steps. I set up a directory for the box, with a &lt;code>nmap&lt;/code> subdirectory. Then set $RADDR to my target machine&amp;rsquo;s IP, and scanned it with my typical nmap &amp;ldquo;init&amp;rdquo; scan:&lt;/p></description></item><item><title>Precious</title><link>https://4wayhandshake.github.io/walkthrough/precious/</link><pubDate>Sat, 20 May 2023 18:00:00 +0000</pubDate><guid>https://4wayhandshake.github.io/walkthrough/precious/</guid><description>&lt;h2 id="introduction">INTRODUCTION&lt;/h2>
 &lt;p>Precious is an Easy Linux box on HackTheBox, released on November 26, 2022. Its high rating and easy difficulty make it an attactive way to get back into HTB after a short hiatus. It prominently features the Ruby language, and usage of ruby gems - hence the name. While the foothold is fairly straightforward, the path to root takes a bit of thought!&lt;/p>
-&lt;p>&lt;img alt="index page" src="https://4wayhandshake.github.io/walkthrough/precious/index%20page.png">&lt;/p></description></item></channel></rss>
+&lt;p>&lt;img alt="index page" src="https://4wayhandshake.github.io/walkthrough/precious/index%20page.png">&lt;/p>
+&lt;h2 id="recon">RECON&lt;/h2>
+&lt;p>[04:00:40] Performing nmap initial scan:&lt;/p></description></item></channel></rss>

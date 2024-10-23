@@ -14,7 +14,7 @@
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Sec-Fetch-Site&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#ae81ff">none&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Sec-Fetch-User&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#ae81ff">?1&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Sec-GPC&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pr</description></item><item><title>Server-side Request Forgery (SSRF)</title><link>https://4wayhandshake.github.io/strategy/ssrf/</link><pubDate>Mon, 17 Jun 2024 00:00:00 +0000</pubDate><guid>https://4wayhandshake.github.io/strategy/ssrf/</guid><description>&lt;h2 id="introduction">INTRODUCTION&lt;/h2>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The full list of HTTP verbs is as follows:&lt;/p></description></item><item><title>Server-side Request Forgery (SSRF)</title><link>https://4wayhandshake.github.io/strategy/ssrf/</link><pubDate>Mon, 17 Jun 2024 00:00:00 +0000</pubDate><guid>https://4wayhandshake.github.io/strategy/ssrf/</guid><description>&lt;h2 id="introduction">INTRODUCTION&lt;/h2>
 &lt;h3 id="why-write-this">Why write this?&lt;/h3>
 &lt;p>I often forget small steps about testing SSRF. It&amp;rsquo;d be good to have a checklist to remind myself of things to investigate when I find an opportunity for SSRF.&lt;/p>
 &lt;p>This is &lt;em>by no means comprehensive&lt;/em>. If you want a longer and more detailed guide, I recommend the &lt;a href="https://book.hacktricks.xyz/pentesting-web/ssrf-server-side-request-forgery">Hacktricks page&lt;/a>&lt;/p>
