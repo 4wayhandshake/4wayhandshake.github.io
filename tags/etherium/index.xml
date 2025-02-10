@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Etherium on 4wayhandshake</title>
+    <link>http://4wayhandshake.local:1313/tags/etherium/</link>
+    <description>Recent content in Etherium on 4wayhandshake</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Tue, 20 Feb 2024 12:49:00 +0000</lastBuildDate>
+    <atom:link href="http://4wayhandshake.local:1313/tags/etherium/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Honor Among Thieves</title>
+      <link>http://4wayhandshake.local:1313/ctf/honor-among-thieves/</link>
+      <pubDate>Tue, 20 Feb 2029 18:00:00 +0000</pubDate>
+      <guid>http://4wayhandshake.local:1313/ctf/honor-among-thieves/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;INTRODUCTION&lt;/h2&gt;&#xA;&lt;p&gt;This challenge is a continuation of the previous one, &lt;a href=&#34;http://4wayhandshake.local:1313/ctf/distract-and-destroy/&#34;&gt;Distract and Destroy&lt;/a&gt;. Our main character, Alex, now has two others in her party. Their objective is to somehow gain the key to the treasure (the flag) by eavesdropping on a rival party.&lt;/p&gt;&#xA;&lt;p&gt;Since a lot of the setup was done in the &lt;a href=&#34;http://4wayhandshake.local:1313/ctf/survival-of-the-fittest/&#34;&gt;first challenge of the series&lt;/a&gt;, I won&amp;rsquo;t be covering it again. Please see the &lt;a href=&#34;http://4wayhandshake.local:1313/ctf/survival-of-the-fittest/#setup&#34;&gt;Setup&lt;/a&gt; section of that walkthrough for more detail.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Distract and Destroy</title>
+      <link>http://4wayhandshake.local:1313/ctf/distract-and-destroy/</link>
+      <pubDate>Sat, 17 Feb 2029 18:00:00 +0000</pubDate>
+      <guid>http://4wayhandshake.local:1313/ctf/distract-and-destroy/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;INTRODUCTION&lt;/h2&gt;&#xA;&lt;p&gt;This challenge is a continuation of the previous one, &lt;a href=&#34;http://4wayhandshake.local:1313/ctf/survival-of-the-fittest/&#34;&gt;Survival of the Fittest&lt;/a&gt;. Our main character, Alex, is now accompanied by another person in her party (who I&amp;rsquo;m calling &amp;ldquo;Brock&amp;rdquo;, &lt;em&gt;a la&lt;/em&gt; alice-and-bob). The title, &lt;em&gt;Distract and Destroy&lt;/em&gt;, is a pretty huge hint in how this one will need to be solved.&lt;/p&gt;&#xA;&lt;p&gt;Since a lot of the setup was done in the &lt;a href=&#34;http://4wayhandshake.local:1313/ctf/survival-of-the-fittest/&#34;&gt;last challenge&lt;/a&gt;, I won&amp;rsquo;t be covering it again. Please see the &lt;a href=&#34;http://4wayhandshake.local:1313/ctf/survival-of-the-fittest/#setup&#34;&gt;Setup&lt;/a&gt; section of my other walkthrough for more detail.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Survival of the Fittest</title>
+      <link>http://4wayhandshake.local:1313/ctf/survival-of-the-fittest/</link>
+      <pubDate>Fri, 16 Feb 2029 18:00:00 +0000</pubDate>
+      <guid>http://4wayhandshake.local:1313/ctf/survival-of-the-fittest/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;INTRODUCTION&lt;/h2&gt;&#xA;&lt;p&gt;Starting up the challenge, it looks like a cute little web-based side scrolling RPG. The interface is limited to just &lt;code&gt;Attack&lt;/code&gt; and &lt;code&gt;Restart&lt;/code&gt;. Despite it&amp;rsquo;s simple appearance, this challenge is actually hosting a private blockchain, where the game is running as a distributed app. The goal is simple: kill the monsters.&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;This was my first blockchain challenge. Even though the challenge itself was very very easy, I was quite confused about how to set up the &lt;code&gt;hardhat&lt;/code&gt; environment. I&amp;rsquo;m writing this walkthrough in the hopes that others won&amp;rsquo;t have to stumble over the same issues that I did.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

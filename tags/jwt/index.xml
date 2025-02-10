@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>JWT on 4wayhandshake</title>
+    <link>http://4wayhandshake.local:1313/tags/jwt/</link>
+    <description>Recent content in JWT on 4wayhandshake</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Sun, 19 Jan 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://4wayhandshake.local:1313/tags/jwt/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Backfire</title>
+      <link>http://4wayhandshake.local:1313/walkthrough/backfire/</link>
+      <pubDate>Thu, 18 Jan 2029 00:00:00 +0000</pubDate>
+      <guid>http://4wayhandshake.local:1313/walkthrough/backfire/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;INTRODUCTION&lt;/h2&gt;&#xA;&lt;p&gt;&lt;em&gt;Backfire&lt;/em&gt; was released as the second box of HTB&amp;rsquo;s Season 7, &lt;em&gt;Vice&lt;/em&gt;. HTB claims this one is a &amp;ldquo;Medium&amp;rdquo; difficulty, but I cannot agree. Maybe the lateral movement and privesc were a &amp;ldquo;Medium&amp;rdquo;, but getting the user flag was frustratingly hard. More importantly though, it was extremely niche, and required a lot of scripting to stitch together two very specific exploits into one. If you&amp;rsquo;re running this box and expecting &amp;ldquo;Medium&amp;rdquo; difficulty, do as I did and seek out as complete of a PoC as you can&amp;hellip;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

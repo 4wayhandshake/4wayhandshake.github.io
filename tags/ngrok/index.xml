@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ngrok on 4wayhandshake</title>
+    <link>http://4wayhandshake.local:1313/tags/ngrok/</link>
+    <description>Recent content in Ngrok on 4wayhandshake</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Fri, 05 Jul 2024 12:49:00 +0000</lastBuildDate>
+    <atom:link href="http://4wayhandshake.local:1313/tags/ngrok/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>PDFy</title>
+      <link>http://4wayhandshake.local:1313/ctf/pdfy/</link>
+      <pubDate>Sat, 23 Jun 2029 18:00:00 +0000</pubDate>
+      <guid>http://4wayhandshake.local:1313/ctf/pdfy/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;INTRODUCTION&lt;/h2&gt;&#xA;&lt;p&gt;&lt;em&gt;PDFy&lt;/em&gt; is a web challenge by the prolific @makelaris. It&amp;rsquo;s about exploiting a known vulnerability in the &lt;code&gt;wkhtmltopdf&lt;/code&gt; application - a solution for parsing HTML and printing it into a PDF using a built-in stylesheet. Since we know the goal of this challenge was to disclose a file, it&amp;rsquo;s not overly challenging to find a vulnerability to suit our needs.&lt;/p&gt;&#xA;&lt;p&gt;By far, the biggest obstacle on &lt;em&gt;PDFy&lt;/em&gt; is overcoming the lack of a VPN connection. This one requires you to host a resource on the public internet - something that has been a huge roadblock for me in the past, on other challenges and CTF competitions. This challenge forced me to explore what tools exist for getting around the lack of VPN (without using a leased VPS). Ultimately, I settled on a paid subscription to &lt;strong&gt;Pinggy&lt;/strong&gt;, which I&amp;rsquo;m glad I got.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

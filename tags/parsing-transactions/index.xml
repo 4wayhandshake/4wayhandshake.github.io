@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Parsing Transactions on 4wayhandshake</title>
+    <link>http://4wayhandshake.local:1313/tags/parsing-transactions/</link>
+    <description>Recent content in Parsing Transactions on 4wayhandshake</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Tue, 20 Feb 2024 12:49:00 +0000</lastBuildDate>
+    <atom:link href="http://4wayhandshake.local:1313/tags/parsing-transactions/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Honor Among Thieves</title>
+      <link>http://4wayhandshake.local:1313/ctf/honor-among-thieves/</link>
+      <pubDate>Tue, 20 Feb 2029 18:00:00 +0000</pubDate>
+      <guid>http://4wayhandshake.local:1313/ctf/honor-among-thieves/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;INTRODUCTION&lt;/h2&gt;&#xA;&lt;p&gt;This challenge is a continuation of the previous one, &lt;a href=&#34;http://4wayhandshake.local:1313/ctf/distract-and-destroy/&#34;&gt;Distract and Destroy&lt;/a&gt;. Our main character, Alex, now has two others in her party. Their objective is to somehow gain the key to the treasure (the flag) by eavesdropping on a rival party.&lt;/p&gt;&#xA;&lt;p&gt;Since a lot of the setup was done in the &lt;a href=&#34;http://4wayhandshake.local:1313/ctf/survival-of-the-fittest/&#34;&gt;first challenge of the series&lt;/a&gt;, I won&amp;rsquo;t be covering it again. Please see the &lt;a href=&#34;http://4wayhandshake.local:1313/ctf/survival-of-the-fittest/#setup&#34;&gt;Setup&lt;/a&gt; section of that walkthrough for more detail.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

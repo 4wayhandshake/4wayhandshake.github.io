@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Broken Random Seed on 4wayhandshake</title>
+    <link>http://4wayhandshake.local:1313/tags/broken-random-seed/</link>
+    <description>Recent content in Broken Random Seed on 4wayhandshake</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Tue, 26 Mar 2024 12:49:00 +0000</lastBuildDate>
+    <atom:link href="http://4wayhandshake.local:1313/tags/broken-random-seed/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Simple Encryptor</title>
+      <link>http://4wayhandshake.local:1313/ctf/simple-encryptor/</link>
+      <pubDate>Sat, 23 Jun 2029 18:00:00 +0000</pubDate>
+      <guid>http://4wayhandshake.local:1313/ctf/simple-encryptor/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;INTRODUCTION&lt;/h2&gt;&#xA;&lt;p&gt;This challenge is about decrypting a file that was created with a flawed form of encryption. We are provided the encrypted file, and also the encryption program. The program can easily be disassembled to examine how it functions. The code is very small, and thankfully the vulnerability is easy to locate. However, even after locating the flaw, a proper solution requires a little bit of C coding, which can be somewhat daunting.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

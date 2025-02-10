@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Whitebox on 4wayhandshake</title>
+    <link>http://4wayhandshake.local:1313/tags/whitebox/</link>
+    <description>Recent content in Whitebox on 4wayhandshake</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Sat, 01 Feb 2025 00:00:01 +0000</lastBuildDate>
+    <atom:link href="http://4wayhandshake.local:1313/tags/whitebox/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cat</title>
+      <link>http://4wayhandshake.local:1313/walkthrough/cat/</link>
+      <pubDate>Thu, 01 Feb 2029 00:00:00 +0000</pubDate>
+      <guid>http://4wayhandshake.local:1313/walkthrough/cat/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;INTRODUCTION&lt;/h2&gt;&#xA;&lt;p&gt;&lt;em&gt;Cat&lt;/em&gt; was released as the fourth box of HTB&amp;rsquo;s Season 7 &lt;em&gt;Vice&lt;/em&gt;&amp;hellip; and it was an absolute delight! If you&amp;rsquo;re searching for a fun box to try some web attacks, look no further!&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;Plus, what is more fitting for a web-oriented box than a website for ranking cute cat photos? &amp;#x1f431;&lt;/p&gt;&lt;/blockquote&gt;&#xA;&lt;p&gt;Recon was easy, as long as &lt;code&gt;.git&lt;/code&gt; is in your go-to dirbusting wordlist. Once discovering the exposed .git directory, you can read through the target&amp;rsquo;s website source code. Read through the source code carefully, and look for mistakes that the programmer made - there are more than one.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

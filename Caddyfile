@@ -1,0 +1,12 @@
+(logging) {
+    log {
+        output stdout
+        format json
+    }
+}
+
+4wayhandshake.local:80 {
+    root * ./
+    file_server
+    import logging
+}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Low Public Exponent on 4wayhandshake</title>
+    <link>http://4wayhandshake.local:1313/tags/low-public-exponent/</link>
+    <description>Recent content in Low Public Exponent on 4wayhandshake</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Wed, 21 Feb 2024 12:49:00 +0000</lastBuildDate>
+    <atom:link href="http://4wayhandshake.local:1313/tags/low-public-exponent/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Baby Time Capsule</title>
+      <link>http://4wayhandshake.local:1313/ctf/baby-time-capsule/</link>
+      <pubDate>Wed, 21 Feb 2029 00:00:00 +0000</pubDate>
+      <guid>http://4wayhandshake.local:1313/ctf/baby-time-capsule/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;INTRODUCTION&lt;/h2&gt;&#xA;&lt;p&gt;&lt;em&gt;Baby Time Capsule&lt;/em&gt; is a cryptography challenge, rated &amp;ldquo;very easy&amp;rdquo;. Personally, I am not accustomed to crypto challenges, and found this one a lot more difficult than &amp;ldquo;very easy&amp;rdquo;. However, the solution only requires a very textbook attack. Anyone well-versed with RSA already should find it relatively simple.&lt;/p&gt;&#xA;&lt;p&gt;Once identified, the solution is conceptually simple. Like other crypto challenges, there are several implementation pitfalls to avoid when scripting a solution. If you are wise, you&amp;rsquo;ll stick to well-established libraries. See the section on &lt;a href=&#34;http://4wayhandshake.local:1313/ctf/baby-time-capsule/#scripting&#34;&gt;scripting&lt;/a&gt; for more details of how I wrote the solution.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
