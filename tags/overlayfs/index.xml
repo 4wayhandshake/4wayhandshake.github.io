@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>OverlayFS on 4wayhandshake</title><link>https://4wayhandshake.github.io/tags/overlayfs/</link><description>Recent content in OverlayFS on 4wayhandshake</description><generator>Hugo</generator><language>en</language><copyright>&lt;a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0&lt;/a></copyright><lastBuildDate>Thu, 01 Feb 2024 22:29:00 +0000</lastBuildDate><atom:link href="https://4wayhandshake.github.io/tags/overlayfs/index.xml" rel="self" type="application/rss+xml"/><item><title>Analytics</title><link>https://4wayhandshake.github.io/walkthrough/analytics/</link><pubDate>Sat, 23 Mar 2024 00:00:00 +0000</pubDate><guid>https://4wayhandshake.github.io/walkthrough/analytics/</guid><description>&lt;h2 id="introduction">INTRODUCTION&lt;/h2>
+&lt;p>At the time of writing this walkthrough, &lt;em>Analytics&lt;/em> is still active. The box centers around a fictional analytics company that provides data analysis services using the infrastructure they&amp;rsquo;re hosting. The company is running a popular open-source analytics / BI platform. This box uses a modern architecture, reflective of how real websites run these days (when they&amp;rsquo;re on-prem).&lt;/p>
+&lt;p>For each step of &lt;em>Analytics&lt;/em>, the skill emphasis is placed firmly on &lt;em>enumeration&lt;/em>. Combining effective enumeration skills with some good research is well-rewarded at every step of this box. For this box, foothold, user, and root are each only a single step. Once you research the right things, it should all fall right into your lap. Have some fun with this one; use this opportunity to sharpen your enumeration toolset.&lt;/p></description></item><item><title>MonitorsTwo</title><link>https://4wayhandshake.github.io/walkthrough/monitorstwo/</link><pubDate>Fri, 08 Sep 2023 18:00:00 +0000</pubDate><guid>https://4wayhandshake.github.io/walkthrough/monitorstwo/</guid><description>&lt;h2 id="introduction">INTRODUCTION&lt;/h2>
+&lt;p>Upon initial enumeration, the website hosted on MonitorsTwo is something called &amp;ldquo;Cacti&amp;rdquo;, which appears to be a run-of-the-mill website management panel. However, some searching reveals that it is an open-source tool, which gives more detail about its functionality:&lt;/p>
+&lt;blockquote>
+&lt;p>Cacti is a complete network graphing solution designed to harness the power of RRDtool&amp;rsquo;s data storage and graphing functionality providing the following features:&lt;/p>
+&lt;ul>
+&lt;li>Remote and local data collectors&lt;/li>
+&lt;li>Device discovery&lt;/li>
+&lt;li>Automation of device and graph creation&lt;/li>
+&lt;li>Graph and device templating&lt;/li>
+&lt;li>Custom data collection methods&lt;/li>
+&lt;li>User, group and domain access controls&lt;/li>
+&lt;/ul>&lt;/blockquote>
+&lt;p>&lt;strong>Warning: This walkthrough contains many spoilers.&lt;/strong>
+No spoilers will be unexpected if you read the walkthrough sequentially.&lt;/p></description></item></channel></rss>
