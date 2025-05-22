@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dynamic Analysis on 4wayhandshake</title><link>https://4wayhandshake.github.io/tags/dynamic-analysis/</link><description>Recent content in Dynamic Analysis on 4wayhandshake</description><generator>Hugo</generator><language>en</language><copyright>&lt;a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0&lt;/a></copyright><lastBuildDate>Thu, 22 May 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://4wayhandshake.github.io/tags/dynamic-analysis/index.xml" rel="self" type="application/rss+xml"/><item><title>Find the Easy Pass</title><link>https://4wayhandshake.github.io/ctf/find-the-easy-pass/</link><pubDate>Thu, 22 May 2025 00:00:00 +0000</pubDate><guid>https://4wayhandshake.github.io/ctf/find-the-easy-pass/</guid><description>&lt;h2 id="first-take">FIRST TAKE&lt;/h2>
+&lt;p>We&amp;rsquo;re provided with just a single file, &lt;code>EasyPass.exe&lt;/code>. It&amp;rsquo;s an &lt;code>exe&lt;/code> file, so on Linux we&amp;rsquo;ll need to run it through &lt;code>wine&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>wine EasyPass.exe
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://4wayhandshake.github.io/ctf/find-the-easy-pass/main%20screen.png" alt="main screen">&lt;/p>
+&lt;p>When we enter a test password, we get a modal indicating the wrong password was used:&lt;/p>
+&lt;p>&lt;img src="https://4wayhandshake.github.io/ctf/find-the-easy-pass/wrong%20password.png" alt="wrong password">&lt;/p>
+&lt;h2 id="disassembly">DISASSEMBLY&lt;/h2>
+&lt;p>Normally, these would by my go-to tools for analyzing an &lt;code>exe&lt;/code>:&lt;/p>
+&lt;ul>
+&lt;li>ILSpy&lt;/li>
+&lt;li>BinaryNinja&lt;/li>
+&lt;li>Ghidra&lt;/li>
+&lt;/ul>
+&lt;h3 id="ilspy">ILSpy&lt;/h3>
+&lt;p>ILSpy didn&amp;rsquo;t work at all.&lt;/p>
+&lt;h3 id="binaryninja">BinaryNinja&lt;/h3>
+&lt;p>BinaryNinja is my favourite for doing small, simple programs, so I started with that. However, after taking a look at the disassembled code, it&amp;rsquo;s clear that BinaryNinja did a terrible job on this one (for example, there aren&amp;rsquo;t even any &lt;code>call&lt;/code> instructions &amp;#x1f440;)&lt;/p></description></item></channel></rss>
