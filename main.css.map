@@ -1,7 +1,7 @@
 {
 	"version": 3,
 	"file": "main.css",
-	"sourceRoot": "/home/tim/Documents/Writeups/blog",
+	"sourceRoot": "/home/fourway/Documents/Writeups/blog",
 	"sources": [
 		"assets/scss/main.scss",
 		"themes/hello-4s3ti/assets/scss/_normalize.scss",
