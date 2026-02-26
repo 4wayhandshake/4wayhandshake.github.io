@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Log Parsing on 4wayhandshake</title><link>https://4wayhandshake.github.io/tags/log-parsing/</link><description>Recent content in Log Parsing on 4wayhandshake</description><generator>Hugo</generator><language>en</language><copyright>&lt;a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0&lt;/a></copyright><lastBuildDate>Thu, 26 Feb 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://4wayhandshake.github.io/tags/log-parsing/index.xml" rel="self" type="application/rss+xml"/><item><title>Bumblebee</title><link>https://4wayhandshake.github.io/ctf/bumblebee/</link><pubDate>Thu, 22 Jan 2026 00:00:00 +0000</pubDate><guid>https://4wayhandshake.github.io/ctf/bumblebee/</guid><description>Mostly just jotting down notes with this one.
+SOLUTION Looked through database; found the phpbb_posts table
+![](found malicious post.png)
+It&amp;rsquo;s post_id is 9. The user that submitted it is apoole1
+Take the value of that post_text field and paste it into an HTML template file. Open it in a browser and see it&amp;rsquo;s a credential harvester
+![](malicious post.png)
+Note that it probably would have rendered normally on the target&amp;rsquo;s computer.</description></item></channel></rss>

